@@ -1,39 +1,23 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowLink } from "@/components/arrow-link";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
 const description =
-  "Meet Carter Steinhoff, a Phoenix-based designer, developer, and former Nucamp instructor.";
+  "Meet Carter Steinhoff, a Phoenix web designer, full-stack developer, and former Nucamp instructor focused on clear, useful digital products.";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "About",
   description,
-  alternates: {
-    canonical: "/about",
+  path: "/about",
+  image: {
+    url: "/images/phoenix-night.webp",
+    width: 1672,
+    height: 941,
+    alt: "Phoenix city lights and the Sonoran Desert at night",
   },
-  openGraph: {
-    title: `About — ${site.name}`,
-    description,
-    type: "website",
-    url: "/about",
-    images: [
-      {
-        url: "/images/carter-phoenix-portrait-v2.webp",
-        width: 1024,
-        height: 1536,
-        alt: "Carter Steinhoff in Phoenix at blue hour",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `About — ${site.name}`,
-    description,
-    images: ["/images/carter-phoenix-portrait-v2.webp"],
-  },
-};
+});
 
 export default function AboutPage() {
   return (

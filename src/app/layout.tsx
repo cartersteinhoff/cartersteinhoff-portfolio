@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Manrope } from "next/font/google";
+import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getSiteUrl, site } from "@/data/site";
+import { getAbsoluteUrl, getSiteUrl, site } from "@/data/site";
+import { defaultSocialImage } from "@/lib/seo";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -20,33 +22,45 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
+  applicationName: site.name,
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} | ${site.seoTitle}`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
+  authors: [{ name: site.name, url: "/" }],
+  creator: site.name,
+  publisher: site.name,
+  category: "technology",
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
   openGraph: {
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} | ${site.seoTitle}`,
     description: site.description,
     type: "website",
     url: "/",
-    images: [
-      {
-        url: "/images/studio-hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Carter Steinhoff working from his Phoenix studio",
-      },
-    ],
+    siteName: site.name,
+    locale: "en_US",
+    images: [defaultSocialImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} | ${site.seoTitle}`,
     description: site.description,
-    images: ["/images/studio-hero.webp"],
+    images: [{ url: "/twitter-image", alt: site.socialImageAlt }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -56,9 +70,79 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const siteUrl = getSiteUrl();
+  const personId = `${siteUrl}/#person`;
+  const serviceId = `${siteUrl}/#professional-service`;
+  const websiteId = `${siteUrl}/#website`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: site.name,
+        url: `${siteUrl}/`,
+        image: getAbsoluteUrl(site.personImage),
+        jobTitle: "Web designer and full-stack developer",
+        description: site.description,
+        email: site.email,
+        sameAs: [site.upworkUrl],
+        homeLocation: {
+          "@type": "Place",
+          name: site.location,
+        },
+        knowsAbout: site.serviceTypes,
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": serviceId,
+        name: site.name,
+        url: `${siteUrl}/`,
+        image: getAbsoluteUrl("/opengraph-image"),
+        description: site.description,
+        email: site.email,
+        founder: {
+          "@id": personId,
+        },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Phoenix",
+          addressRegion: "AZ",
+          addressCountry: "US",
+        },
+        areaServed: {
+          "@type": "City",
+          name: site.location,
+        },
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Digital services",
+          itemListElement: site.serviceTypes.map((serviceName) => ({
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: serviceName,
+            },
+          })),
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        name: site.name,
+        url: `${siteUrl}/`,
+        description: site.description,
+        publisher: {
+          "@id": personId,
+        },
+      },
+    ],
+  };
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={`${manrope.variable} ${instrumentSerif.variable}`}>
+        <JsonLd id="site-structured-data" data={structuredData} />
         <SiteHeader />
         {children}
         <SiteFooter />

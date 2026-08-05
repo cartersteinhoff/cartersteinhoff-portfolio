@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { portfolioProjects, site } from "@/data/site";
+import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
 type CaseStudyPageProps = {
   params: Promise<{ slug: string }>;
@@ -25,35 +27,21 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
     notFound();
   }
 
-  const title = `${project.title} case study`;
-  const description = `${project.caseStudy.overview} Explore Carter Steinhoff's role, approach, and selected screens.`;
+  const title = `${project.title} Case Study`;
   const url = `/portfolio/${project.slug}`;
 
-  return {
+  return createPageMetadata({
     title,
-    description,
-    alternates: { canonical: url },
-    openGraph: {
-      title: `${title} — ${site.name}`,
-      description,
-      type: "article",
-      url,
-      images: [
-        {
-          url: project.image,
-          width: 1440,
-          height: 1000,
-          alt: project.imageAlt,
-        },
-      ],
+    description: project.seoDescription,
+    path: url,
+    type: "article",
+    image: {
+      url: project.image,
+      width: 1440,
+      height: 1000,
+      alt: project.imageAlt,
     },
-    twitter: {
-      card: "summary_large_image",
-      title: `${title} — ${site.name}`,
-      description,
-      images: [{ url: project.image, alt: project.imageAlt }],
-    },
-  };
+  });
 }
 
 export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
@@ -66,9 +54,39 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   const projectIndex = portfolioProjects.findIndex((item) => item.slug === project.slug);
   const nextProject = portfolioProjects[(projectIndex + 1) % portfolioProjects.length];
+  const siteUrl = getSiteUrl();
+  const caseStudyUrl = getAbsoluteUrl(`/portfolio/${project.slug}`);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${caseStudyUrl}#creative-work`,
+    name: `${project.title} case study`,
+    headline: project.caseStudy.headline,
+    description: project.seoDescription,
+    url: caseStudyUrl,
+    image: getAbsoluteUrl(project.image),
+    sameAs: project.url,
+    creator: {
+      "@id": `${siteUrl}/#person`,
+    },
+    author: {
+      "@id": `${siteUrl}/#person`,
+    },
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    mainEntityOfPage: caseStudyUrl,
+    keywords: project.services,
+    about: {
+      "@type": "WebSite",
+      name: project.title,
+      url: project.url,
+    },
+  };
 
   return (
     <main className="case-study bg-[var(--dusk)] text-[var(--sand)]" data-project={project.slug}>
+      <JsonLd id="case-study-structured-data" data={structuredData} />
       <section className="case-hero px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32">
         <div className="mx-auto max-w-[1500px]">
           <Link className="case-back-link" href="/portfolio">

@@ -1,45 +1,24 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
 import { Reveal } from "@/components/reveal";
 import { portfolioProjects, site } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
 const description =
-  "Selected WordPress and Next.js projects designed and developed by Carter Steinhoff.";
+  "Explore Carter Steinhoff's WordPress, Next.js, headless CMS, and cloud product case studies, including RetailBoss and OpenWorkspace.";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Portfolio",
   description,
-  alternates: {
-    canonical: "/portfolio",
+  path: "/portfolio",
+  image: {
+    url: "/images/retailboss-project.webp",
+    width: 1440,
+    height: 1000,
+    alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
   },
-  openGraph: {
-    title: `Portfolio — ${site.name}`,
-    description,
-    type: "website",
-    url: "/portfolio",
-    images: [
-      {
-        url: "/images/retailboss-project.webp",
-        width: 1440,
-        height: 1000,
-        alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Portfolio — ${site.name}`,
-    description,
-    images: [
-      {
-        url: "/images/retailboss-project.webp",
-        alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
-      },
-    ],
-  },
-};
+});
 
 export default function PortfolioPage() {
   return (

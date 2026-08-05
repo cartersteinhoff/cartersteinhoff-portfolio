@@ -2,6 +2,8 @@
 
 A cinematic, image-led portfolio for Carter Steinhoff, built with Next.js App Router, Tailwind CSS, TypeScript, and Biome.
 
+Production: [cartersteinhoff.co](https://cartersteinhoff.co)
+
 ## Local development
 
 ```bash
@@ -25,7 +27,7 @@ npm run build
 - Page copy lives in each route under `src/app`.
 - Final project images belong in `public/images` and should be served through `next/image`.
 - The contact form currently opens the visitor's email app. Set `NEXT_PUBLIC_CONTACT_EMAIL` in Vercel to use a different address.
-- Set `NEXT_PUBLIC_SITE_URL` to the final custom domain so canonical metadata, robots, and the sitemap use it.
+- Production uses `NEXT_PUBLIC_SITE_URL=https://cartersteinhoff.co` so canonical metadata, robots, structured data, and the sitemap share one public origin.
 
 The homepage and Portfolio page currently feature RetailBoss, Pay It Forward Card Shows, OpenWorkspace, and the Provepharm microsite. Each project has a dedicated case study under `src/app/portfolio/[slug]`, and the Services page lives at `src/app/services/page.tsx`.
 

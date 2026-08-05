@@ -1,28 +1,52 @@
 export const site = {
   name: "Carter Steinhoff",
   shortName: "CS",
+  defaultUrl: "https://cartersteinhoff.co",
   role: "Designer & developer",
+  seoTitle: "Phoenix Web Designer & Full-Stack Developer",
   location: "Phoenix, Arizona",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "cartersteinhoff@gmail.com",
   upworkUrl: "https://www.upwork.com/freelancers/cartersteinhoff",
   description:
-    "Carter Steinhoff designs and builds thoughtful digital products, editorial platforms, and brand experiences from Phoenix, Arizona.",
+    "Carter Steinhoff is a Phoenix web designer and full-stack developer building Next.js, WordPress, custom CMS, AI automation, and cloud products.",
+  personImage: "/images/carter-phoenix-portrait-v2.webp",
+  socialImageAlt: "Carter Steinhoff, Phoenix web designer and full-stack developer",
+  serviceTypes: [
+    "Website design",
+    "Full-stack development",
+    "WordPress and CMS development",
+    "AI automation",
+    "Cloud architecture and deployment",
+  ],
 };
+
+function normalizeSiteUrl(value: string) {
+  const url =
+    value.startsWith("http://") || value.startsWith("https://")
+      ? new URL(value)
+      : new URL(`https://${value}`);
+
+  return url.origin;
+}
 
 export function getSiteUrl() {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL;
+    return normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL);
   }
 
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+    return normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL);
   }
 
   if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
+    return normalizeSiteUrl(process.env.VERCEL_URL);
   }
 
-  return "http://localhost:3000";
+  return site.defaultUrl;
+}
+
+export function getAbsoluteUrl(path = "/") {
+  return new URL(path, `${getSiteUrl()}/`).toString();
 }
 
 export type ProjectArchitecture = {
@@ -45,6 +69,8 @@ export const portfolioProjects = [
     status: "Live",
     statusDetail: "Live and in production",
     summary: "An editorial and intelligence platform powered by custom WordPress systems.",
+    seoDescription:
+      "RetailBoss case study: a custom WordPress publishing platform with purpose-built plugins for editorial, research, jobs, events, and brands.",
     description:
       "I designed and developed RetailBoss end to end in WordPress, including its editorial experience, custom plugins, brand and research tools, jobs, events, and the systems supporting publication.",
     services: ["Web design", "WordPress", "Custom plugins", "Platform systems"],
@@ -131,6 +157,8 @@ export const portfolioProjects = [
     statusDetail: "Live and in production",
     summary:
       "A community event platform with a custom CMS and serverless backend for shows and dealers.",
+    seoDescription:
+      "Pay It Forward Card Shows case study: a Next.js event platform for show discovery, dealer information, and table reservations.",
     description:
       "I designed and developed Pay It Forward Card Shows as a Next.js platform, with a custom CMS, Vercel Serverless Functions, and Neon Postgres supporting shows, dealer workflows, reservations, and community content.",
     services: ["Web design", "Next.js", "Custom CMS", "Serverless backend"],
@@ -216,6 +244,8 @@ export const portfolioProjects = [
     status: "Live",
     statusDetail: "Live and in production",
     summary: "A cross-platform desktop automation product backed by a purpose-built AWS service.",
+    seoDescription:
+      "OpenWorkspace case study: a Next.js frontend, Fastify API, AWS EC2 and RDS backend, and Windows and macOS desktop clients.",
     description:
       "I designed and developed OpenWorkspace end to end: a Next.js frontend on Vercel and the entire Fastify backend on AWS EC2, connected to AWS RDS and handling requests from Windows and macOS desktop clients.",
     services: ["Product design", "Next.js & Vercel", "Fastify backend", "AWS infrastructure"],
@@ -300,6 +330,8 @@ export const portfolioProjects = [
     status: "Previously used",
     statusDetail: "Used by Provepharm for a period of time",
     summary: "A pharmaceutical microsite built on a headless WordPress publishing stack.",
+    seoDescription:
+      "Provepharm case study: a Next.js and Faust.js pharmaceutical microsite powered by headless WordPress on WP Engine.",
     description:
       "I built a microsite for Provepharm that the company used for a period of time, pairing a Next.js frontend hosted on Vercel with Faust.js and a headless WordPress backend hosted on WP Engine.",
     services: ["Web development", "Next.js", "Faust.js", "Headless WordPress"],

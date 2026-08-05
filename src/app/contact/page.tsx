@@ -1,38 +1,23 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactForm } from "@/components/contact-form";
 import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
-const description = "Start a project or conversation with Carter Steinhoff in Phoenix, Arizona.";
+const description =
+  "Contact Carter Steinhoff about website design, Next.js or WordPress development, custom CMS work, AI automation, and cloud delivery.";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Contact",
   description,
-  alternates: {
-    canonical: "/contact",
+  path: "/contact",
+  image: {
+    url: "/images/phoenix-night.webp",
+    width: 1672,
+    height: 941,
+    alt: "Phoenix city lights beyond the Sonoran Desert at night",
   },
-  openGraph: {
-    title: `Contact — ${site.name}`,
-    description,
-    type: "website",
-    url: "/contact",
-    images: [
-      {
-        url: "/images/phoenix-night.webp",
-        width: 1672,
-        height: 941,
-        alt: "Phoenix city lights beyond the Sonoran Desert at night",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Contact — ${site.name}`,
-    description,
-    images: ["/images/phoenix-night.webp"],
-  },
-};
+});
 
 export default function ContactPage() {
   return (

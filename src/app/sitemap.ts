@@ -1,22 +1,47 @@
 import type { MetadataRoute } from "next";
-import { getSiteUrl, portfolioProjects } from "@/data/site";
+import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const lastModified = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: siteUrl, lastModified, priority: 1 },
-    { url: `${siteUrl}/about`, lastModified, priority: 0.8 },
-    { url: `${siteUrl}/portfolio`, lastModified, priority: 0.9 },
-    { url: `${siteUrl}/services`, lastModified, priority: 0.8 },
-    { url: `${siteUrl}/contact`, lastModified, priority: 0.7 },
+    {
+      url: `${siteUrl}/`,
+      changeFrequency: "monthly",
+      priority: 1,
+      images: [getAbsoluteUrl("/opengraph-image")],
+    },
+    {
+      url: `${siteUrl}/about`,
+      changeFrequency: "yearly",
+      priority: 0.7,
+      images: [getAbsoluteUrl("/images/phoenix-night.webp")],
+    },
+    {
+      url: `${siteUrl}/portfolio`,
+      changeFrequency: "monthly",
+      priority: 0.9,
+      images: portfolioProjects.map((project) => getAbsoluteUrl(project.image)),
+    },
+    {
+      url: `${siteUrl}/services`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      images: [getAbsoluteUrl("/images/studio-hero.webp")],
+    },
+    {
+      url: `${siteUrl}/contact`,
+      changeFrequency: "yearly",
+      priority: 0.6,
+      images: [getAbsoluteUrl("/images/phoenix-night.webp")],
+    },
   ];
 
   const projectRoutes: MetadataRoute.Sitemap = portfolioProjects.map((project) => ({
     url: `${siteUrl}/portfolio/${project.slug}`,
-    lastModified,
+    changeFrequency: "yearly",
     priority: 0.8,
+    images: [getAbsoluteUrl(project.image)],
   }));
 
   return [...staticRoutes, ...projectRoutes];

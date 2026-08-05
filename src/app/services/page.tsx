@@ -1,43 +1,21 @@
-import type { Metadata } from "next";
 import { ArrowLink } from "@/components/arrow-link";
 import { Reveal } from "@/components/reveal";
-import { site } from "@/data/site";
+import { createPageMetadata } from "@/lib/seo";
 
 const description =
-  "Website design, full-stack development, custom CMS systems, AI automation, and cloud delivery from Carter Steinhoff.";
+  "Website design, Next.js and WordPress development, custom CMS systems, AI automation, and AWS, Azure, GCP, and Vercel delivery.";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Services",
   description,
-  alternates: {
-    canonical: "/services",
+  path: "/services",
+  image: {
+    url: "/images/studio-hero.webp",
+    width: 1672,
+    height: 941,
+    alt: "Carter Steinhoff working in his Phoenix studio",
   },
-  openGraph: {
-    title: `Services — ${site.name}`,
-    description,
-    type: "website",
-    url: "/services",
-    images: [
-      {
-        url: "/images/studio-hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Carter Steinhoff working in his Phoenix studio",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `Services — ${site.name}`,
-    description,
-    images: [
-      {
-        url: "/images/studio-hero.webp",
-        alt: "Carter Steinhoff working in his Phoenix studio",
-      },
-    ],
-  },
-};
+});
 
 const services = [
   {
