@@ -14,6 +14,7 @@
 # local browser verification artifacts
 /artifacts/
 /output/
+/.playwright-cli/
 .codex-dev.*.log
 
 # local environment files

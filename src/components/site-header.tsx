@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 const links = [
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -106,7 +107,7 @@ export function SiteHeader() {
           <span className="hidden sm:block">Carter Steinhoff</span>
         </Link>
 
-        <nav className="hidden items-center gap-8 rounded-full border border-white/15 bg-black/20 px-6 py-3 text-[0.66rem] font-semibold tracking-[0.18em] text-stone-100 uppercase backdrop-blur-xl md:flex">
+        <nav className="hidden items-center gap-6 rounded-full border border-white/15 bg-black/20 px-6 py-3 text-[0.66rem] font-semibold tracking-[0.16em] text-stone-100 uppercase backdrop-blur-xl md:flex lg:gap-8 lg:tracking-[0.18em]">
           {links.map((link) => (
             <Link
               key={link.href}

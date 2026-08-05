@@ -38,7 +38,7 @@ Run lint, typecheck, and build before publishing. For visible changes, also chec
 - Use at most the two configured typefaces and the existing color system unless the art direction is intentionally revised.
 - Prefer sections, rows, dividers, and media planes over generic cards.
 - Keep copy brief and concrete. Do not fabricate clients, project outcomes, metrics, testimonials, or credentials.
-- Portfolio placeholders must remain clearly labeled until real case studies replace them.
+- Featured work must use current screenshots, accurate platform labels, and verified live URLs.
 - Motion should clarify hierarchy: one entrance, one depth/scroll treatment, and restrained hover feedback. Respect `prefers-reduced-motion`.
 - Preserve keyboard focus, semantic headings, form labels, and readable contrast.
 
@@ -50,7 +50,7 @@ The current contact form deliberately composes a `mailto:` message and does not 
 
 - Never commit `.env*` values or `.vercel` project metadata.
 - Set `NEXT_PUBLIC_SITE_URL` to the deployed/custom origin and `NEXT_PUBLIC_CONTACT_EMAIL` to Carter's confirmed inbox.
-- Before a production deploy, verify `/`, `/about`, `/portfolio`, `/contact`, `/robots.txt`, and `/sitemap.xml` locally and again on the deployed origin.
+- Before a production deploy, verify `/`, `/about`, `/portfolio`, every `/portfolio/[slug]` case study, `/services`, `/contact`, `/robots.txt`, and `/sitemap.xml` locally and again on the deployed origin.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

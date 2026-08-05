@@ -5,7 +5,7 @@ import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
 
 const description =
-  "Meet Carter Steinhoff, a Phoenix-based designer and developer focused on thoughtful digital work.";
+  "Meet Carter Steinhoff, a Phoenix-based designer, developer, and former Nucamp instructor.";
 
 export const metadata: Metadata = {
   title: "About",
@@ -95,6 +95,10 @@ export default function AboutPage() {
                 Phoenix keeps the work grounded: direct, bright, a little unexpected. When I’m not
                 at the desk, I’m usually noticing how a place, sign, tool, or story could be made
                 clearer.
+              </p>
+              <p className="border-t border-white/15 pt-6 md:col-span-2">
+                I also served as a web development instructor at Nucamp, helping new developers turn
+                technical concepts into practical skills and working software.
               </p>
             </div>
           </Reveal>

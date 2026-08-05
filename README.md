@@ -21,18 +21,26 @@ npm run build
 
 ## Content updates
 
-- Identity, email, location, and portfolio focus areas live in `src/data/site.ts`.
+- Identity, email, location, and portfolio projects live in `src/data/site.ts`.
 - Page copy lives in each route under `src/app`.
 - Final project images belong in `public/images` and should be served through `next/image`.
 - The contact form currently opens the visitor's email app. Set `NEXT_PUBLIC_CONTACT_EMAIL` in Vercel to use a different address.
 - Set `NEXT_PUBLIC_SITE_URL` to the final custom domain so canonical metadata, robots, and the sitemap use it.
 
-The three portfolio entries are intentionally labeled “Case study in edit” so the live site does not invent client work. Replace them in `src/data/site.ts` as final projects are ready.
+The homepage and Portfolio page currently feature RetailBoss, Pay It Forward Card Shows, and OpenWorkspace. Each project has a dedicated case study under `src/app/portfolio/[slug]`, and the Services page lives at `src/app/services/page.tsx`.
+
+## Project screenshots
+
+- `public/images/retailboss-*.webp` — current homepage, jobs, events, and research screens from RetailBoss.
+- `public/images/pay-it-forward-*.webp` — current homepage, shows, dealer, and about screens from Pay It Forward Card Shows.
+- `public/images/openworkspace-*.webp` — current product, workflow, interface, and compatibility screens from OpenWorkspace.
+
+Browser capture sources stay local under the ignored `output` directory. Refresh the compact WebPs when a featured site changes materially.
 
 ## Generated photography
 
 - `public/images/studio-hero.webp` — identity-referenced studio hero generated from Carter's supplied portrait.
-- `public/images/carter-phoenix-portrait.webp` — identity-referenced editorial portrait generated from Carter's supplied portrait.
+- `public/images/carter-phoenix-portrait.webp` — identity-referenced editorial portrait generated from Carter's supplied portrait; the original approved version is retained.
 - `public/images/phoenix-night.webp` — generated Phoenix night editorial landscape.
 
 The supplied source portrait is not committed; only the compact generated website assets are part of the project. High-resolution generated PNG sources stay local under the ignored `source-assets` directory.

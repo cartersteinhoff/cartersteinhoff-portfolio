@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
 import { Reveal } from "@/components/reveal";
-import { focusAreas, site } from "@/data/site";
+import { portfolioProjects, site } from "@/data/site";
 
 const description =
-  "Selected directions and forthcoming case studies from designer and developer Carter Steinhoff.";
+  "Selected WordPress and Next.js projects designed and developed by Carter Steinhoff.";
 
 export const metadata: Metadata = {
   title: "Portfolio",
@@ -20,10 +21,10 @@ export const metadata: Metadata = {
     url: "/portfolio",
     images: [
       {
-        url: "/images/studio-hero.webp",
-        width: 1672,
-        height: 941,
-        alt: "Carter Steinhoff working from his Phoenix studio",
+        url: "/images/retailboss-project.webp",
+        width: 1440,
+        height: 1000,
+        alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
       },
     ],
   },
@@ -31,7 +32,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Portfolio — ${site.name}`,
     description,
-    images: ["/images/studio-hero.webp"],
+    images: [
+      {
+        url: "/images/retailboss-project.webp",
+        alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
+      },
+    ],
   },
 };
 
@@ -41,12 +47,12 @@ export default function PortfolioPage() {
       <section className="px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-44">
         <div className="mx-auto max-w-[1500px]">
           <div className="grid gap-8 md:grid-cols-[0.6fr_1.4fr]">
-            <p className="page-kicker">Portfolio · Selected directions</p>
+            <p className="page-kicker">Portfolio · Selected work</p>
             <div>
               <h1 className="page-title">Work with a reason to exist.</h1>
               <p className="mt-10 max-w-xl text-base leading-7 text-stone-400 md:ml-auto md:text-lg md:leading-8">
-                The first case studies are being edited now. Until then, here are the spaces where I
-                do my best work—and the standard each project has to meet.
+                Three live platforms shaped from design through development: a custom WordPress
+                publishing system and two focused Next.js products.
               </p>
             </div>
           </div>
@@ -54,42 +60,74 @@ export default function PortfolioPage() {
       </section>
 
       <section className="border-t border-white/15">
-        {focusAreas.map((area) => (
-          <article key={area.number} className="portfolio-entry">
+        {portfolioProjects.map((project) => (
+          <article key={project.slug} className="portfolio-entry" data-project={project.slug}>
             <div className="portfolio-entry-copy">
               <div className="flex items-center justify-between gap-4">
                 <span className="text-[0.65rem] font-semibold tracking-[0.16em] text-stone-500">
-                  {area.number}
+                  {project.number}
                 </span>
                 <span className="text-[0.62rem] tracking-[0.16em] text-[var(--accent)] uppercase">
-                  Case study in edit
+                  Live · {project.platform}
                 </span>
               </div>
               <div>
                 <h2 className="font-[family-name:var(--font-display)] text-[clamp(3.2rem,7vw,7.4rem)] leading-[0.86] tracking-[-0.045em]">
-                  {area.title}
+                  {project.title}
                 </h2>
+                <p className="mt-6 max-w-xl font-[family-name:var(--font-display)] text-3xl leading-tight tracking-[-0.025em] text-[var(--accent)] italic">
+                  {project.summary}
+                </p>
                 <p className="mt-5 max-w-lg text-base leading-7 text-stone-400">
-                  {area.description}
+                  {project.description}
                 </p>
               </div>
-              <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[0.62rem] font-semibold tracking-[0.14em] text-stone-500 uppercase">
-                {area.services.map((service) => (
-                  <li key={service}>{service}</li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-8">
+                <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[0.62rem] font-semibold tracking-[0.14em] text-stone-500 uppercase">
+                  {project.services.map((service) => (
+                    <li key={service}>{service}</li>
+                  ))}
+                </ul>
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
+                  <ArrowLink href={`/portfolio/${project.slug}`}>View case study</ArrowLink>
+                  <a
+                    className="text-[0.65rem] font-semibold tracking-[0.14em] text-stone-500 uppercase transition-colors hover:text-[var(--accent)]"
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Live site ↗<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div className="portfolio-entry-media group">
-              <Image
-                src={area.image}
-                alt={area.imageAlt}
-                fill
-                unoptimized
-                sizes="(max-width: 768px) 100vw, 58vw"
-                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.035]"
-              />
-              <div className="absolute inset-0 bg-black/10 transition-colors duration-500 group-hover:bg-transparent" />
-            </div>
+            <Link
+              className="portfolio-entry-media group"
+              href={`/portfolio/${project.slug}`}
+              aria-label={`View the ${project.title} case study`}
+            >
+              <span className="project-browser">
+                <span className="project-browser-bar">
+                  <span className="project-browser-dots" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </span>
+                  <span>{project.domain}</span>
+                  <span aria-hidden="true">↗</span>
+                </span>
+                <span className="project-browser-image">
+                  <Image
+                    src={project.image}
+                    alt={project.imageAlt}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 768px) 92vw, 56vw"
+                    className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.018]"
+                  />
+                </span>
+              </span>
+            </Link>
           </article>
         ))}
       </section>
