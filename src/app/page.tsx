@@ -50,8 +50,8 @@ export default function Home() {
             <div>
               <h2 className="section-title">Built for real work.</h2>
               <p className="section-lead mt-7 md:ml-auto">
-                Four platforms spanning retail publishing, events, desktop automation, and
-                pharmaceutical communications.
+                Five platforms spanning publishing, events, desktop automation, pharmaceutical
+                communications, and editorial storytelling.
               </p>
             </div>
           </Reveal>
@@ -83,13 +83,7 @@ export default function Home() {
                       {index === 0 ? `Featured ${project.number}` : project.number}
                     </span>
                     <span className="home-project-platform">
-                      {project.slug === "retailboss"
-                        ? "WordPress"
-                        : project.slug === "pay-it-forward-card-shows"
-                          ? "Next.js · Vercel"
-                          : project.slug === "openworkspace"
-                            ? "Next.js · AWS"
-                            : "Next.js · Faust"}
+                      {project.shortPlatform}
                       {` · ${project.status}`}
                     </span>
                   </span>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BeforeAfterSlider } from "@/components/before-after-slider";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
@@ -54,6 +55,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   const projectIndex = portfolioProjects.findIndex((item) => item.slug === project.slug);
   const nextProject = portfolioProjects[(projectIndex + 1) % portfolioProjects.length];
+  const comparison = "comparison" in project.caseStudy ? project.caseStudy.comparison : null;
   const siteUrl = getSiteUrl();
   const caseStudyUrl = getAbsoluteUrl(`/portfolio/${project.slug}`);
   const structuredData = {
@@ -100,11 +102,25 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <div className="case-hero-copy">
               <h1 className="case-title">{project.title}</h1>
               <p className="case-summary">{project.summary}</p>
-              <a className="case-hero-action" href={project.url} target="_blank" rel="noreferrer">
-                View {project.domain}
-                <span aria-hidden="true"> ↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
+              <div className="case-hero-actions">
+                <a className="case-hero-action" href={project.url} target="_blank" rel="noreferrer">
+                  {project.externalLabel}
+                  <span aria-hidden="true"> ↗</span>
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+                {comparison ? (
+                  <a
+                    className="case-hero-action case-hero-action-secondary"
+                    href={comparison.before.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View original
+                    <span aria-hidden="true"> ↗</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : null}
+              </div>
             </div>
 
             <dl className="case-hero-facts">
@@ -165,6 +181,52 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           </div>
         </div>
       </section>
+
+      {comparison ? (
+        <section
+          className="case-comparison-section px-5 py-16 md:px-8 md:py-24"
+          aria-labelledby="case-comparison-title"
+        >
+          <div className="mx-auto max-w-[1500px]">
+            <Reveal className="case-comparison-heading">
+              <p className="section-label">Before / after</p>
+              <div>
+                <h2 id="case-comparison-title">{comparison.headline}</h2>
+                <p>{comparison.summary}</p>
+              </div>
+            </Reveal>
+
+            <Reveal className="case-comparison-stage">
+              <figure>
+                <div className="case-comparison-key">
+                  {[comparison.before, comparison.after].map((state) => (
+                    <a href={state.url} target="_blank" rel="noreferrer" key={state.label}>
+                      <span className="case-comparison-state-label">{state.label}</span>
+                      <strong>{state.technology}</strong>
+                      <i aria-hidden="true">↗</i>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  ))}
+                </div>
+
+                <BeforeAfterSlider
+                  before={{ src: comparison.before.image, label: comparison.before.label }}
+                  after={{ src: comparison.after.image, label: comparison.after.label }}
+                  ariaLabel={`${comparison.before.alt}. Compared with ${comparison.after.alt}.`}
+                />
+
+                <figcaption>
+                  <span>Drag to compare</span>
+                  <p>
+                    One matched viewport. The original WordPress site is still on the custom domain;
+                    the redesign is the public Vercel preview.
+                  </p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
 
       <section className="case-ownership-section px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
@@ -262,11 +324,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <h2>{project.statusDetail}</h2>
           </Reveal>
           <Reveal className="case-status-action">
-            <p>
-              {project.status === "Live"
-                ? "Available in production today; the live experience reflects the system shown throughout this case study."
-                : "The deployed microsite remains available as a reference for the implementation Provepharm used."}
-            </p>
+            <p>{project.caseStudy.statusCopy}</p>
           </Reveal>
         </div>
       </section>

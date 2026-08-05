@@ -27,7 +27,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/services`,
       changeFrequency: "monthly",
       priority: 0.8,
-      images: [getAbsoluteUrl("/images/studio-hero.webp")],
+      images: [
+        getAbsoluteUrl("/images/services-cms-system.webp"),
+        getAbsoluteUrl("/images/services-ai-workflow.webp"),
+      ],
     },
     {
       url: `${siteUrl}/contact`,

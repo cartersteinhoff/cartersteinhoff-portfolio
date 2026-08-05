@@ -1,207 +1,478 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
-import { Reveal } from "@/components/reveal";
-import { portfolioProjects } from "@/data/site";
+import { portfolioProjects, site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
+import styles from "./services.module.css";
 
 const description =
-  "Product design, full-stack and CMS development, AI automation, cloud architecture, and delivery across AWS, Azure, GCP, and Vercel.";
+  "Product and website design, full-stack development, custom CMS and WordPress work, technical SEO, AI automation, and cloud architecture from strategy through production.";
 
 export const metadata = createPageMetadata({
   title: "Services",
   description,
   path: "/services",
   image: {
-    url: "/images/studio-hero.webp",
-    width: 1672,
-    height: 941,
-    alt: "Carter Steinhoff working in his Phoenix studio",
+    url: "/images/openworkspace-product-ui.webp",
+    width: 1440,
+    height: 1000,
+    alt: "OpenWorkspace product interface designed and developed by Carter Steinhoff",
   },
 });
 
 type ProjectSlug = (typeof portfolioProjects)[number]["slug"];
 
-type ServiceGroup = {
+type RelatedWork = {
+  readonly slug: ProjectSlug;
+  readonly label: string;
+};
+
+type ServiceFamily = {
   readonly number: string;
   readonly id: string;
   readonly title: string;
-  readonly description: string;
-  readonly capabilities: readonly string[];
-  readonly projectSlugs: readonly ProjectSlug[];
+  readonly goal: string;
+  readonly promise: string;
+  readonly summary: string;
+  readonly disciplines: readonly string[];
+  readonly includes: readonly string[];
+  readonly relatedWork: readonly RelatedWork[];
+  readonly visual: {
+    readonly src: string;
+    readonly alt: string;
+    readonly caption: string;
+    readonly label: string;
+  };
 };
 
-const serviceGroups = [
+const buyerPaths = [
   {
     number: "01",
-    id: "product-design-frontend",
-    title: "Product design & frontend",
-    description:
-      "Shape the product before building it—positioning, user flows, visual direction, and a responsive interface that makes the experience clear from the first screen.",
-    capabilities: [
-      "Product strategy",
-      "UX architecture",
-      "Interface design",
-      "Design systems",
-      "Next.js & React",
-      "Accessibility & performance",
-    ],
-    projectSlugs: ["openworkspace", "provepharm"],
+    title: "Launch a product",
+    copy: "Strategy, UX, frontend, backend, and data.",
+    href: "#design-build",
   },
   {
     number: "02",
-    id: "full-stack-cms",
-    title: "Full-stack platforms & CMS",
-    description:
-      "Build the application and the operating surface behind it: APIs, data, custom publishing workflows, integrations, and a deployment path that stays maintainable.",
-    capabilities: [
-      "TypeScript & APIs",
-      "Postgres & data modeling",
-      "Custom WordPress plugins",
-      "Headless & custom CMS",
-      "Authentication & payments",
-      "Technical SEO & stewardship",
-    ],
-    projectSlugs: ["retailboss", "pay-it-forward-card-shows"],
+    title: "Rebuild a platform",
+    copy: "CMS, WordPress, migrations, search, and performance.",
+    href: "#publish-grow",
   },
   {
     number: "03",
-    id: "ai-cloud",
-    title: "AI automation & cloud delivery",
-    description:
-      "Connect models, tools, APIs, and human review into useful workflows, then deliver the surrounding system with clear infrastructure, monitoring, and handoff.",
-    capabilities: [
-      "Agent workflows",
-      "Process automation",
-      "API integrations",
-      "AWS, Azure & GCP",
-      "Vercel & serverless",
-      "CI/CD & observability",
-    ],
-    projectSlugs: ["openworkspace", "pay-it-forward-card-shows"],
+    title: "Automate operations",
+    copy: "AI workflows, integrations, and cloud delivery.",
+    href: "#automate-operate",
   },
-] as const satisfies readonly ServiceGroup[];
+] as const;
+
+const serviceFamilies = [
+  {
+    number: "01",
+    id: "design-build",
+    title: "Design & build",
+    goal: "Launch a product",
+    promise: "Take a product from rough idea to a working, production-ready experience.",
+    summary:
+      "I shape the offer and user experience, then build the responsive frontend, application logic, APIs, and data layer as one coherent system.",
+    disciplines: ["Website & product design", "Full-stack development"],
+    includes: [
+      "Product strategy & UX/UI",
+      "Responsive websites & apps",
+      "Frontend, backend & APIs",
+      "Data, integrations & testing",
+    ],
+    relatedWork: [
+      { slug: "anne-newgarden", label: "Anne Newgarden redesign" },
+      { slug: "pay-it-forward-card-shows", label: "Pay It Forward platform" },
+      { slug: "openworkspace", label: "OpenWorkspace product" },
+    ],
+    visual: {
+      src: "/images/openworkspace-product-ui.webp",
+      alt: "OpenWorkspace product interface for saving a desktop workspace configuration",
+      caption: "Product design, application experience, API, and AWS delivery.",
+      label: "Shipped work · OpenWorkspace",
+    },
+  },
+  {
+    number: "02",
+    id: "publish-grow",
+    title: "Publish & grow",
+    goal: "Rebuild a platform",
+    promise: "Turn content, search, and performance into a maintainable publishing system.",
+    summary:
+      "I build custom WordPress, headless, and purpose-built CMS workflows—then protect discoverability with technical SEO, migration planning, and performance work.",
+    disciplines: ["CMS & WordPress", "Technical SEO & performance"],
+    includes: [
+      "Custom WordPress themes & plugins",
+      "Headless & custom CMS",
+      "Content models & migrations",
+      "Technical SEO & performance",
+    ],
+    relatedWork: [
+      { slug: "retailboss", label: "RetailBoss custom platform" },
+      { slug: "provepharm", label: "Provepharm headless WordPress" },
+      { slug: "pay-it-forward-card-shows", label: "Pay It Forward custom CMS" },
+    ],
+    visual: {
+      src: "/images/services-cms-system.webp",
+      alt: "Editorial concept illustration showing scattered content becoming a structured publishing system",
+      caption: "From scattered source material to one coherent publishing system.",
+      label: "Concept · Content system",
+    },
+  },
+  {
+    number: "03",
+    id: "automate-operate",
+    title: "Automate & operate",
+    goal: "Automate operations",
+    promise: "Remove repetitive work and run the result on dependable infrastructure.",
+    summary:
+      "I connect models, tools, APIs, and human approval steps into understandable workflows, then design the cloud and delivery path around the real product needs.",
+    disciplines: ["AI automation & integrations", "Cloud architecture & delivery"],
+    includes: [
+      "Workflow audits & mapping",
+      "AI assistants & integrations",
+      "Human approval & evaluation",
+      "Cloud delivery & observability",
+    ],
+    relatedWork: [
+      { slug: "openworkspace", label: "OpenWorkspace on AWS" },
+      { slug: "pay-it-forward-card-shows", label: "Pay It Forward on Vercel & Neon" },
+    ],
+    visual: {
+      src: "/images/services-ai-workflow.webp",
+      alt: "Concept illustration of an automation moving through connected checkpoints and a human approval loop",
+      caption: "Connected tools, explicit checkpoints, and human judgment where it matters.",
+      label: "Concept · Automation system",
+    },
+  },
+] as const satisfies readonly ServiceFamily[];
+
+const proofStories = [
+  {
+    slug: "retailboss",
+    eyebrow: "CMS, WordPress & technical SEO",
+    headline: "Custom publishing, plugins, and search architecture.",
+    copy: "RetailBoss connects editorial workflows, structured content, custom WordPress plugins, and technical SEO in one production platform.",
+    image: "/images/retailboss-research.webp",
+    alt: "RetailBoss research page with retail rankings, filters, and reports",
+  },
+  {
+    slug: "pay-it-forward-card-shows",
+    eyebrow: "Full-stack application & custom CMS",
+    headline: "A complete event system from page to database.",
+    copy: "A Next.js experience backed by a custom CMS, Vercel Functions, and Neon Postgres.",
+    image: "/images/pay-it-forward-shows.webp",
+    alt: "Pay It Forward Card Shows upcoming shows page with dates and venue information",
+  },
+  {
+    slug: "openworkspace",
+    eyebrow: "Product, backend & cloud architecture",
+    headline: "A product spanning web, desktop, API, and AWS.",
+    copy: "A Next.js product connected to Windows and macOS clients through Fastify, AWS EC2, and RDS.",
+    image: "/images/openworkspace-how-it-works.webp",
+    alt: "OpenWorkspace product sequence explaining how desktop workspaces are saved and reopened",
+  },
+] as const satisfies readonly {
+  readonly slug: ProjectSlug;
+  readonly eyebrow: string;
+  readonly headline: string;
+  readonly copy: string;
+  readonly image: string;
+  readonly alt: string;
+}[];
+
+const engagements = [
+  {
+    number: "01",
+    title: "Audit & roadmap",
+    copy: "A focused review with priorities, tradeoffs, and implementation-ready next steps.",
+    bestFor: "Unclear scope, inherited systems, or a high-stakes rebuild",
+  },
+  {
+    number: "02",
+    title: "Build or rebuild",
+    copy: "A scoped website, product, CMS, or automation from discovery through production.",
+    bestFor: "New launches, redesigns, migrations, and major features",
+  },
+  {
+    number: "03",
+    title: "Ongoing product partner",
+    copy: "Senior design and development support for iteration, SEO, automation, and infrastructure.",
+    bestFor: "Teams that need continuity without another full-time hire",
+  },
+] as const;
+
+const technologyGroups = [
+  {
+    label: "Experience",
+    values: "Product strategy · UX/UI · Next.js · React · TypeScript · Tailwind CSS",
+  },
+  {
+    label: "Content",
+    values: "WordPress · Custom plugins · Headless CMS · Custom admin tools · Migrations",
+  },
+  {
+    label: "Backend & data",
+    values: "Node.js · Fastify · Serverless Functions · Postgres · Neon · REST APIs",
+  },
+  {
+    label: "Cloud & delivery",
+    values: "Vercel · AWS EC2/RDS · Azure/GCP planning · CI/CD · Observability",
+  },
+  {
+    label: "Search & quality",
+    values: "Technical SEO · Structured data · Core Web Vitals · Playwright · Axe · Biome",
+  },
+] as const;
+
+function getProject(slug: ProjectSlug) {
+  const project = portfolioProjects.find((item) => item.slug === slug);
+
+  if (!project) {
+    throw new Error(`Unknown portfolio project: ${slug}`);
+  }
+
+  return project;
+}
 
 export default function ServicesPage() {
   return (
-    <main className="services-page bg-[var(--dusk)] text-[var(--sand)]">
-      <section className="services-compact-hero relative overflow-hidden border-b border-white/15 px-5 pt-28 pb-12 md:px-8 md:pt-32 md:pb-16 lg:pt-36">
-        <div className="services-compact-hero-inner mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.65fr)] lg:items-end lg:gap-16">
-          <div className="services-compact-hero-heading">
-            <p className="page-kicker">Services · Product to production</p>
-            <h1 className="services-compact-title mt-8 max-w-5xl font-[family-name:var(--font-display)] text-[clamp(3.25rem,7.4vw,7.25rem)] leading-[0.88] font-normal tracking-[-0.042em] text-balance">
-              <span className="block">Ideas into</span>
-              <span className="italic text-[var(--accent)]">working systems.</span>
+    <main className={styles.page}>
+      <section className={styles.intro} aria-labelledby="services-title">
+        <div className={styles.introGridLines} aria-hidden="true" />
+        <div className={`${styles.shell} ${styles.introInner}`}>
+          <div className={styles.introMeta}>
+            <p className={styles.kicker}>Services · Strategy through production</p>
+            <p>Independent studio · Phoenix, Arizona</p>
+          </div>
+          <div className={styles.introStatement}>
+            <h1 id="services-title">
+              Product design and full-stack delivery—from <em>interface to infrastructure.</em>
             </h1>
+            <div className={styles.introSummary}>
+              <p>
+                Websites, products, CMS, technical SEO, AI automation, and cloud systems—planned and
+                built by one accountable partner.
+              </p>
+              <div className={styles.introActions}>
+                <ArrowLink href="/contact">Start a project</ArrowLink>
+                <Link href="/portfolio" className={styles.textLink}>
+                  See case studies <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <div className="services-compact-hero-copy border-t border-white/20 pt-6">
-            <p className="section-lead">
-              I design the experience, build the full stack, and carry the product through
-              automation, cloud architecture, launch, and stewardship.
-            </p>
-            <p className="services-hero-evidence mt-5 max-w-xl text-sm leading-7 text-[var(--muted-soft)]">
-              Selected work includes custom WordPress plugins, Vercel and Neon backends, and a
-              Fastify service running on AWS EC2 with RDS.
-            </p>
-            <div className="mt-7">
-              <ArrowLink href="/contact">Start a project</ArrowLink>
-            </div>
+          <h2 id="paths-title" className="sr-only">
+            Start with what you need
+          </h2>
+          <div className={styles.pathGrid}>
+            {buyerPaths.map((path) => (
+              <Link key={path.number} href={path.href}>
+                <span>{path.number}</span>
+                <strong>{path.title}</strong>
+                <p>{path.copy}</p>
+                <i aria-hidden="true">↓</i>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      <div id="services" className="services-disciplines">
-        <div className="mx-auto max-w-[1500px] px-5 md:px-8">
-          {serviceGroups.map((service) => (
-            <section
-              key={service.number}
-              id={service.id}
-              className="services-discipline scroll-mt-24"
-              aria-labelledby={`${service.id}-title`}
-            >
-              <Reveal className="service-entry services-discipline-layout">
-                <span className="service-number" aria-hidden="true">
-                  {service.number}
-                </span>
-                <h2 id={`${service.id}-title`} className="service-title services-discipline-title">
-                  {service.title}
-                </h2>
-                <div className="services-discipline-detail">
-                  <p className="service-description section-lead">{service.description}</p>
-                  <ul className="service-capability-list services-discipline-capabilities mt-8">
-                    {service.capabilities.map((capability) => (
-                      <li key={capability}>{capability}</li>
-                    ))}
-                  </ul>
+      <section className={styles.offer} aria-labelledby="offer-title">
+        <div className={`${styles.shell} ${styles.offerGrid}`}>
+          <div className={styles.offerIntro}>
+            <p className={styles.kicker}>Capabilities</p>
+            <h2 id="offer-title">Six services. Three connected lanes.</h2>
+            <p>Start with the closest lane; the scope can narrow from there.</p>
+          </div>
 
-                  <aside
-                    className="services-related-work mt-9"
-                    aria-label={`Related ${service.title} case studies`}
-                  >
-                    <p className="services-related-work-label text-xs font-bold tracking-[0.14em] text-[var(--muted-soft)] uppercase">
-                      Related work
-                    </p>
-                    <ul className="services-proof-list mt-3 border-t border-white/15">
-                      {service.projectSlugs.map((slug) => {
-                        const project = portfolioProjects.find((item) => item.slug === slug);
-
-                        if (!project) return null;
-
-                        return (
-                          <li key={project.slug} className="services-proof-item">
-                            <Link
-                              className="services-proof-link group grid min-h-20 gap-3 border-b border-white/15 py-4 transition-colors hover:text-[var(--accent)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-6"
-                              href={`/portfolio/${project.slug}`}
-                              aria-label={`View the ${project.title} case study`}
-                            >
-                              <span className="services-proof-copy">
-                                <strong className="block text-base font-semibold">
-                                  {project.title}
-                                </strong>
-                                <span className="mt-1 block max-w-xl text-sm leading-6 text-[var(--muted)]">
-                                  {project.summary}
-                                </span>
-                              </span>
-                              <span className="services-proof-platform flex items-center gap-3 text-xs font-semibold tracking-[0.08em] text-[var(--muted-soft)] uppercase">
-                                {project.platform}
-                                <span
-                                  className="transition-transform group-hover:translate-x-1"
-                                  aria-hidden="true"
-                                >
-                                  →
-                                </span>
-                              </span>
-                            </Link>
-                          </li>
-                        );
-                      })}
+          <div className={styles.serviceList}>
+            {serviceFamilies.map((service) => (
+              <div key={service.id} className={styles.serviceRow}>
+                <article id={service.id} aria-labelledby={`${service.id}-title`}>
+                  <span className={styles.serviceNumber}>{service.number}</span>
+                  <div className={styles.serviceTitle}>
+                    <p>{service.disciplines.join(" + ")}</p>
+                    <h3 id={`${service.id}-title`}>{service.title}</h3>
+                    <span className={styles.serviceGoal}>For: {service.goal}</span>
+                  </div>
+                  <div className={styles.serviceBody}>
+                    <strong>{service.promise}</strong>
+                    <p>{service.summary}</p>
+                    <ul aria-label={`${service.title} includes`}>
+                      {service.includes.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
                     </ul>
-                  </aside>
-                </div>
-              </Reveal>
-            </section>
-          ))}
+                    <figure className={styles.serviceVisual}>
+                      <Image
+                        src={service.visual.src}
+                        alt={service.visual.alt}
+                        width={2172}
+                        height={724}
+                        sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1023px) 56vw, 43vw"
+                      />
+                      <figcaption>
+                        <span>{service.visual.label}</span>
+                        {service.visual.caption}
+                      </figcaption>
+                    </figure>
+                    <nav
+                      className={styles.relatedWork}
+                      aria-label={`${service.title} related work`}
+                    >
+                      <span>Relevant work</span>
+                      <div>
+                        {service.relatedWork.map((work) => (
+                          <Link key={work.slug} href={`/portfolio/${work.slug}`}>
+                            {work.label} <span aria-hidden="true">↗</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </nav>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      <section className="services-credibility-strip border-y border-white/15 bg-[var(--ink)] px-5 py-10 md:px-8 md:py-12">
-        <Reveal className="services-credibility-inner mx-auto grid max-w-[1500px] gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.25fr)_auto] md:items-center md:gap-10">
-          <div className="services-credibility-heading">
-            <p className="section-label">Teaching experience</p>
-            <h2 className="mt-4 max-w-md text-2xl leading-tight font-medium text-balance md:text-3xl">
-              Former web development instructor at Nucamp.
+      <section className={styles.proof} aria-labelledby="proof-title">
+        <div className={styles.shell}>
+          <div className={styles.sectionHeading}>
+            <p className={styles.kicker}>Selected case studies</p>
+            <h2 id="proof-title">See the work behind the offer.</h2>
+            <p>
+              Three shipped systems. Each case study shows the interface and what runs behind it.
+            </p>
+          </div>
+
+          <div className={styles.proofGrid}>
+            {proofStories.map((proof) => {
+              const project = getProject(proof.slug);
+
+              return (
+                <div key={proof.slug} className={styles.proofStory}>
+                  <article>
+                    <Link
+                      href={`/portfolio/${project.slug}`}
+                      className={styles.proofMedia}
+                      aria-label={`View the ${project.title} case study`}
+                    >
+                      <span className={styles.browserBar}>
+                        <span className={styles.browserDots} aria-hidden="true">
+                          <i />
+                          <i />
+                          <i />
+                        </span>
+                        <span>{project.domain}</span>
+                        <span aria-hidden="true">↗</span>
+                      </span>
+                      <span className={styles.proofImage}>
+                        <Image
+                          src={proof.image}
+                          alt={proof.alt}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 767px) 92vw, (max-width: 1023px) 46vw, 30vw"
+                          className="object-cover object-top"
+                        />
+                      </span>
+                    </Link>
+                    <div className={styles.proofCopy}>
+                      <p>{proof.eyebrow}</p>
+                      <h3>{proof.headline}</h3>
+                      <p>{proof.copy}</p>
+                      <Link href={`/portfolio/${project.slug}`}>
+                        View {project.title} case study <span aria-hidden="true">↗</span>
+                      </Link>
+                    </div>
+                  </article>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.engagements} aria-labelledby="engagements-title">
+        <div className={`${styles.shell} ${styles.engagementGrid}`}>
+          <div className={styles.engagementHeading}>
+            <p className={styles.kicker}>Ways to work together</p>
+            <h2 id="engagements-title">Pick the right starting point.</h2>
+          </div>
+          <div className={styles.engagementList}>
+            {engagements.map((engagement) => (
+              <div key={engagement.number} className={styles.engagementRow}>
+                <article>
+                  <span>{engagement.number}</span>
+                  <h3>{engagement.title}</h3>
+                  <p>{engagement.copy}</p>
+                  <div>
+                    <strong>Best for</strong>
+                    <p>{engagement.bestFor}</p>
+                  </div>
+                </article>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.teaching} aria-labelledby="teaching-title">
+        <div className={styles.shell}>
+          <div className={styles.teachingGrid}>
+            <div>
+              <p className={styles.kicker}>Former Nucamp web development instructor</p>
+              <h2 id="teaching-title">Clear thinking. Maintainable handoffs.</h2>
+            </div>
+            <p>
+              Teaching sharpened how I explain tradeoffs and document decisions. You get a system
+              your team can understand and extend.
+            </p>
+            <ul aria-label="Handoff principles">
+              <li>Clear tradeoffs</li>
+              <li>Documented decisions</li>
+              <li>Maintainable handoff</li>
+            </ul>
+          </div>
+          <dl className={styles.trustStack} aria-label="Selected technology stack">
+            {technologyGroups.map((group) => (
+              <div key={group.label}>
+                <dt>{group.label}</dt>
+                <dd>{group.values}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className={styles.finalCta} aria-labelledby="services-final-title">
+        <div className={`${styles.shell} ${styles.finalInner}`}>
+          <div>
+            <p className={styles.kicker}>Bring me the messy version</p>
+            <h2 id="services-final-title">
+              I’ll help turn it into a clear plan and a working system.
             </h2>
           </div>
-          <p className="services-credibility-copy max-w-2xl text-base leading-7 text-[var(--muted)]">
-            Teaching sharpened how I explain architecture, document decisions, and leave teams with
-            systems they can understand and extend.
-          </p>
-          <div className="services-credibility-cta md:justify-self-end">
-            <ArrowLink href="/contact" inverse>
-              Talk about a project
-            </ArrowLink>
+          <div className={styles.finalActions}>
+            <ArrowLink href="/contact">Start a project</ArrowLink>
+            <nav aria-label="Professional profiles">
+              <a href={site.upworkUrl} target="_blank" rel="noreferrer">
+                Hire through Upwork <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
+                Connect on LinkedIn <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </nav>
           </div>
-        </Reveal>
+        </div>
       </section>
     </main>
   );

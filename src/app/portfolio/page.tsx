@@ -198,7 +198,7 @@ export default function PortfolioPage() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      {project.status === "Live" ? "Live site" : "View microsite"} ↗
+                      {project.externalLabel} ↗
                       <span className="sr-only"> (opens in a new tab)</span>
                     </a>
                   </div>

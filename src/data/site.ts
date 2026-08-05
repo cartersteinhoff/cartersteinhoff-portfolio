@@ -14,11 +14,12 @@ export const site = {
   socialImageAlt:
     "Carter Steinhoff, Phoenix product designer, full-stack developer, and AI automation expert",
   serviceTypes: [
-    "Website design",
-    "Full-stack development",
-    "WordPress and CMS development",
-    "AI automation",
-    "Cloud architecture and deployment",
+    "Website and product design",
+    "Full-stack product development",
+    "WordPress, headless, and custom CMS development",
+    "Technical SEO and performance",
+    "AI automation and integrations",
+    "Cloud architecture and production delivery",
   ],
 };
 
@@ -68,6 +69,8 @@ export const portfolioProjects = [
     url: "https://retailboss.co/",
     domain: "retailboss.co",
     platform: "WordPress · Custom plugins",
+    shortPlatform: "WordPress · Custom plugins",
+    externalLabel: "Live site",
     status: "Live",
     statusDetail: "Live and in production",
     summary: "An editorial and intelligence platform powered by custom WordPress systems.",
@@ -93,6 +96,8 @@ export const portfolioProjects = [
         "Backend content systems for brands, research, jobs, and events",
         "Responsive frontend, technical SEO, deployment, and production stewardship",
       ],
+      statusCopy:
+        "Available in production today; the live experience reflects the system shown throughout this case study.",
       architecture: {
         headline: "A custom WordPress publishing architecture.",
         summary:
@@ -155,6 +160,8 @@ export const portfolioProjects = [
     url: "https://www.payitforwardcardshows.com/",
     domain: "payitforwardcardshows.com",
     platform: "Next.js · Vercel",
+    shortPlatform: "Next.js · Vercel",
+    externalLabel: "Live site",
     status: "Live",
     statusDetail: "Live and in production",
     summary:
@@ -181,6 +188,8 @@ export const portfolioProjects = [
         "Vercel Serverless Functions for backend and reservation workflows",
         "Neon Postgres data layer and Vercel deployment",
       ],
+      statusCopy:
+        "Available in production today; the live experience reflects the system shown throughout this case study.",
       architecture: {
         headline: "A custom event stack from page to database.",
         summary:
@@ -243,6 +252,8 @@ export const portfolioProjects = [
     url: "https://openworkspace.com/",
     domain: "openworkspace.com",
     platform: "Next.js/Vercel · AWS",
+    shortPlatform: "Next.js · AWS",
+    externalLabel: "Live site",
     status: "Live",
     statusDetail: "Live and in production",
     summary: "A cross-platform desktop automation product backed by a purpose-built AWS service.",
@@ -267,6 +278,8 @@ export const portfolioProjects = [
         "AWS EC2 application hosting and AWS RDS integration",
         "Request handling for Windows and macOS desktop clients",
       ],
+      statusCopy:
+        "Available in production today; the live experience reflects the system shown throughout this case study.",
       architecture: {
         headline: "A web-to-desktop product architecture.",
         summary:
@@ -329,6 +342,8 @@ export const portfolioProjects = [
     url: "https://provepharm.vercel.app/",
     domain: "provepharm.vercel.app",
     platform: "Next.js · Faust.js · Headless WordPress",
+    shortPlatform: "Next.js · Faust",
+    externalLabel: "View microsite",
     status: "Previously used",
     statusDetail: "Used by Provepharm for a period of time",
     summary: "A pharmaceutical microsite built on a headless WordPress publishing stack.",
@@ -354,6 +369,8 @@ export const portfolioProjects = [
         "WordPress editorial backend hosted on WP Engine",
         "Reusable views for corporate, product, news, press-release, and event content",
       ],
+      statusCopy:
+        "The deployed microsite remains available as a reference for the implementation Provepharm used.",
       architecture: {
         headline: "A decoupled frontend and publishing architecture.",
         summary:
@@ -405,6 +422,117 @@ export const portfolioProjects = [
           caption:
             "WordPress-managed announcements flowed into a focused archive on the decoupled frontend.",
           alt: "Provepharm press releases archive with a Bludigo FDA approval announcement",
+        },
+      ],
+    },
+  },
+  {
+    number: "05",
+    slug: "anne-newgarden",
+    title: "Anne Newgarden",
+    url: "https://annenewgarden.vercel.app/",
+    domain: "annenewgarden.vercel.app",
+    platform: "Next.js 16 · Static export · Vercel",
+    shortPlatform: "Next.js · Static",
+    externalLabel: "View redesign",
+    status: "Redesign preview",
+    statusDetail:
+      "The redesign is deployed on Vercel; the original WordPress site remains on annenewgarden.com",
+    summary: "A legacy author site rebuilt as a static-first editorial platform.",
+    seoDescription:
+      "Anne Newgarden case study: an author website redesigned and rebuilt with Next.js, React, TypeScript, static editorial content, and Vercel.",
+    description:
+      "I redesigned and rebuilt Anne Newgarden’s author site, migrating books, essays, news, events, and resources into a versioned Next.js experience with a clearer editorial hierarchy and a static-first delivery model.",
+    services: ["Product design", "Next.js", "Content migration", "Static architecture"],
+    image: "/images/anne-newgarden-project.webp",
+    imageAlt:
+      "Rebuilt Anne Newgarden homepage with an editorial lavender hero, large author name, portrait, book and Soul Salon actions, and simplified navigation",
+    caseStudy: {
+      role: "Product design, content migration & development",
+      system: "Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Vercel",
+      headline: "From a legacy publishing template to a distinctive author platform.",
+      overview:
+        "The existing WordPress site held years of books, essays, appearances, and community material. I turned that body of work into a focused editorial experience built around Anne’s voice, current books, and Soul Salon.",
+      detail:
+        "The rebuild moves public content into statically generated Next.js routes, preserves reviewed archives and legacy paths, and delivers the site without a runtime CMS or database.",
+      contributions: [
+        "Editorial product direction, information architecture, and responsive visual system",
+        "Migration of books, long-form articles, news, events, and directory content",
+        "Next.js App Router architecture with version-controlled static publishing",
+        "Metadata, structured data, legacy redirects, accessibility testing, and Vercel delivery",
+      ],
+      statusCopy:
+        "The redesigned experience is publicly available on Vercel while annenewgarden.com continues to serve the original WordPress site pending domain cutover.",
+      comparison: {
+        headline: "Same body of work. A clearer way into it.",
+        summary:
+          "The redesign replaces a dense, theme-led WordPress homepage with a deliberate editorial hierarchy for the author, books, writing archive, and Soul Salon. Drag the divider to compare the same opening viewport.",
+        before: {
+          image: "/images/anne-newgarden-before.webp",
+          label: "Before · WordPress",
+          alt: "Original Anne Newgarden WordPress homepage with a purple masthead, book promotion, Soul Salon panel, and multi-column layout",
+          url: "https://annenewgarden.com/",
+          technology: "Apache · WordPress · Theme and plugin stack",
+        },
+        after: {
+          image: "/images/anne-newgarden-project.webp",
+          label: "After · Next.js",
+          alt: "Rebuilt Anne Newgarden homepage with an editorial lavender hero, large author name, portrait, book and Soul Salon actions, and simplified navigation",
+          url: "https://annenewgarden.vercel.app/",
+          technology: "Next.js 16 · React 19 · Static Vercel export",
+        },
+      },
+      architecture: {
+        headline: "A static editorial system with no runtime CMS.",
+        summary:
+          "The rebuild turns migrated publishing content into pre-generated pages, keeping the public experience fast, portable, and easy to reason about while preserving the depth of the archive.",
+        items: [
+          {
+            label: "Experience",
+            value: "Next.js 16 App Router, React 19, TypeScript, and Tailwind CSS 4",
+          },
+          {
+            label: "Publishing",
+            value: "Version-controlled books, blog, news, events, and directory content",
+          },
+          {
+            label: "Delivery",
+            value: "Static Vercel export with metadata, sitemap, robots, redirects, and headers",
+          },
+          {
+            label: "Quality",
+            value: "Biome, Vitest, Playwright, and Axe accessibility checks",
+          },
+        ],
+      } satisfies ProjectArchitecture,
+      screens: [
+        {
+          image: "/images/anne-newgarden-project.webp",
+          title: "Editorial homepage",
+          caption:
+            "A simplified opening frame gives Anne’s voice, portrait, books, and Soul Salon a clear hierarchy.",
+          alt: "Anne Newgarden redesign homepage with author portrait, editorial headline, and book and Soul Salon actions",
+        },
+        {
+          image: "/images/anne-newgarden-books.webp",
+          title: "Books",
+          caption:
+            "A visual books destination separates the catalog from the author story and gives each title room to lead.",
+          alt: "Anne Newgarden books page with an editorial headline and two book covers",
+        },
+        {
+          image: "/images/anne-newgarden-directory.webp",
+          title: "Resource directory",
+          caption:
+            "Migrated recommendations become a concise, scannable directory instead of another long-form page.",
+          alt: "Anne Newgarden directory page listing practitioners, specialties, and websites in a structured table",
+        },
+        {
+          image: "/images/anne-newgarden-soul-salon.webp",
+          title: "Soul Salon",
+          caption:
+            "The recurring gathering receives its own focused story, invitation, and visual identity.",
+          alt: "Anne Newgarden Soul Salon page with an editorial introduction and online gathering artwork",
         },
       ],
     },
