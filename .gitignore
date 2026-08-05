@@ -1,0 +1,35 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# local high-resolution generated image sources
+/source-assets/
+
+# local browser verification artifacts
+/artifacts/
+/output/
+.codex-dev.*.log
+
+# local environment files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# logs and OS files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
