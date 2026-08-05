@@ -21,7 +21,7 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-end px-5 pb-8 pt-32 md:px-8 md:pb-10">
           <p className="hero-kicker mb-5 text-[0.72rem] font-semibold tracking-[0.13em] text-stone-300 uppercase md:mb-7">
-            Designer &amp; developer · Phoenix
+            Product · Full-stack · AI &amp; cloud
           </p>
           <h1 className="hero-title home-hero-title">
             <span className="block">Carter</span>
@@ -30,7 +30,8 @@ export default function Home() {
 
           <div className="hero-bottom mt-9 grid gap-6 border-t border-white/25 pt-5 text-stone-100 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <p className="max-w-lg text-[0.95rem] leading-6 text-stone-300 md:text-base">
-              I design and build useful digital products, from first screen to production.
+              I design and build complete digital products—from interface and CMS to backend, cloud
+              architecture, and AI automation.
             </p>
             <ArrowLink href="#selected-work" inverse>
               View the work
@@ -41,10 +42,10 @@ export default function Home() {
 
       <section
         id="selected-work"
-        className="sunset-surface bg-[var(--dusk)] px-5 py-20 text-[var(--sand)] md:px-8 md:py-28"
+        className="sunset-surface bg-[var(--dusk)] px-5 py-16 text-[var(--sand)] md:px-8 md:py-20"
       >
         <div className="mx-auto max-w-[1500px]">
-          <Reveal className="mb-12 grid gap-7 md:mb-16 md:grid-cols-[0.55fr_1.45fr]">
+          <Reveal className="mb-10 grid gap-5 md:mb-14 md:grid-cols-[0.55fr_1.45fr]">
             <p className="section-label">Selected work</p>
             <div>
               <h2 className="section-title">Built for real work.</h2>
@@ -115,7 +116,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="sunset-band relative overflow-hidden bg-[var(--sunset-deep)] px-5 py-20 text-[var(--sand)] md:px-8 md:py-28">
+      <section className="sunset-band relative overflow-hidden bg-[var(--sunset-deep)] px-5 py-16 text-[var(--sand)] md:px-8 md:py-20">
         <div className="desert-orbit" aria-hidden="true" />
         <div className="relative z-10 mx-auto max-w-[1500px]">
           <Reveal className="grid gap-7 md:grid-cols-[0.8fr_1.2fr] md:items-end">
@@ -165,8 +166,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid bg-[var(--ink)] text-stone-100 md:min-h-[70svh] md:grid-cols-2">
-        <div className="relative min-h-[48svh] overflow-hidden md:min-h-full">
+      <section className="grid bg-[var(--ink)] text-stone-100 md:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative min-h-[22rem] overflow-hidden md:min-h-[28rem]">
           <Image
             src="/images/phoenix-night.webp"
             alt="Phoenix city lights and the Sonoran Desert at night"
@@ -177,7 +178,7 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
         </div>
-        <div className="flex items-center px-5 py-20 md:px-16 md:py-24">
+        <div className="flex items-center px-5 py-16 md:px-14 md:py-16">
           <Reveal>
             <p className="section-label">Experience</p>
             <h2 className="section-title mt-7 max-w-3xl">Teaching made the work sharper.</h2>
@@ -197,7 +198,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[var(--ink)] px-5 py-20 text-stone-100 md:px-8 md:py-28">
+      <section className="bg-[var(--ink)] px-5 py-16 text-stone-100 md:px-8 md:py-20">
         <div className="mx-auto max-w-[1500px]">
           <Reveal className="grid gap-10 md:grid-cols-[1fr_auto] md:items-end">
             <div>

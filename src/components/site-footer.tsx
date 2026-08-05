@@ -7,7 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1500px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <p className="mb-2 font-[family-name:var(--font-display)] text-3xl">{site.name}</p>
-          <p className="text-sm text-stone-400">
+          <p className="max-w-2xl text-sm leading-6 text-stone-400">
             {site.role} · {site.location}
           </p>
         </div>
@@ -27,9 +27,17 @@ export function SiteFooter() {
           <a className="footer-link" href={`mailto:${site.email}`}>
             Email
           </a>
+          <a className="footer-link" href={site.linkedinUrl} target="_blank" rel="noreferrer">
+            LinkedIn
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          <a className="footer-link" href={site.upworkUrl} target="_blank" rel="noreferrer">
+            Upwork
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
         </div>
       </div>
-      <div className="mx-auto mt-14 flex max-w-[1500px] justify-between border-t border-white/10 pt-5 text-[0.68rem] tracking-[0.11em] text-stone-500 uppercase">
+      <div className="mx-auto mt-12 flex max-w-[1500px] justify-between border-t border-white/10 pt-5 text-xs tracking-[0.09em] text-stone-400 uppercase">
         <span>© {new Date().getFullYear()}</span>
         <span>Made in the desert</span>
       </div>

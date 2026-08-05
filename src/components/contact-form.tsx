@@ -137,15 +137,17 @@ export function ContactForm() {
         <select
           id="projectType"
           name="projectType"
-          defaultValue="A new website"
+          defaultValue="A new website or product"
           aria-invalid={fieldErrors.projectType ? true : undefined}
           aria-describedby={fieldErrors.projectType ? "project-type-error" : undefined}
           onChange={() => clearFieldError("projectType")}
         >
-          <option>A new website</option>
-          <option>A product experience</option>
-          <option>A visual refresh</option>
-          <option>Something else</option>
+          <option>A new website or product</option>
+          <option>An existing site or product</option>
+          <option>WordPress or custom CMS</option>
+          <option>AI automation</option>
+          <option>Backend or cloud architecture</option>
+          <option>Not sure yet</option>
         </select>
         {fieldErrors.projectType ? (
           <p className="field-error" id="project-type-error">

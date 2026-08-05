@@ -83,10 +83,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         name: site.name,
         url: `${siteUrl}/`,
         image: getAbsoluteUrl(site.personImage),
-        jobTitle: "Web designer and full-stack developer",
+        jobTitle: site.role,
         description: site.description,
         email: site.email,
-        sameAs: [site.upworkUrl],
+        sameAs: [site.linkedinUrl, site.upworkUrl],
         homeLocation: {
           "@type": "Place",
           name: site.location,
@@ -143,8 +143,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-scroll-behavior="smooth">
       <body className={`${manrope.variable} ${instrumentSerif.variable}`}>
         <JsonLd id="site-structured-data" data={structuredData} />
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
         <SiteHeader />
-        {children}
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
         <SiteFooter />
       </body>
     </html>

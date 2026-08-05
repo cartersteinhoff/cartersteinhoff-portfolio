@@ -2,15 +2,17 @@ export const site = {
   name: "Carter Steinhoff",
   shortName: "CS",
   defaultUrl: "https://cartersteinhoff.co",
-  role: "Designer & developer",
-  seoTitle: "Phoenix Web Designer & Full-Stack Developer",
+  role: "Product designer & full-stack developer · AI automation · Cloud architecture",
+  seoTitle: "Product Designer, Full-Stack Developer & AI Automation Expert",
   location: "Phoenix, Arizona",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "cartersteinhoff@gmail.com",
   upworkUrl: "https://www.upwork.com/freelancers/cartersteinhoff",
+  linkedinUrl: "https://www.linkedin.com/in/carter-steinhoff",
   description:
-    "Carter Steinhoff is a Phoenix web designer and full-stack developer building Next.js, WordPress, custom CMS, AI automation, and cloud products.",
+    "Carter Steinhoff is a Phoenix product designer and full-stack developer specializing in AI automation, cloud architecture, Next.js, and custom WordPress and CMS platforms.",
   personImage: "/images/carter-phoenix-portrait-v2.webp",
-  socialImageAlt: "Carter Steinhoff, Phoenix web designer and full-stack developer",
+  socialImageAlt:
+    "Carter Steinhoff, Phoenix product designer, full-stack developer, and AI automation expert",
   serviceTypes: [
     "Website design",
     "Full-stack development",

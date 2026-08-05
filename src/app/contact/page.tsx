@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal } from "@/components/reveal";
 import { site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -22,7 +21,7 @@ export const metadata = createPageMetadata({
 export default function ContactPage() {
   return (
     <main className="contact-sunset min-h-screen bg-[var(--sunset-deep)] text-[var(--sand)]">
-      <section className="contact-hero page-hero">
+      <section className="contact-page-shell">
         <Image
           src="/images/phoenix-night.webp"
           alt=""
@@ -30,67 +29,45 @@ export default function ContactPage() {
           preload
           unoptimized
           sizes="100vw"
-          className="contact-hero-media object-cover"
+          className="contact-page-media object-cover"
         />
-        <span className="contact-hero-scrim" aria-hidden="true" />
-        <div className="contact-hero-inner page-hero-inner">
-          <p className="page-kicker">Contact · Start anywhere</p>
-          <div className="contact-hero-stage">
-            <div className="contact-hero-copy">
-              <h1 className="contact-hero-title page-title max-w-4xl">
+        <span className="contact-page-scrim" aria-hidden="true" />
+        <div className="contact-page-inner">
+          <header className="contact-page-copy">
+            <p className="page-kicker">Contact · Start anywhere</p>
+            <div>
+              <h1 className="contact-page-title page-title">
                 Let’s make something
                 <span className="italic text-[var(--accent)]"> good.</span>
               </h1>
-              <div className="contact-hero-intro mt-8 border-t border-white/20 pt-6">
-                <p className="section-lead">
-                  Tell me what you’re thinking—even if it is still rough. I’ll read it, ask the
-                  useful questions, and reply directly.
-                </p>
-                <a
-                  className="contact-email-link mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent)] underline decoration-white/20 underline-offset-8 hover:decoration-[var(--accent)]"
-                  href={`mailto:${site.email}`}
-                >
-                  {site.email}
-                </a>
-              </div>
+              <p className="contact-page-intro">
+                Tell me what you’re thinking—even if it is still rough. I’ll ask the useful
+                questions and reply directly.
+              </p>
             </div>
-            <aside className="contact-signal" aria-label="Working details">
-              <span className="contact-signal-line" aria-hidden="true">
-                <i />
-              </span>
-              <p className="contact-signal-title">From first thought to production.</p>
-              <dl className="contact-signal-details">
-                <div>
-                  <dt>Range</dt>
-                  <dd>Interface → infrastructure</dd>
-                </div>
-                <div>
-                  <dt>Based</dt>
-                  <dd>Phoenix · MST</dd>
-                </div>
-                <div>
-                  <dt>Reply</dt>
-                  <dd>Direct from Carter</dd>
-                </div>
-              </dl>
-            </aside>
-          </div>
-        </div>
-      </section>
+            <div className="contact-page-details">
+              <a className="contact-email-link" href={`mailto:${site.email}`}>
+                {site.email}
+              </a>
+              <span>Phoenix · MST</span>
+              <nav aria-label="Professional profiles">
+                <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
+                  LinkedIn<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+                <a href={site.upworkUrl} target="_blank" rel="noreferrer">
+                  Upwork<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </nav>
+            </div>
+          </header>
 
-      <section className="contact-form-section border-t border-white/15 bg-[var(--ink)] px-5 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-[1500px] gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-          <Reveal className="contact-form-intro">
-            <p className="section-label">Project brief</p>
-            <h2 className="contact-form-title section-title mt-8">Tell me what you’re making.</h2>
-            <p className="section-lead mt-7 max-w-md">
-              Name the kind of project and add the context you already have. Your message goes
-              directly to my inbox, and I’ll reply by email.
-            </p>
-          </Reveal>
-          <Reveal delay={120}>
+          <div className="contact-page-form">
+            <div className="contact-form-heading">
+              <p className="section-label">Project brief</p>
+              <h2>Tell me what you’re making.</h2>
+            </div>
             <ContactForm />
-          </Reveal>
+          </div>
         </div>
       </section>
     </main>

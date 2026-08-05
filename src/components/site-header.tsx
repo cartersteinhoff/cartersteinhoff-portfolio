@@ -11,6 +11,10 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+function isActivePath(pathname: string, href: string) {
+  return pathname === href || (href === "/portfolio" && pathname.startsWith("/portfolio/"));
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -145,16 +149,20 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 rounded-full border border-white/15 bg-black/20 px-6 py-3 text-[0.66rem] font-semibold tracking-[0.16em] text-stone-100 uppercase backdrop-blur-xl md:flex lg:gap-8 lg:tracking-[0.18em]">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              aria-current={pathname === link.href ? "page" : undefined}
-              className={`nav-link ${pathname === link.href ? "is-active" : ""}`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {links.map((link) => {
+            const isActive = isActivePath(pathname, link.href);
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`nav-link ${isActive ? "is-active" : ""}`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <button
@@ -188,21 +196,27 @@ export function SiteHeader() {
       >
         <nav className="flex h-full flex-col justify-end gap-2 px-6 pb-12">
           <p className="mb-6 text-[0.66rem] tracking-[0.2em] text-stone-400 uppercase">Navigate</p>
-          {links.map((link, index) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              tabIndex={isOpen ? 0 : -1}
-              aria-current={pathname === link.href ? "page" : undefined}
-              onClick={() => setIsOpen(false)}
-              className="flex items-end justify-between border-t border-white/15 py-4 font-[family-name:var(--font-display)] text-[clamp(2.9rem,15vw,5rem)] leading-none text-stone-50"
-            >
-              {link.label}
-              <span className="pb-1 font-sans text-[0.62rem] tracking-[0.18em] text-[var(--accent)]">
-                0{index + 1}
-              </span>
-            </Link>
-          ))}
+          {links.map((link, index) => {
+            const isActive = isActivePath(pathname, link.href);
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                tabIndex={isOpen ? 0 : -1}
+                aria-current={isActive ? "page" : undefined}
+                onClick={() => setIsOpen(false)}
+                className={`mobile-nav-link flex items-end justify-between border-t border-white/15 py-4 font-[family-name:var(--font-display)] text-[clamp(2.9rem,15vw,5rem)] leading-none text-stone-50 ${
+                  isActive ? "is-active" : ""
+                }`}
+              >
+                {link.label}
+                <span className="pb-1 font-sans text-[0.62rem] tracking-[0.18em] text-[var(--accent)]">
+                  0{index + 1}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </header>

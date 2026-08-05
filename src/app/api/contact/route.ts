@@ -6,10 +6,12 @@ export const runtime = "nodejs";
 
 const MAX_BODY_BYTES = 12_000;
 const PROJECT_TYPES = [
-  "A new website",
-  "A product experience",
-  "A visual refresh",
-  "Something else",
+  "A new website or product",
+  "An existing site or product",
+  "WordPress or custom CMS",
+  "AI automation",
+  "Backend or cloud architecture",
+  "Not sure yet",
 ] as const;
 
 type ProjectType = (typeof PROJECT_TYPES)[number];

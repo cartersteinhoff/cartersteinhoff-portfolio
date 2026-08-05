@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
 import { Reveal } from "@/components/reveal";
+import { portfolioProjects } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
 const description =
-  "Website design, Next.js and WordPress development, custom CMS systems, AI automation, and AWS, Azure, GCP, and Vercel delivery.";
+  "Product design, full-stack and CMS development, AI automation, cloud architecture, and delivery across AWS, Azure, GCP, and Vercel.";
 
 export const metadata = createPageMetadata({
   title: "Services",
@@ -17,204 +19,187 @@ export const metadata = createPageMetadata({
   },
 });
 
-const services = [
+type ProjectSlug = (typeof portfolioProjects)[number]["slug"];
+
+type ServiceGroup = {
+  readonly number: string;
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly capabilities: readonly string[];
+  readonly projectSlugs: readonly ProjectSlug[];
+};
+
+const serviceGroups = [
   {
     number: "01",
-    title: "Web strategy & design",
+    id: "product-design-frontend",
+    title: "Product design & frontend",
     description:
-      "Turn a rough idea or an aging experience into a clear product direction, visual system, and responsive interface.",
+      "Shape the product before building it—positioning, user flows, visual direction, and a responsive interface that makes the experience clear from the first screen.",
     capabilities: [
-      "Discovery",
+      "Product strategy",
       "UX architecture",
-      "Website design",
-      "Product design",
+      "Interface design",
       "Design systems",
-      "Responsive prototypes",
+      "Next.js & React",
+      "Accessibility & performance",
     ],
+    projectSlugs: ["openworkspace", "provepharm"],
   },
   {
     number: "02",
-    title: "Full-stack development",
+    id: "full-stack-cms",
+    title: "Full-stack platforms & CMS",
     description:
-      "Build fast, maintainable web products with a frontend people enjoy using and a backend that supports the real workflow.",
+      "Build the application and the operating surface behind it: APIs, data, custom publishing workflows, integrations, and a deployment path that stays maintainable.",
     capabilities: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "APIs",
-      "Databases",
-      "Authentication",
-      "Payments & integrations",
+      "TypeScript & APIs",
+      "Postgres & data modeling",
+      "Custom WordPress plugins",
+      "Headless & custom CMS",
+      "Authentication & payments",
+      "Technical SEO & stewardship",
     ],
+    projectSlugs: ["retailboss", "pay-it-forward-card-shows"],
   },
   {
     number: "03",
-    title: "CMS development",
+    id: "ai-cloud",
+    title: "AI automation & cloud delivery",
     description:
-      "Create publishing systems around the people who use them, from a tailored editorial workflow to custom business functionality.",
-    capabilities: [
-      "WordPress",
-      "Custom themes",
-      "Custom plugins",
-      "Headless CMS",
-      "Content modeling",
-      "Editorial workflows",
-      "Migrations",
-    ],
-  },
-  {
-    number: "04",
-    title: "AI automation",
-    description:
-      "Connect models, tools, and human review into useful workflows that reduce repetitive work without hiding how the system operates.",
+      "Connect models, tools, APIs, and human review into useful workflows, then deliver the surrounding system with clear infrastructure, monitoring, and handoff.",
     capabilities: [
       "Agent workflows",
       "Process automation",
-      "Content pipelines",
-      "Data enrichment",
       "API integrations",
-      "Human review",
-      "Monitoring",
+      "AWS, Azure & GCP",
+      "Vercel & serverless",
+      "CI/CD & observability",
     ],
+    projectSlugs: ["openworkspace", "pay-it-forward-card-shows"],
   },
-  {
-    number: "05",
-    title: "Cloud & DevOps",
-    description:
-      "Take a product from local development to a dependable production environment with the right platform, deployment, and visibility.",
-    capabilities: [
-      "AWS",
-      "Microsoft Azure",
-      "Google Cloud",
-      "Vercel",
-      "CI/CD",
-      "Environment strategy",
-      "Observability",
-    ],
-  },
-  {
-    number: "06",
-    title: "Performance & stewardship",
-    description:
-      "Keep the experience fast, findable, accessible, secure, and maintainable after the first launch.",
-    capabilities: [
-      "Accessibility",
-      "Performance",
-      "Technical SEO",
-      "Analytics",
-      "Security hardening",
-      "Maintenance",
-      "Documentation",
-    ],
-  },
-] as const;
+] as const satisfies readonly ServiceGroup[];
 
 export default function ServicesPage() {
   return (
-    <main className="bg-[var(--dusk)] text-[var(--sand)]">
-      <section className="services-hero page-hero">
-        <div className="page-hero-inner">
-          <p className="page-kicker">Services · Idea to infrastructure</p>
-          <div className="services-hero-stage">
-            <div className="services-hero-copy">
-              <h1 className="services-hero-title page-title max-w-6xl">
-                <span className="block">Design it. Build it.</span>
-                <span className="italic text-[var(--accent)]">Make it useful.</span>
-              </h1>
-              <p className="services-intro section-lead mt-8">
-                I work across the whole digital product: the idea, interface, code, content system,
-                integrations, infrastructure, and handoff.
-              </p>
-            </div>
-            <div className="services-system-map" aria-hidden="true">
-              <span className="services-system-ring services-system-ring-outer" />
-              <span className="services-system-ring services-system-ring-inner" />
-              <span className="services-system-axis services-system-axis-horizontal" />
-              <span className="services-system-axis services-system-axis-vertical" />
-              <span className="services-system-core">
-                <strong>One system</strong>
-                <small>idea → live product</small>
-              </span>
-              <span className="services-system-node services-system-node-strategy">Strategy</span>
-              <span className="services-system-node services-system-node-design">Design</span>
-              <span className="services-system-node services-system-node-build">Build</span>
-              <span className="services-system-node services-system-node-ai">AI</span>
-              <span className="services-system-node services-system-node-cloud">Cloud</span>
-              <span className="services-system-node services-system-node-cms">CMS</span>
+    <main className="services-page bg-[var(--dusk)] text-[var(--sand)]">
+      <section className="services-compact-hero relative overflow-hidden border-b border-white/15 px-5 pt-28 pb-12 md:px-8 md:pt-32 md:pb-16 lg:pt-36">
+        <div className="services-compact-hero-inner mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.65fr)] lg:items-end lg:gap-16">
+          <div className="services-compact-hero-heading">
+            <p className="page-kicker">Services · Product to production</p>
+            <h1 className="services-compact-title mt-8 max-w-5xl font-[family-name:var(--font-display)] text-[clamp(3.25rem,7.4vw,7.25rem)] leading-[0.88] font-normal tracking-[-0.042em] text-balance">
+              <span className="block">Ideas into</span>
+              <span className="italic text-[var(--accent)]">working systems.</span>
+            </h1>
+          </div>
+
+          <div className="services-compact-hero-copy border-t border-white/20 pt-6">
+            <p className="section-lead">
+              I design the experience, build the full stack, and carry the product through
+              automation, cloud architecture, launch, and stewardship.
+            </p>
+            <p className="services-hero-evidence mt-5 max-w-xl text-sm leading-7 text-[var(--muted-soft)]">
+              Selected work includes custom WordPress plugins, Vercel and Neon backends, and a
+              Fastify service running on AWS EC2 with RDS.
+            </p>
+            <div className="mt-7">
+              <ArrowLink href="/contact">Start a project</ArrowLink>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/15">
+      <div id="services" className="services-disciplines">
         <div className="mx-auto max-w-[1500px] px-5 md:px-8">
-          {services.map((service) => (
-            <Reveal key={service.number} className="service-entry">
-              <span className="service-number">{service.number}</span>
-              <h2 className="service-title">{service.title}</h2>
-              <div>
-                <p className="service-description section-lead">{service.description}</p>
-                <ul className="service-capability-list mt-9">
-                  {service.capabilities.map((capability) => (
-                    <li key={capability}>{capability}</li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
+          {serviceGroups.map((service) => (
+            <section
+              key={service.number}
+              id={service.id}
+              className="services-discipline scroll-mt-24"
+              aria-labelledby={`${service.id}-title`}
+            >
+              <Reveal className="service-entry services-discipline-layout">
+                <span className="service-number" aria-hidden="true">
+                  {service.number}
+                </span>
+                <h2 id={`${service.id}-title`} className="service-title services-discipline-title">
+                  {service.title}
+                </h2>
+                <div className="services-discipline-detail">
+                  <p className="service-description section-lead">{service.description}</p>
+                  <ul className="service-capability-list services-discipline-capabilities mt-8">
+                    {service.capabilities.map((capability) => (
+                      <li key={capability}>{capability}</li>
+                    ))}
+                  </ul>
+
+                  <aside
+                    className="services-related-work mt-9"
+                    aria-label={`Related ${service.title} case studies`}
+                  >
+                    <p className="services-related-work-label text-xs font-bold tracking-[0.14em] text-[var(--muted-soft)] uppercase">
+                      Related work
+                    </p>
+                    <ul className="services-proof-list mt-3 border-t border-white/15">
+                      {service.projectSlugs.map((slug) => {
+                        const project = portfolioProjects.find((item) => item.slug === slug);
+
+                        if (!project) return null;
+
+                        return (
+                          <li key={project.slug} className="services-proof-item">
+                            <Link
+                              className="services-proof-link group grid min-h-20 gap-3 border-b border-white/15 py-4 transition-colors hover:text-[var(--accent)] sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-6"
+                              href={`/portfolio/${project.slug}`}
+                              aria-label={`View the ${project.title} case study`}
+                            >
+                              <span className="services-proof-copy">
+                                <strong className="block text-base font-semibold">
+                                  {project.title}
+                                </strong>
+                                <span className="mt-1 block max-w-xl text-sm leading-6 text-[var(--muted)]">
+                                  {project.summary}
+                                </span>
+                              </span>
+                              <span className="services-proof-platform flex items-center gap-3 text-xs font-semibold tracking-[0.08em] text-[var(--muted-soft)] uppercase">
+                                {project.platform}
+                                <span
+                                  className="transition-transform group-hover:translate-x-1"
+                                  aria-hidden="true"
+                                >
+                                  →
+                                </span>
+                              </span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </aside>
+                </div>
+              </Reveal>
+            </section>
           ))}
         </div>
-      </section>
+      </div>
 
-      <section className="sunset-band overflow-hidden bg-[var(--sunset-deep)] px-5 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="services-platform-intro grid gap-10 lg:grid-cols-[0.65fr_1.35fr]">
-            <p className="section-label">Platforms</p>
-            <div>
-              <h2 className="services-platform-heading section-title max-w-5xl">
-                The right cloud,
-                <span className="italic text-[var(--accent)]"> not more cloud.</span>
-              </h2>
-              <p className="section-lead mt-8 lg:ml-auto">
-                I work across the major platforms and choose around the product’s needs—then leave a
-                deployment path the next person can understand.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal className="platform-rail mt-14 md:mt-16">
-            {[
-              ["AWS", "Amazon Web Services"],
-              ["Azure", "Microsoft cloud"],
-              ["GCP", "Google Cloud"],
-              ["Vercel", "Frontend cloud"],
-            ].map(([name, detail]) => (
-              <div key={name}>
-                <strong>{name}</strong>
-                <span>{detail}</span>
-              </div>
-            ))}
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="bg-[var(--ink)] px-5 py-20 md:px-8 md:py-28">
-        <Reveal className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
-          <div>
+      <section className="services-credibility-strip border-y border-white/15 bg-[var(--ink)] px-5 py-10 md:px-8 md:py-12">
+        <Reveal className="services-credibility-inner mx-auto grid max-w-[1500px] gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.25fr)_auto] md:items-center md:gap-10">
+          <div className="services-credibility-heading">
             <p className="section-label">Teaching experience</p>
-            <p className="section-lead mt-7 max-w-sm">
-              I served as a web development instructor at Nucamp, helping new developers turn
-              technical ideas into practical, working skills.
-            </p>
-          </div>
-          <div>
-            <h2 className="services-teaching-heading section-title max-w-5xl">
-              Good systems should be
-              <span className="italic text-[var(--accent)]"> explainable.</span>
+            <h2 className="mt-4 max-w-md text-2xl leading-tight font-medium text-balance md:text-3xl">
+              Former web development instructor at Nucamp.
             </h2>
-            <div className="mt-10 flex justify-end">
-              <ArrowLink href="/contact" inverse>
-                Talk about a project
-              </ArrowLink>
-            </div>
+          </div>
+          <p className="services-credibility-copy max-w-2xl text-base leading-7 text-[var(--muted)]">
+            Teaching sharpened how I explain architecture, document decisions, and leave teams with
+            systems they can understand and extend.
+          </p>
+          <div className="services-credibility-cta md:justify-self-end">
+            <ArrowLink href="/contact" inverse>
+              Talk about a project
+            </ArrowLink>
           </div>
         </Reveal>
       </section>

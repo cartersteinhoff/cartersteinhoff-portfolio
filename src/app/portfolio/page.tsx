@@ -6,7 +6,7 @@ import { portfolioProjects, site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
 const description =
-  "Explore Carter Steinhoff's WordPress, Next.js, headless CMS, and cloud product case studies, including RetailBoss and OpenWorkspace.";
+  "Explore digital products Carter Steinhoff designed and built end to end across WordPress, Next.js, custom CMS, backend systems, and cloud architecture.";
 
 export const metadata = createPageMetadata({
   title: "Portfolio",
@@ -21,100 +21,64 @@ export const metadata = createPageMetadata({
 });
 
 export default function PortfolioPage() {
+  const featuredProject = portfolioProjects[0];
+  const secondaryProjects = portfolioProjects.slice(1);
+
   return (
-    <main className="bg-[var(--dusk)] text-[var(--sand)]">
-      <section className="portfolio-hero page-hero">
-        <div className="page-hero-inner">
-          <p className="page-kicker">Portfolio · Selected work</p>
-          <div className="portfolio-hero-stage">
-            <div className="portfolio-hero-copy">
-              <h1 className="portfolio-hero-title page-title">Work with a reason to exist.</h1>
-              <p className="portfolio-hero-lead section-lead mt-8">
-                Four platforms shaped through development: custom publishing systems, focused
-                products, and a headless pharmaceutical microsite.
+    <main className="portfolio-index bg-[var(--dusk)] text-[var(--sand)]">
+      <section className="portfolio-intro page-hero" aria-labelledby="portfolio-title">
+        <div className="portfolio-intro-inner page-hero-inner">
+          <p className="portfolio-intro-kicker page-kicker">Portfolio · Selected work</p>
+          <div className="portfolio-intro-grid">
+            <div className="portfolio-intro-copy">
+              <h1 id="portfolio-title" className="portfolio-intro-title page-title">
+                Selected products, built end to end.
+              </h1>
+              <p className="portfolio-intro-lead section-lead">
+                I turn product ideas into complete working systems—from interface and CMS to
+                backend, automation, and cloud infrastructure.
               </p>
-              <a
-                className="profile-link mt-7"
-                href={site.upworkUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>View my Upwork profile</span>
-                <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
+              <ArrowLink href="#selected-work">Explore the work</ArrowLink>
             </div>
-            <nav className="portfolio-hero-reel" aria-label="Selected project previews">
-              {portfolioProjects.slice(0, 3).map((project, index) => (
-                <Link
-                  key={project.slug}
-                  className={`portfolio-hero-shot portfolio-hero-shot-${index + 1}`}
-                  href={`/portfolio/${project.slug}`}
-                  aria-label={`View the ${project.title} case study`}
-                >
-                  <Image
-                    src={project.image}
-                    alt=""
-                    fill
-                    unoptimized
-                    sizes="(max-width: 767px) 72vw, 44vw"
-                    className="object-cover"
-                  />
-                  <span className="portfolio-hero-shot-scrim" aria-hidden="true" />
-                  <span className="portfolio-hero-shot-label">
-                    <span>{project.number}</span>
-                    <strong>{project.title}</strong>
-                  </span>
-                </Link>
-              ))}
-            </nav>
+
+            <div className="portfolio-intro-proof">
+              <p className="portfolio-intro-proof-label">Across the work</p>
+              <ul className="portfolio-intro-proof-list">
+                <li>Product design</li>
+                <li>Full-stack development</li>
+                <li>Custom CMS systems</li>
+                <li>AI automation</li>
+                <li>Cloud architecture</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="border-t border-white/15">
-        {portfolioProjects.map((project) => (
-          <article key={project.slug} className="portfolio-entry" data-project={project.slug}>
-            <div className="portfolio-entry-copy">
-              <div className="flex items-center justify-between gap-4">
-                <span className="text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--muted-soft)]">
-                  {project.number}
+      <section
+        id="selected-work"
+        className="portfolio-featured-section"
+        aria-labelledby="featured-project-title"
+      >
+        <div className="portfolio-featured-shell">
+          <article className="portfolio-featured" data-project={featuredProject.slug}>
+            <header className="portfolio-featured-header">
+              <div className="portfolio-featured-labels">
+                <span>{featuredProject.number} · Featured project</span>
+                <span>
+                  {featuredProject.status} · {featuredProject.platform}
                 </span>
-                <span className="text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--accent)] uppercase">
-                  {project.status} · {project.platform}
-                </span>
               </div>
-              <div>
-                <h2 className="portfolio-entry-title">{project.title}</h2>
-                <p className="portfolio-entry-summary mt-6 max-w-xl">{project.summary}</p>
-                <p className="portfolio-entry-description mt-5 max-w-lg text-base leading-7 text-stone-400">
-                  {project.description}
-                </p>
-              </div>
-              <div className="flex flex-col gap-8">
-                <ul className="portfolio-entry-services flex flex-wrap gap-x-5 gap-y-2 uppercase">
-                  {project.services.map((service) => (
-                    <li key={service}>{service}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
-                  <ArrowLink href={`/portfolio/${project.slug}`}>View case study</ArrowLink>
-                  <a
-                    className="inline-flex min-h-11 items-center text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--muted)] uppercase transition-colors hover:text-[var(--accent)]"
-                    href={project.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {project.status === "Live" ? "Live site" : "View microsite"} ↗
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </div>
-              </div>
-            </div>
+              <h2 id="featured-project-title" className="portfolio-featured-title">
+                {featuredProject.title}
+              </h2>
+              <p className="portfolio-featured-summary">{featuredProject.summary}</p>
+            </header>
+
             <Link
-              className="portfolio-entry-media group"
-              href={`/portfolio/${project.slug}`}
-              aria-label={`View the ${project.title} case study`}
+              className="portfolio-featured-media group"
+              href={`/portfolio/${featuredProject.slug}`}
+              aria-label={`View the ${featuredProject.title} case study`}
             >
               <span className="project-browser">
                 <span className="project-browser-bar">
@@ -123,32 +87,152 @@ export default function PortfolioPage() {
                     <i />
                     <i />
                   </span>
-                  <span>{project.domain}</span>
+                  <span>{featuredProject.domain}</span>
                   <span aria-hidden="true">↗</span>
                 </span>
                 <span className="project-browser-image">
                   <Image
-                    src={project.image}
-                    alt={project.imageAlt}
+                    src={featuredProject.image}
+                    alt={featuredProject.imageAlt}
                     fill
+                    preload
                     unoptimized
-                    sizes="(max-width: 1023px) 92vw, 56vw"
+                    sizes="(max-width: 767px) 100vw, (max-width: 1279px) 92vw, 82vw"
                     className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.018]"
                   />
                 </span>
               </span>
             </Link>
+
+            <div className="portfolio-featured-content">
+              <p className="portfolio-featured-description">{featuredProject.description}</p>
+              <div className="portfolio-featured-details">
+                <ul className="portfolio-featured-services" aria-label="Services provided">
+                  {featuredProject.services.map((service) => (
+                    <li key={service}>{service}</li>
+                  ))}
+                </ul>
+                <div className="portfolio-project-links">
+                  <ArrowLink href={`/portfolio/${featuredProject.slug}`}>View case study</ArrowLink>
+                  <a
+                    className="portfolio-live-link"
+                    href={featuredProject.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Live site ↗<span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </article>
-        ))}
+        </div>
       </section>
 
-      <section className="sunset-band bg-[var(--sunset-deep)] px-5 py-20 md:px-8 md:py-28">
-        <Reveal className="mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-          <h2 className="portfolio-cta-title section-title max-w-5xl">
-            Your project could be
-            <span className="italic"> next.</span>
-          </h2>
-          <ArrowLink href="/contact">Tell me about it</ArrowLink>
+      <section className="portfolio-secondary" aria-labelledby="more-work-title">
+        <div className="portfolio-secondary-inner">
+          <Reveal className="portfolio-secondary-header">
+            <p className="portfolio-secondary-kicker page-kicker">More selected work</p>
+            <h2 id="more-work-title" className="portfolio-secondary-title">
+              Different products. The same end-to-end ownership.
+            </h2>
+          </Reveal>
+
+          <Reveal className="portfolio-secondary-grid">
+            {secondaryProjects.map((project) => (
+              <article
+                key={project.slug}
+                className="portfolio-secondary-item"
+                data-project={project.slug}
+                aria-labelledby={`project-${project.slug}`}
+              >
+                <Link
+                  className="portfolio-secondary-media group"
+                  href={`/portfolio/${project.slug}`}
+                  aria-label={`View the ${project.title} case study`}
+                >
+                  <span className="project-browser">
+                    <span className="project-browser-bar">
+                      <span className="project-browser-dots" aria-hidden="true">
+                        <i />
+                        <i />
+                        <i />
+                      </span>
+                      <span>{project.domain}</span>
+                      <span aria-hidden="true">↗</span>
+                    </span>
+                    <span className="project-browser-image">
+                      <Image
+                        src={project.image}
+                        alt={project.imageAlt}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.018]"
+                      />
+                    </span>
+                  </span>
+                </Link>
+
+                <div className="portfolio-secondary-content">
+                  <div className="portfolio-secondary-meta">
+                    <span>{project.number}</span>
+                    <span>
+                      {project.status} · {project.platform}
+                    </span>
+                  </div>
+                  <h3 id={`project-${project.slug}`} className="portfolio-secondary-item-title">
+                    <Link href={`/portfolio/${project.slug}`}>{project.title}</Link>
+                  </h3>
+                  <p className="portfolio-secondary-summary">{project.summary}</p>
+                  <ul className="portfolio-secondary-services" aria-label="Services provided">
+                    {project.services.map((service) => (
+                      <li key={service}>{service}</li>
+                    ))}
+                  </ul>
+                  <div className="portfolio-project-links">
+                    <ArrowLink href={`/portfolio/${project.slug}`}>View case study</ArrowLink>
+                    <a
+                      className="portfolio-live-link"
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.status === "Live" ? "Live site" : "View microsite"} ↗
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="portfolio-final-cta sunset-band bg-[var(--sunset-deep)]">
+        <Reveal className="portfolio-final-cta-inner">
+          <div className="portfolio-final-cta-copy">
+            <p className="page-kicker">Have a product in mind?</p>
+            <h2 className="portfolio-cta-title section-title">
+              Let’s build the
+              <span className="italic"> next one.</span>
+            </h2>
+          </div>
+          <div className="portfolio-final-cta-actions">
+            <ArrowLink href="/contact">Tell me about it</ArrowLink>
+            <nav className="portfolio-profile-links" aria-label="Professional profiles">
+              <a className="profile-link" href={site.linkedinUrl} target="_blank" rel="noreferrer">
+                <span>LinkedIn</span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              <a className="profile-link" href={site.upworkUrl} target="_blank" rel="noreferrer">
+                <span>Hire through Upwork</span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </nav>
+          </div>
         </Reveal>
       </section>
     </main>

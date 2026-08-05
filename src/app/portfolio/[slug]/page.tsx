@@ -87,104 +87,107 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   return (
     <main className="case-study bg-[var(--dusk)] text-[var(--sand)]" data-project={project.slug}>
       <JsonLd id="case-study-structured-data" data={structuredData} />
-      <section className="case-hero px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32">
-        <div className="mx-auto max-w-[1500px]">
-          <Link className="case-back-link" href="/portfolio">
-            <span aria-hidden="true">←</span> All selected work
-          </Link>
-
-          <div className="case-hero-heading">
+      <section className="case-hero px-5 pb-12 pt-24 md:px-8 md:pb-16 md:pt-28">
+        <div className="case-hero-shell mx-auto max-w-[1500px]">
+          <div className="case-hero-topline">
+            <Link className="case-back-link" href="/portfolio">
+              <span aria-hidden="true">←</span> All selected work
+            </Link>
             <p className="page-kicker">Case study · {project.number}</p>
-            <div>
-              <h1 className="case-title">{project.title}</h1>
-              <p className="case-summary">{project.summary}</p>
-            </div>
           </div>
 
-          <dl className="case-facts">
-            <div>
-              <dt>Role</dt>
-              <dd>{project.caseStudy.role}</dd>
+          <div className="case-hero-layout">
+            <div className="case-hero-copy">
+              <h1 className="case-title">{project.title}</h1>
+              <p className="case-summary">{project.summary}</p>
+              <a className="case-hero-action" href={project.url} target="_blank" rel="noreferrer">
+                View {project.domain}
+                <span aria-hidden="true"> ↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </div>
-            <div>
-              <dt>System</dt>
-              <dd>{project.caseStudy.system}</dd>
+
+            <dl className="case-hero-facts">
+              <div>
+                <dt>Role</dt>
+                <dd>{project.caseStudy.role}</dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd>{project.caseStudy.system}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>{project.statusDetail}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div className="case-hero-proof">
+            <div className="case-browser">
+              <div className="project-browser-bar">
+                <span className="project-browser-dots" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span>{project.domain}</span>
+                <span aria-hidden="true">01</span>
+              </div>
+              <div className="case-browser-image">
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  fill
+                  preload
+                  unoptimized
+                  sizes="(max-width: 768px) 94vw, 92vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
-            <div>
-              <dt>Status</dt>
-              <dd>{project.statusDetail}</dd>
-            </div>
-            <div>
-              <dt>Website</dt>
-              <dd>
-                <a href={project.url} target="_blank" rel="noreferrer">
-                  {project.domain} ↗<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </dd>
-            </div>
-          </dl>
+          </div>
         </div>
       </section>
 
-      <section className="case-featured-media px-5 py-8 md:px-8 md:py-12">
-        <Reveal className="mx-auto max-w-[1500px]">
-          <div className="case-browser">
-            <div className="project-browser-bar">
-              <span className="project-browser-dots" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span>{project.domain}</span>
-              <span aria-hidden="true">01</span>
-            </div>
-            <div className="case-browser-image">
-              <Image
-                src={project.image}
-                alt={project.imageAlt}
-                fill
-                preload
-                unoptimized
-                sizes="(max-width: 768px) 94vw, 92vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="case-overview-section px-5 py-20 md:px-8 md:py-28">
+      <section className="case-brief-section px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-overview-heading">
-            <p className="section-label">The work</p>
+          <Reveal className="case-brief-heading">
+            <p className="section-label">Project brief</p>
             <h2>{project.caseStudy.headline}</h2>
           </Reveal>
 
-          <div className="case-overview-grid">
-            <Reveal className="case-narrative">
+          <div className="case-brief-grid">
+            <Reveal className="case-brief-copy">
               <p>{project.caseStudy.overview}</p>
               <p>{project.caseStudy.detail}</p>
-            </Reveal>
-
-            <Reveal className="case-contributions">
-              <p className="case-list-label">Selected contributions</p>
-              <ol>
-                {project.caseStudy.contributions.map((contribution, index) => (
-                  <li key={contribution}>
-                    <span>{String(index + 1).padStart(2, "0")}</span>
-                    <strong>{contribution}</strong>
-                  </li>
-                ))}
-              </ol>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section className="case-architecture-section px-5 py-20 md:px-8 md:py-28">
+      <section className="case-ownership-section px-5 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-[1500px]">
+          <Reveal className="case-ownership-heading">
+            <p className="section-label">What I owned</p>
+            <h2>The work behind the finished product.</h2>
+          </Reveal>
+
+          <div className="case-ownership-grid">
+            {project.caseStudy.contributions.map((contribution, index) => (
+              <Reveal className="case-ownership-item" delay={index * 60} key={contribution}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <p>{contribution}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="case-architecture-section px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
           <Reveal className="case-architecture-heading">
-            <p className="section-label">Backend & systems</p>
+            <p className="section-label">Architecture</p>
             <div>
               <h2>{project.caseStudy.architecture.headline}</h2>
               <p className="case-architecture-intro">{project.caseStudy.architecture.summary}</p>
@@ -202,15 +205,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-gallery-section px-5 py-20 md:px-8 md:py-28">
+      <section className="case-gallery-section px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
           <Reveal className="case-gallery-heading">
-            <p className="section-label">Important screens</p>
-            <h2>A platform is more than its homepage.</h2>
-            <p>
-              Real screens from the project show how the visual system carries into the parts people
-              actually use.
-            </p>
+            <p className="section-label">Selected screens</p>
+            <h2>{project.title}, beyond the opening screen.</h2>
           </Reveal>
 
           <div className="case-gallery">
@@ -256,9 +255,37 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-next-section px-5 py-20 md:px-8 md:py-24">
+      <section className="case-status-section px-5 py-16 md:px-8 md:py-20">
+        <div className="case-status-layout mx-auto max-w-[1500px]">
+          <Reveal className="case-status-copy">
+            <p className="section-label">Current status</p>
+            <h2>{project.statusDetail}</h2>
+          </Reveal>
+          <Reveal className="case-status-action">
+            <p>
+              {project.status === "Live"
+                ? "Available in production today; the live experience reflects the system shown throughout this case study."
+                : "The deployed microsite remains available as a reference for the implementation Provepharm used."}
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="case-cta-section px-5 py-16 md:px-8 md:py-24">
+        <Reveal className="case-cta-layout mx-auto max-w-[1500px]">
+          <div>
+            <p className="section-label">Have a similar project?</p>
+            <h2>Let’s design and build the system behind it.</h2>
+          </div>
+          <Link className="case-cta-link" href="/contact">
+            Discuss your project <span aria-hidden="true">↗</span>
+          </Link>
+        </Reveal>
+      </section>
+
+      <section className="case-next-section px-5 py-16 md:px-8 md:py-20">
         <div className="mx-auto max-w-[1500px]">
-          <p className="section-label">Next case study</p>
+          <h2 className="section-label">Next case study</h2>
           <Link className="case-next-link group" href={`/portfolio/${nextProject.slug}`}>
             <span>{nextProject.title}</span>
             <span className="case-next-arrow" aria-hidden="true">
