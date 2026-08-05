@@ -1732,11 +1732,45 @@ textarea:focus-visible {
   border-color: var(--accent);
 }
 
+.form-submit:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.form-submit:disabled:hover {
+  color: inherit;
+  background: transparent;
+  border-color: rgba(242, 236, 228, 0.75);
+}
+
+.contact-honeypot {
+  position: absolute;
+  left: -100vw;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.field-error {
+  margin: 0.5rem 0 0;
+  color: #ffb4a8;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
 .form-note {
   min-height: 1.5rem;
   color: var(--muted-soft);
   font-size: 0.82rem;
   line-height: 1.55;
+}
+
+.form-note[data-status="success"] {
+  color: var(--accent);
+}
+
+.form-note[data-status="error"] {
+  color: #ffb4a8;
 }
 
 .footer-link {

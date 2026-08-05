@@ -84,8 +84,8 @@ export default function ContactPage() {
             <p className="section-label">Project brief</p>
             <h2 className="contact-form-title section-title mt-8">Tell me what you’re making.</h2>
             <p className="section-lead mt-7 max-w-md">
-              Name the kind of project and add the context you already have. Submitting opens a
-              draft in your email app.
+              Name the kind of project and add the context you already have. Your message goes
+              directly to my inbox, and I’ll reply by email.
             </p>
           </Reveal>
           <Reveal delay={120}>

@@ -44,7 +44,7 @@ Run lint, typecheck, and build before publishing. For visible changes, also chec
 
 ## Contact behavior
 
-The current contact form deliberately composes a `mailto:` message and does not claim to store or send data. Do not change the confirmation copy to imply server delivery unless a real mail provider and verified success/error flow have been added. Configure the destination through `NEXT_PUBLIC_CONTACT_EMAIL`.
+The contact form posts JSON to `/api/contact`, verifies requests with BotID Basic, and sends through Resend without database persistence. Keep the API key and sender/recipient values server-only through `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL`. `NEXT_PUBLIC_CONTACT_EMAIL` controls the visible manual email fallback. Preserve truthful pending, success, and failure states, and never expose provider errors or secrets to the browser.
 
 ## Deployment
 
