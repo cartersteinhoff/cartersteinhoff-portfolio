@@ -26,7 +26,7 @@ npm run build
 - Identity, email, location, and portfolio projects live in `src/data/site.ts`.
 - Page copy lives in each route under `src/app`.
 - Final project images belong in `public/images` and should be served through `next/image`.
-- The contact form currently opens the visitor's email app. Set `NEXT_PUBLIC_CONTACT_EMAIL` in Vercel to use a different address.
+- The contact form posts to `/api/contact`, verifies the browser with BotID Basic, and sends through Resend. Configure `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and `CONTACT_TO_EMAIL` as server-only Vercel environment variables. `NEXT_PUBLIC_CONTACT_EMAIL` controls the visible fallback email link.
 - Production uses `NEXT_PUBLIC_SITE_URL=https://cartersteinhoff.co` so canonical metadata, robots, structured data, and the sitemap share one public origin.
 
 The homepage and Portfolio page currently feature RetailBoss, Pay It Forward Card Shows, OpenWorkspace, and the Provepharm microsite. Each project has a dedicated case study under `src/app/portfolio/[slug]`, and the Services page lives at `src/app/services/page.tsx`.
