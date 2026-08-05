@@ -1796,6 +1796,25 @@ textarea:focus-visible {
   color: #ffb4a8;
 }
 
+.contact-privacy-note {
+  max-width: 36rem;
+  color: var(--muted-soft);
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.contact-privacy-note a {
+  color: var(--sand);
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 162, 97, 0.55);
+  text-underline-offset: 0.22rem;
+  transition: color 180ms ease;
+}
+
+.contact-privacy-note a:hover {
+  color: var(--accent);
+}
+
 .footer-link {
   display: inline-flex;
   min-height: 2.75rem;

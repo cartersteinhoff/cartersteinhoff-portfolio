@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { type FormEvent, useState } from "react";
 
 type ContactField = "name" | "email" | "projectType" | "message";
@@ -133,20 +134,21 @@ export function ContactForm() {
         ) : null}
       </div>
       <div className="form-field">
-        <label htmlFor="projectType">What are we making?</label>
+        <label htmlFor="projectType">What service do you need?</label>
         <select
           id="projectType"
           name="projectType"
-          defaultValue="A new website or product"
+          defaultValue="Website & product design"
           aria-invalid={fieldErrors.projectType ? true : undefined}
           aria-describedby={fieldErrors.projectType ? "project-type-error" : undefined}
           onChange={() => clearFieldError("projectType")}
         >
-          <option>A new website or product</option>
-          <option>An existing site or product</option>
-          <option>WordPress or custom CMS</option>
-          <option>AI automation</option>
-          <option>Backend or cloud architecture</option>
+          <option>Website &amp; product design</option>
+          <option>Full-stack web development</option>
+          <option>WordPress &amp; CMS development</option>
+          <option>Technical SEO &amp; performance</option>
+          <option>AI automation &amp; integrations</option>
+          <option>Cloud architecture &amp; delivery</option>
           <option>Not sure yet</option>
         </select>
         {fieldErrors.projectType ? (
@@ -185,6 +187,9 @@ export function ContactForm() {
       </button>
       <p className="form-note" aria-live="polite" data-status={status.tone}>
         {status.message}
+      </p>
+      <p className="contact-privacy-note">
+        See how submitted information is handled in the <Link href="/privacy">Privacy Policy</Link>.
       </p>
     </form>
   );

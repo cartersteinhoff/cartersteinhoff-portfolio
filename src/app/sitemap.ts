@@ -38,6 +38,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
       images: [getAbsoluteUrl("/images/phoenix-night.webp")],
     },
+    {
+      url: `${siteUrl}/privacy`,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${siteUrl}/terms`,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ];
 
   const projectRoutes: MetadataRoute.Sitemap = portfolioProjects.map((project) => ({

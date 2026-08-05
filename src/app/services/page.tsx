@@ -22,132 +22,94 @@ export const metadata = createPageMetadata({
 
 type ProjectSlug = (typeof portfolioProjects)[number]["slug"];
 
-type RelatedWork = {
-  readonly slug: ProjectSlug;
-  readonly label: string;
-};
-
-type ServiceFamily = {
+type ServiceOffering = {
   readonly number: string;
   readonly id: string;
   readonly title: string;
-  readonly goal: string;
-  readonly promise: string;
   readonly summary: string;
-  readonly disciplines: readonly string[];
   readonly includes: readonly string[];
-  readonly relatedWork: readonly RelatedWork[];
-  readonly visual: {
-    readonly src: string;
-    readonly alt: string;
-    readonly caption: string;
-    readonly label: string;
-  };
 };
 
-const buyerPaths = [
+const services = [
   {
     number: "01",
-    title: "Launch a product",
-    copy: "Strategy, UX, frontend, backend, and data.",
-    href: "#design-build",
+    id: "website-product-design",
+    title: "Website & product design",
+    summary:
+      "Turn an idea or an existing experience into a clear product direction and polished interface.",
+    includes: [
+      "Product strategy",
+      "Information architecture",
+      "UX/UI design",
+      "Prototypes & design systems",
+    ],
   },
   {
     number: "02",
-    title: "Rebuild a platform",
-    copy: "CMS, WordPress, migrations, search, and performance.",
-    href: "#publish-grow",
+    id: "full-stack-development",
+    title: "Full-stack web development",
+    summary:
+      "Build fast, reliable websites and web apps from the interface through the API and data layer.",
+    includes: [
+      "Next.js, React & responsive frontend",
+      "Node.js, Fastify & serverless APIs",
+      "Postgres, Neon & data modeling",
+      "Integrations, testing & deployment",
+    ],
   },
   {
     number: "03",
-    title: "Automate operations",
-    copy: "AI workflows, integrations, and cloud delivery.",
-    href: "#automate-operate",
-  },
-] as const;
-
-const serviceFamilies = [
-  {
-    number: "01",
-    id: "design-build",
-    title: "Design & build",
-    goal: "Launch a product",
-    promise: "Take a product from rough idea to a working, production-ready experience.",
+    id: "cms-wordpress-development",
+    title: "WordPress & CMS development",
     summary:
-      "I shape the offer and user experience, then build the responsive frontend, application logic, APIs, and data layer as one coherent system.",
-    disciplines: ["Website & product design", "Full-stack development"],
-    includes: [
-      "Product strategy & UX/UI",
-      "Responsive websites & apps",
-      "Frontend, backend & APIs",
-      "Data, integrations & testing",
-    ],
-    relatedWork: [
-      { slug: "anne-newgarden", label: "Anne Newgarden redesign" },
-      { slug: "pay-it-forward-card-shows", label: "Pay It Forward platform" },
-      { slug: "openworkspace", label: "OpenWorkspace product" },
-    ],
-    visual: {
-      src: "/images/openworkspace-product-ui.webp",
-      alt: "OpenWorkspace product interface for saving a desktop workspace configuration",
-      caption: "Product design, application experience, API, and AWS delivery.",
-      label: "Shipped work · OpenWorkspace",
-    },
-  },
-  {
-    number: "02",
-    id: "publish-grow",
-    title: "Publish & grow",
-    goal: "Rebuild a platform",
-    promise: "Turn content, search, and performance into a maintainable publishing system.",
-    summary:
-      "I build custom WordPress, headless, and purpose-built CMS workflows—then protect discoverability with technical SEO, migration planning, and performance work.",
-    disciplines: ["CMS & WordPress", "Technical SEO & performance"],
+      "Create a publishing system your team can manage, whether it is WordPress, headless, or fully custom.",
     includes: [
       "Custom WordPress themes & plugins",
-      "Headless & custom CMS",
-      "Content models & migrations",
-      "Technical SEO & performance",
+      "Headless & custom CMS builds",
+      "Content models & editorial workflows",
+      "Content migrations & team handoff",
     ],
-    relatedWork: [
-      { slug: "retailboss", label: "RetailBoss custom platform" },
-      { slug: "provepharm", label: "Provepharm headless WordPress" },
-      { slug: "pay-it-forward-card-shows", label: "Pay It Forward custom CMS" },
-    ],
-    visual: {
-      src: "/images/services-cms-system.webp",
-      alt: "Editorial concept illustration showing scattered content becoming a structured publishing system",
-      caption: "From scattered source material to one coherent publishing system.",
-      label: "Concept · Content system",
-    },
   },
   {
-    number: "03",
-    id: "automate-operate",
-    title: "Automate & operate",
-    goal: "Automate operations",
-    promise: "Remove repetitive work and run the result on dependable infrastructure.",
+    number: "04",
+    id: "seo-performance",
+    title: "Technical SEO & performance",
     summary:
-      "I connect models, tools, APIs, and human approval steps into understandable workflows, then design the cloud and delivery path around the real product needs.",
-    disciplines: ["AI automation & integrations", "Cloud architecture & delivery"],
+      "Make your site easier to discover, faster to use, and safer to change without losing search visibility.",
     includes: [
-      "Workflow audits & mapping",
-      "AI assistants & integrations",
-      "Human approval & evaluation",
-      "Cloud delivery & observability",
+      "Technical SEO audits",
+      "Metadata, sitemaps & structured data",
+      "Core Web Vitals & performance",
+      "Redirects, migrations & launch QA",
     ],
-    relatedWork: [
-      { slug: "openworkspace", label: "OpenWorkspace on AWS" },
-      { slug: "pay-it-forward-card-shows", label: "Pay It Forward on Vercel & Neon" },
-    ],
-    visual: {
-      src: "/images/services-ai-workflow.webp",
-      alt: "Concept illustration of an automation moving through connected checkpoints and a human approval loop",
-      caption: "Connected tools, explicit checkpoints, and human judgment where it matters.",
-      label: "Concept · Automation system",
-    },
   },
-] as const satisfies readonly ServiceFamily[];
+  {
+    number: "05",
+    id: "ai-automation",
+    title: "AI automation & integrations",
+    summary:
+      "Reduce repetitive work by connecting AI, business tools, APIs, and human review into a reliable workflow.",
+    includes: [
+      "Workflow audits & opportunity mapping",
+      "AI assistants & agent workflows",
+      "Tool and API integrations",
+      "Human approval, evaluation & safeguards",
+    ],
+  },
+  {
+    number: "06",
+    id: "cloud-architecture",
+    title: "Cloud architecture & delivery",
+    summary:
+      "Plan and ship dependable infrastructure for websites, applications, APIs, and data services.",
+    includes: [
+      "AWS, Azure, GCP & Vercel planning",
+      "Compute, serverless, databases & storage",
+      "CI/CD and environment strategy",
+      "Monitoring, reliability & cost review",
+    ],
+  },
+] as const satisfies readonly ServiceOffering[];
 
 const proofStories = [
   {
@@ -244,17 +206,17 @@ export default function ServicesPage() {
         <div className={styles.introGridLines} aria-hidden="true" />
         <div className={`${styles.shell} ${styles.introInner}`}>
           <div className={styles.introMeta}>
-            <p className={styles.kicker}>Services · Strategy through production</p>
+            <p className={styles.kicker}>Services · Available individually or together</p>
             <p>Independent studio · Phoenix, Arizona</p>
           </div>
           <div className={styles.introStatement}>
             <h1 id="services-title">
-              Product design and full-stack delivery—from <em>interface to infrastructure.</em>
+              Design, development, automation, and <em>cloud.</em>
             </h1>
             <div className={styles.introSummary}>
               <p>
-                Websites, products, CMS, technical SEO, AI automation, and cloud systems—planned and
-                built by one accountable partner.
+                Websites, products, CMS, SEO, AI workflows, and infrastructure—hire me for one
+                focused service or combine only what your project needs.
               </p>
               <div className={styles.introActions}>
                 <ArrowLink href="/contact">Start a project</ArrowLink>
@@ -264,78 +226,42 @@ export default function ServicesPage() {
               </div>
             </div>
           </div>
-
-          <h2 id="paths-title" className="sr-only">
-            Start with what you need
-          </h2>
-          <div className={styles.pathGrid}>
-            {buyerPaths.map((path) => (
-              <Link key={path.number} href={path.href}>
-                <span>{path.number}</span>
-                <strong>{path.title}</strong>
-                <p>{path.copy}</p>
-                <i aria-hidden="true">↓</i>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
       <section className={styles.offer} aria-labelledby="offer-title">
         <div className={`${styles.shell} ${styles.offerGrid}`}>
           <div className={styles.offerIntro}>
-            <p className={styles.kicker}>Capabilities</p>
-            <h2 id="offer-title">Six services. Three connected lanes.</h2>
-            <p>Start with the closest lane; the scope can narrow from there.</p>
+            <p className={styles.kicker}>Service catalog</p>
+            <h2 id="offer-title">Choose the help you need.</h2>
+            <p>
+              Every service can stand on its own. Start with one, or combine services when the scope
+              genuinely calls for it.
+            </p>
           </div>
 
-          <div className={styles.serviceList}>
-            {serviceFamilies.map((service) => (
-              <div key={service.id} className={styles.serviceRow}>
-                <article id={service.id} aria-labelledby={`${service.id}-title`}>
-                  <span className={styles.serviceNumber}>{service.number}</span>
-                  <div className={styles.serviceTitle}>
-                    <p>{service.disciplines.join(" + ")}</p>
-                    <h3 id={`${service.id}-title`}>{service.title}</h3>
-                    <span className={styles.serviceGoal}>For: {service.goal}</span>
-                  </div>
-                  <div className={styles.serviceBody}>
-                    <strong>{service.promise}</strong>
-                    <p>{service.summary}</p>
-                    <ul aria-label={`${service.title} includes`}>
-                      {service.includes.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                    <figure className={styles.serviceVisual}>
-                      <Image
-                        src={service.visual.src}
-                        alt={service.visual.alt}
-                        width={2172}
-                        height={724}
-                        sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1023px) 56vw, 43vw"
-                      />
-                      <figcaption>
-                        <span>{service.visual.label}</span>
-                        {service.visual.caption}
-                      </figcaption>
-                    </figure>
-                    <nav
-                      className={styles.relatedWork}
-                      aria-label={`${service.title} related work`}
-                    >
-                      <span>Relevant work</span>
-                      <div>
-                        {service.relatedWork.map((work) => (
-                          <Link key={work.slug} href={`/portfolio/${work.slug}`}>
-                            {work.label} <span aria-hidden="true">↗</span>
-                          </Link>
-                        ))}
-                      </div>
-                    </nav>
-                  </div>
-                </article>
-              </div>
+          <div className={styles.serviceCatalog}>
+            {services.map((service) => (
+              <article
+                key={service.id}
+                id={service.id}
+                className={styles.serviceItem}
+                aria-labelledby={`${service.id}-title`}
+              >
+                <span className={styles.serviceNumber}>{service.number}</span>
+                <div className={styles.serviceCopy}>
+                  <h3 id={`${service.id}-title`}>{service.title}</h3>
+                  <p>{service.summary}</p>
+                </div>
+                <div className={styles.serviceIncludes}>
+                  <span>Services include</span>
+                  <ul aria-label={`${service.title} services include`}>
+                    {service.includes.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -402,8 +328,8 @@ export default function ServicesPage() {
       <section className={styles.engagements} aria-labelledby="engagements-title">
         <div className={`${styles.shell} ${styles.engagementGrid}`}>
           <div className={styles.engagementHeading}>
-            <p className={styles.kicker}>Ways to work together</p>
-            <h2 id="engagements-title">Pick the right starting point.</h2>
+            <p className={styles.kicker}>Engagement options</p>
+            <h2 id="engagements-title">Choose how you want to work.</h2>
           </div>
           <div className={styles.engagementList}>
             {engagements.map((engagement) => (

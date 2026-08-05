@@ -37,9 +37,17 @@ export function SiteFooter() {
           </a>
         </div>
       </div>
-      <div className="mx-auto mt-12 flex max-w-[1500px] justify-between border-t border-white/10 pt-5 text-xs tracking-[0.09em] text-stone-400 uppercase">
+      <div className="mx-auto mt-12 flex max-w-[1500px] flex-wrap items-center gap-x-6 gap-y-1 border-t border-white/10 pt-5 text-xs tracking-[0.09em] text-stone-400 uppercase">
         <span>© {new Date().getFullYear()}</span>
-        <span>Made in the desert</span>
+        <nav className="flex flex-wrap gap-x-5" aria-label="Legal">
+          <Link className="footer-link" href="/privacy">
+            Privacy
+          </Link>
+          <Link className="footer-link" href="/terms">
+            Terms
+          </Link>
+        </nav>
+        <span className="ml-auto">Made in the desert</span>
       </div>
     </footer>
   );
