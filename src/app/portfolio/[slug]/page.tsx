@@ -69,7 +69,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   return (
     <main className="case-study bg-[var(--dusk)] text-[var(--sand)]" data-project={project.slug}>
-      <section className="case-hero px-5 pb-16 pt-32 md:px-8 md:pb-24 md:pt-40">
+      <section className="case-hero px-5 pb-14 pt-28 md:px-8 md:pb-20 md:pt-32">
         <div className="mx-auto max-w-[1500px]">
           <Link className="case-back-link" href="/portfolio">
             <span aria-hidden="true">←</span> All selected work
@@ -94,7 +94,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </div>
             <div>
               <dt>Status</dt>
-              <dd>Live and in production</dd>
+              <dd>{project.statusDetail}</dd>
             </div>
             <div>
               <dt>Website</dt>
@@ -108,7 +108,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-featured-media px-5 py-10 md:px-8 md:py-16">
+      <section className="case-featured-media px-5 py-8 md:px-8 md:py-12">
         <Reveal className="mx-auto max-w-[1500px]">
           <div className="case-browser">
             <div className="project-browser-bar">
@@ -135,7 +135,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </Reveal>
       </section>
 
-      <section className="case-overview-section px-5 py-24 md:px-8 md:py-36">
+      <section className="case-overview-section px-5 py-20 md:px-8 md:py-28">
         <div className="mx-auto max-w-[1500px]">
           <Reveal className="case-overview-heading">
             <p className="section-label">The work</p>
@@ -163,14 +163,35 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-gallery-section px-5 py-24 md:px-8 md:py-36">
+      <section className="case-architecture-section px-5 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-[1500px]">
+          <Reveal className="case-architecture-heading">
+            <p className="section-label">Backend & systems</p>
+            <div>
+              <h2>{project.caseStudy.architecture.headline}</h2>
+              <p className="case-architecture-intro">{project.caseStudy.architecture.summary}</p>
+            </div>
+          </Reveal>
+
+          <div className="case-architecture-grid">
+            {project.caseStudy.architecture.items.map((item, index) => (
+              <Reveal className="case-architecture-item" delay={index * 70} key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.value}</strong>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="case-gallery-section px-5 py-20 md:px-8 md:py-28">
         <div className="mx-auto max-w-[1500px]">
           <Reveal className="case-gallery-heading">
             <p className="section-label">Important screens</p>
             <h2>A platform is more than its homepage.</h2>
             <p>
-              Real screens from the live product show how the visual system carries into the parts
-              people actually use.
+              Real screens from the project show how the visual system carries into the parts people
+              actually use.
             </p>
           </Reveal>
 
@@ -217,7 +238,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-next-section px-5 py-24 md:px-8 md:py-32">
+      <section className="case-next-section px-5 py-20 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
           <p className="section-label">Next case study</p>
           <Link className="case-next-link group" href={`/portfolio/${nextProject.slug}`}>

@@ -56,7 +56,7 @@ export function ContactForm() {
         <span>Start the conversation</span>
         <span aria-hidden="true">↗</span>
       </button>
-      <p className="min-h-5 text-xs leading-5 text-stone-500" aria-live="polite">
+      <p className="form-note" aria-live="polite">
         {status || "Submitting opens your email app—nothing is stored on this website."}
       </p>
     </form>

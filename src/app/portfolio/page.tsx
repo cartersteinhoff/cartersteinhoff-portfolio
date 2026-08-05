@@ -44,17 +44,51 @@ export const metadata: Metadata = {
 export default function PortfolioPage() {
   return (
     <main className="bg-[var(--dusk)] text-[var(--sand)]">
-      <section className="px-5 pb-20 pt-36 md:px-8 md:pb-28 md:pt-44">
-        <div className="mx-auto max-w-[1500px]">
-          <div className="grid gap-8 md:grid-cols-[0.6fr_1.4fr]">
-            <p className="page-kicker">Portfolio · Selected work</p>
-            <div>
-              <h1 className="page-title">Work with a reason to exist.</h1>
-              <p className="mt-10 max-w-xl text-base leading-7 text-stone-400 md:ml-auto md:text-lg md:leading-8">
-                Three live platforms shaped from design through development: a custom WordPress
-                publishing system and two focused Next.js products.
+      <section className="portfolio-hero page-hero">
+        <div className="page-hero-inner">
+          <p className="page-kicker">Portfolio · Selected work</p>
+          <div className="portfolio-hero-stage">
+            <div className="portfolio-hero-copy">
+              <h1 className="portfolio-hero-title page-title">Work with a reason to exist.</h1>
+              <p className="portfolio-hero-lead section-lead mt-8">
+                Four platforms shaped through development: custom publishing systems, focused
+                products, and a headless pharmaceutical microsite.
               </p>
+              <a
+                className="profile-link mt-7"
+                href={site.upworkUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>View my Upwork profile</span>
+                <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
             </div>
+            <nav className="portfolio-hero-reel" aria-label="Selected project previews">
+              {portfolioProjects.slice(0, 3).map((project, index) => (
+                <Link
+                  key={project.slug}
+                  className={`portfolio-hero-shot portfolio-hero-shot-${index + 1}`}
+                  href={`/portfolio/${project.slug}`}
+                  aria-label={`View the ${project.title} case study`}
+                >
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    unoptimized
+                    sizes="(max-width: 767px) 72vw, 44vw"
+                    className="object-cover"
+                  />
+                  <span className="portfolio-hero-shot-scrim" aria-hidden="true" />
+                  <span className="portfolio-hero-shot-label">
+                    <span>{project.number}</span>
+                    <strong>{project.title}</strong>
+                  </span>
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
       </section>
@@ -64,26 +98,22 @@ export default function PortfolioPage() {
           <article key={project.slug} className="portfolio-entry" data-project={project.slug}>
             <div className="portfolio-entry-copy">
               <div className="flex items-center justify-between gap-4">
-                <span className="text-[0.65rem] font-semibold tracking-[0.16em] text-stone-500">
+                <span className="text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--muted-soft)]">
                   {project.number}
                 </span>
-                <span className="text-[0.62rem] tracking-[0.16em] text-[var(--accent)] uppercase">
-                  Live · {project.platform}
+                <span className="text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--accent)] uppercase">
+                  {project.status} · {project.platform}
                 </span>
               </div>
               <div>
-                <h2 className="font-[family-name:var(--font-display)] text-[clamp(3.2rem,7vw,7.4rem)] leading-[0.86] tracking-[-0.045em]">
-                  {project.title}
-                </h2>
-                <p className="mt-6 max-w-xl font-[family-name:var(--font-display)] text-3xl leading-tight tracking-[-0.025em] text-[var(--accent)] italic">
-                  {project.summary}
-                </p>
-                <p className="mt-5 max-w-lg text-base leading-7 text-stone-400">
+                <h2 className="portfolio-entry-title">{project.title}</h2>
+                <p className="portfolio-entry-summary mt-6 max-w-xl">{project.summary}</p>
+                <p className="portfolio-entry-description mt-5 max-w-lg text-base leading-7 text-stone-400">
                   {project.description}
                 </p>
               </div>
               <div className="flex flex-col gap-8">
-                <ul className="flex flex-wrap gap-x-5 gap-y-2 text-[0.62rem] font-semibold tracking-[0.14em] text-stone-500 uppercase">
+                <ul className="portfolio-entry-services flex flex-wrap gap-x-5 gap-y-2 uppercase">
                   {project.services.map((service) => (
                     <li key={service}>{service}</li>
                   ))}
@@ -91,12 +121,13 @@ export default function PortfolioPage() {
                 <div className="flex flex-wrap items-center gap-x-8 gap-y-5">
                   <ArrowLink href={`/portfolio/${project.slug}`}>View case study</ArrowLink>
                   <a
-                    className="text-[0.65rem] font-semibold tracking-[0.14em] text-stone-500 uppercase transition-colors hover:text-[var(--accent)]"
+                    className="inline-flex min-h-11 items-center text-[0.72rem] font-semibold tracking-[0.11em] text-[var(--muted)] uppercase transition-colors hover:text-[var(--accent)]"
                     href={project.url}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Live site ↗<span className="sr-only"> (opens in a new tab)</span>
+                    {project.status === "Live" ? "Live site" : "View microsite"} ↗
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </div>
               </div>
@@ -122,7 +153,7 @@ export default function PortfolioPage() {
                     alt={project.imageAlt}
                     fill
                     unoptimized
-                    sizes="(max-width: 768px) 92vw, 56vw"
+                    sizes="(max-width: 1023px) 92vw, 56vw"
                     className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.018]"
                   />
                 </span>
@@ -132,9 +163,9 @@ export default function PortfolioPage() {
         ))}
       </section>
 
-      <section className="sunset-band bg-[var(--sunset-deep)] px-5 py-24 md:px-8 md:py-36">
-        <Reveal className="mx-auto grid max-w-[1500px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
-          <h2 className="max-w-5xl font-[family-name:var(--font-display)] text-[clamp(4rem,9vw,9rem)] leading-[0.83] tracking-[-0.05em]">
+      <section className="sunset-band bg-[var(--sunset-deep)] px-5 py-20 md:px-8 md:py-28">
+        <Reveal className="mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+          <h2 className="portfolio-cta-title section-title max-w-5xl">
             Your project could be
             <span className="italic"> next.</span>
           </h2>

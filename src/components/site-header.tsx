@@ -14,6 +14,7 @@ const links = [
 export function SiteHeader() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
   const previousPathnameRef = useRef(pathname);
@@ -22,8 +23,40 @@ export function SiteHeader() {
     if (previousPathnameRef.current !== pathname) {
       previousPathnameRef.current = pathname;
       setIsOpen(false);
+      setIsHeaderHidden(false);
     }
   }, [pathname]);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let animationFrame: number | undefined;
+
+    function handleScroll() {
+      if (animationFrame !== undefined) return;
+
+      animationFrame = window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const isMovingDown = currentScrollY > lastScrollY + 6;
+        const isMovingUp = currentScrollY < lastScrollY - 6;
+
+        if (currentScrollY < 96 || isMovingUp) {
+          setIsHeaderHidden(false);
+        } else if (isMovingDown) {
+          setIsHeaderHidden(true);
+        }
+
+        lastScrollY = currentScrollY;
+        animationFrame = undefined;
+      });
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (animationFrame !== undefined) window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -93,7 +126,11 @@ export function SiteHeader() {
   }, [isOpen]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-7">
+    <header
+      className={`site-header fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-7 ${
+        isHeaderHidden && !isOpen ? "is-hidden" : ""
+      }`}
+    >
       <div className="mx-auto flex max-w-[1500px] items-center justify-between">
         <Link
           href="/"
@@ -124,7 +161,10 @@ export function SiteHeader() {
           ref={menuButtonRef}
           type="button"
           className="relative z-50 grid size-11 place-items-center rounded-full border border-white/20 bg-black/20 text-stone-50 backdrop-blur-xl md:hidden"
-          onClick={() => setIsOpen((open) => !open)}
+          onClick={() => {
+            setIsHeaderHidden(false);
+            setIsOpen((open) => !open);
+          }}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           aria-label={isOpen ? "Close menu" : "Open menu"}

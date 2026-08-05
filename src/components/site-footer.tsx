@@ -7,11 +7,11 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-[1500px] gap-10 md:grid-cols-[1fr_auto] md:items-end">
         <div>
           <p className="mb-2 font-[family-name:var(--font-display)] text-3xl">{site.name}</p>
-          <p className="text-sm text-stone-500">
+          <p className="text-sm text-stone-400">
             {site.role} · {site.location}
           </p>
         </div>
-        <div className="flex flex-wrap gap-x-6 gap-y-3 text-[0.68rem] font-semibold tracking-[0.16em] uppercase">
+        <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.72rem] font-semibold tracking-[0.13em] uppercase">
           <Link className="footer-link" href="/about">
             About
           </Link>
@@ -29,7 +29,7 @@ export function SiteFooter() {
           </a>
         </div>
       </div>
-      <div className="mx-auto mt-16 flex max-w-[1500px] justify-between border-t border-white/10 pt-5 text-[0.62rem] tracking-[0.12em] text-stone-600 uppercase">
+      <div className="mx-auto mt-14 flex max-w-[1500px] justify-between border-t border-white/10 pt-5 text-[0.68rem] tracking-[0.11em] text-stone-500 uppercase">
         <span>© {new Date().getFullYear()}</span>
         <span>Made in the desert</span>
       </div>
