@@ -41,15 +41,23 @@ export default function Home() {
           </h1>
 
           <div className="hero-bottom mt-9 grid gap-6 border-t border-white/25 pt-5 text-stone-100 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-            <p className="max-w-lg text-[0.95rem] leading-6 text-stone-300 md:text-base">
-              I design and build complete digital products—from interface and CMS to backend, cloud
-              architecture, and AI automation.
+            {/* States the scope. The disciplines are already in the kicker
+             * above, so repeating them here just made the visitor read the
+             * same list twice. */}
+            <p className="max-w-md text-[0.95rem] leading-6 text-stone-300 md:text-base">
+              I design the product and build the system it runs on.
             </p>
-            {/* Was an anchor to the removed on-page section; now goes
-             * straight to the portfolio. */}
-            <ArrowLink href="/portfolio" inverse>
-              View the work
-            </ArrowLink>
+            {/* This hero is the whole homepage now, so it carries both
+             * evaluation paths. Contact stays in the header and footer
+             * rather than competing for attention as a third route. */}
+            <div className="flex flex-wrap items-center gap-x-9 gap-y-3">
+              <ArrowLink href="/portfolio" inverse>
+                View the work
+              </ArrowLink>
+              <ArrowLink href="/services" inverse>
+                See services
+              </ArrowLink>
+            </div>
           </div>
         </div>
       </section>
