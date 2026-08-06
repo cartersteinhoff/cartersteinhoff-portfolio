@@ -356,6 +356,9 @@ textarea:focus-visible {
   animation: hero-light-shift 20s 1.2s ease-in-out infinite both;
 }
 
+/* Three stacked gradients: a left-heavy one holding the desktop copy
+ * column, plus a bottom and top falloff. They are tuned for a wide
+ * frame, where the right side stays clear enough to read the photo. */
 .hero-scrim {
   position: absolute;
   inset: 0;
@@ -1044,11 +1047,22 @@ textarea:focus-visible {
     object-position: 96% center;
   }
 
+  /* These three used to stack to ~99% black at the bottom
+   * (1 - 0.32 x 0.06 x 0.30), which erased the photograph exactly where
+   * the copy sits. The horizontal gradient is dropped — with no clear
+   * right side on a narrow screen it only darkened, it never framed —
+   * and the bottom falloff is softened so the desk and window still
+   * read behind the text. */
   .hero-scrim {
     background:
-      linear-gradient(90deg, rgba(5, 6, 6, 0.68) 0%, rgba(5, 6, 6, 0.25) 100%),
-      linear-gradient(0deg, rgba(5, 6, 6, 0.94) 0%, rgba(5, 6, 6, 0.2) 72%),
-      linear-gradient(180deg, rgba(5, 6, 6, 0.7) 0%, transparent 30%);
+      linear-gradient(
+        0deg,
+        rgba(5, 6, 6, 0.78) 0%,
+        rgba(5, 6, 6, 0.46) 32%,
+        rgba(5, 6, 6, 0.14) 58%,
+        transparent 80%
+      ),
+      linear-gradient(180deg, rgba(5, 6, 6, 0.45) 0%, transparent 22%);
   }
 
   .project-browser-bar {
