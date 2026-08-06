@@ -156,7 +156,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   alt={project.imageAlt}
                   fill
                   preload
-                  unoptimized
                   sizes="(max-width: 768px) 94vw, 92vw"
                   className="object-cover"
                 />

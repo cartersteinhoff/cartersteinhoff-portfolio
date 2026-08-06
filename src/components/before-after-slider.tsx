@@ -27,7 +27,6 @@ export function BeforeAfterSlider({ before, after, ariaLabel }: BeforeAfterSlide
           src={after.src}
           alt=""
           fill
-          unoptimized
           sizes="(max-width: 767px) 100vw, 92vw"
           className="object-cover"
         />
@@ -36,7 +35,6 @@ export function BeforeAfterSlider({ before, after, ariaLabel }: BeforeAfterSlide
             src={before.src}
             alt=""
             fill
-            unoptimized
             sizes="(max-width: 767px) 100vw, 92vw"
             className="object-cover"
           />

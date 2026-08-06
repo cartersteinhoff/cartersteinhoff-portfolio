@@ -27,7 +27,6 @@ export default function ContactPage() {
           alt=""
           fill
           preload
-          unoptimized
           sizes="100vw"
           className="contact-page-media object-cover"
         />

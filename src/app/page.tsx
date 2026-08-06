@@ -14,7 +14,6 @@ export default function Home() {
             alt=""
             fill
             preload
-            unoptimized
             sizes="100vw"
             className="hero-scene hero-scene-studio"
             data-hero-scene="studio"
@@ -24,7 +23,6 @@ export default function Home() {
             alt=""
             fill
             loading="eager"
-            unoptimized
             sizes="100vw"
             className="hero-scene hero-scene-moonrise"
             data-hero-scene="moonrise"
@@ -82,7 +80,6 @@ export default function Home() {
                     src={project.image}
                     alt=""
                     fill
-                    unoptimized
                     sizes={
                       index === 0
                         ? "(max-width: 767px) 100vw, 92vw"

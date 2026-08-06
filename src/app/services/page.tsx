@@ -305,7 +305,6 @@ export default function ServicesPage() {
                           src={proof.image}
                           alt={proof.alt}
                           fill
-                          unoptimized
                           sizes="(max-width: 767px) 92vw, (max-width: 1023px) 46vw, 30vw"
                           className="object-cover object-top"
                         />
