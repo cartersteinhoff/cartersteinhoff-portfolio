@@ -43,7 +43,6 @@ Browser capture sources stay local under the ignored `output` directory. Refresh
 ## Generated photography
 
 - `public/images/studio-hero.webp` — identity-referenced studio hero generated from Carter's supplied portrait.
-- `public/images/carter-phoenix-portrait-v2.webp` — identity-referenced editorial portrait with the requested ear-length hairstyle.
 - `public/images/phoenix-night.webp` — generated Phoenix night editorial landscape.
 
 The supplied source portrait is not committed; only the compact generated website assets are part of the project. High-resolution generated PNG sources stay local under the ignored `source-assets` directory.

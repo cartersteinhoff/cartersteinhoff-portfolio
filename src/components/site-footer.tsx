@@ -12,9 +12,6 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="flex flex-wrap gap-x-5 gap-y-1 text-[0.72rem] font-semibold tracking-[0.13em] uppercase">
-          <Link className="footer-link" href="/about">
-            About
-          </Link>
           <Link className="footer-link" href="/portfolio">
             Portfolio
           </Link>

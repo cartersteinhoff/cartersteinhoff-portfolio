@@ -12,12 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [getAbsoluteUrl("/opengraph-image")],
     },
     {
-      url: `${siteUrl}/about`,
-      changeFrequency: "yearly",
-      priority: 0.7,
-      images: [getAbsoluteUrl("/images/phoenix-night.webp")],
-    },
-    {
       url: `${siteUrl}/portfolio`,
       changeFrequency: "monthly",
       priority: 0.9,

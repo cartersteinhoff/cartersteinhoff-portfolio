@@ -10,7 +10,6 @@ export const site = {
   linkedinUrl: "https://www.linkedin.com/in/carter-steinhoff",
   description:
     "Carter Steinhoff is a Phoenix product designer and full-stack developer specializing in AI automation, cloud architecture, Next.js, and custom WordPress and CMS platforms.",
-  personImage: "/images/carter-phoenix-portrait-v2.webp",
   socialImageAlt:
     "Carter Steinhoff, Phoenix product designer, full-stack developer, and AI automation expert",
   serviceTypes: [
