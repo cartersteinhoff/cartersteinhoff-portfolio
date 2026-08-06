@@ -40,23 +40,23 @@ export default function AboutPage() {
 
       <section className={styles.story} aria-label="Background">
         <div className={styles.shell}>
-          <div className={styles.prose}>
-            <p>
-              I did not start on the web. I started on a mainframe, writing COBOL as an intern at
-              American Express.
-            </p>
-            <p>
-              It was not glamorous work, and that turned out to be the point. Mainframe code runs
-              the parts of a business that cannot be down, on systems that were old before I got
-              there and will outlive anything I have written since. You learn to read code you did
-              not write, change it carefully, and respect the blast radius of a mistake. I still
-              think about software that way.
-            </p>
-          </div>
+          <div className={styles.column}>
+            <div className={styles.intro}>
+              <p>
+                I did not start on the web. I started on a mainframe, writing COBOL as an intern at
+                American Express.
+              </p>
+              <p>
+                It was not glamorous work, and that turned out to be the point. Mainframe code runs
+                the parts of a business that cannot be down, on systems that were old before I got
+                there and will outlive anything I have written since. You learn to read code you did
+                not write, change it carefully, and respect the blast radius of a mistake. I still
+                think about software that way.
+              </p>
+            </div>
 
-          <div className={styles.chapter}>
-            <p className={styles.chapterLabel}>Passport Health</p>
-            <div className={styles.prose}>
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Passport Health</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Finding the web.</h2>
               <p>
                 My next job moved me onto the web, doing development in a WordPress environment. It
@@ -67,11 +67,9 @@ export default function AboutPage() {
               </p>
               <p>Then I was let go.</p>
             </div>
-          </div>
 
-          <div className={styles.chapter}>
-            <p className={styles.chapterLabel}>Starting over</p>
-            <div className={styles.prose}>
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Starting over</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Back to being a student.</h2>
               <p>
                 I enrolled in a web development bootcamp. Going back to a classroom after having had
@@ -86,11 +84,9 @@ export default function AboutPage() {
                 and you find out quickly which of your opinions survive contact with a real budget.
               </p>
             </div>
-          </div>
 
-          <div className={styles.chapter}>
-            <p className={styles.chapterLabel}>Nucamp</p>
-            <div className={styles.prose}>
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Nucamp</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>
                 The other side of the classroom.
               </h2>
@@ -108,11 +104,9 @@ export default function AboutPage() {
                 actually pick up.
               </p>
             </div>
-          </div>
 
-          <div className={styles.chapter}>
-            <p className={styles.chapterLabel}>Going independent</p>
-            <div className={styles.prose}>
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Going independent</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>A student, and a first client.</h2>
               <p>
                 One of my students wanted to try freelancing. So we tried it together — real
@@ -127,11 +121,9 @@ export default function AboutPage() {
                 two halves of the job I have been circling since the mainframe.
               </p>
             </div>
-          </div>
 
-          <div className={styles.chapter}>
-            <p className={styles.chapterLabel}>Now</p>
-            <div className={styles.prose}>
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Now</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Why the range matters.</h2>
               <p>
                 The odd shape of this path is the useful part. COBOL taught me to respect systems I

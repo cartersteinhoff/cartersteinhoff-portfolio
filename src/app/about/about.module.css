@@ -82,60 +82,60 @@
     radial-gradient(circle at 96% 4%, rgba(141, 49, 81, 0.12), transparent 32rem), var(--dusk);
 }
 
-/* A single measured column. Long-form reading wants one comfortable line
- * length, not the full 93.75rem frame. */
-.prose {
-  max-width: var(--measure-body);
+/* One measured reading column, centred in the frame. Long-form reading
+ * wants a single comfortable line length; the lines themselves stay
+ * left-aligned, since centred body copy gives both edges a ragged
+ * profile and makes each new line harder to find. */
+.column {
+  width: min(100%, var(--measure-body));
+  margin-inline: auto;
 }
 
-.prose p {
+.column p {
   margin: 0 0 1.5rem;
   color: var(--muted);
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
 }
 
-.prose p:last-child {
+.column p:last-child {
   margin-bottom: 0;
 }
 
 /* The opening paragraph carries a little more weight, so the eye has an
  * obvious place to start. */
-.prose p:first-child {
+.intro p:first-child {
   color: var(--sand);
   font-size: var(--text-lead);
   line-height: var(--text-lead--line-height);
 }
 
-.prose strong {
-  color: var(--sand);
-  font-weight: 600;
-}
-
-/* Chapter rules between phases of the story. */
+/* Chapter rules between phases of the story. The label and title centre
+ * over the column so each new chapter reads as a break. */
 .chapter {
-  display: grid;
-  gap: 0.9rem;
   border-top: 1px solid rgba(242, 236, 228, 0.16);
-  margin-top: 3rem;
-  padding-top: 1.75rem;
+  margin-top: 3.25rem;
+  padding-top: 2rem;
 }
 
+/* Only the chapter heading pair centres. The paragraphs keep their
+ * default left alignment for readability. */
 .chapterLabel {
-  margin: 0;
+  margin: 0 0 0.75rem;
   color: var(--accent);
   font-size: var(--text-meta);
   font-weight: var(--text-meta--font-weight);
   letter-spacing: var(--text-meta--letter-spacing);
   line-height: var(--text-meta--line-height);
+  text-align: center;
   text-transform: uppercase;
 }
 
 .chapterTitle {
-  max-width: 20ch;
-  /* The prose paragraphs carry no top margin, so the gap under a chapter
-   * title has to come from here or the two would touch. */
-  margin: 0 0 1.1rem;
+  /* The paragraphs carry no top margin, so the gap under a chapter title
+   * has to come from here or the two would touch. */
+  margin: 0 0 1.25rem;
+  text-align: center;
 }
 
 /* Closing */
@@ -183,12 +183,6 @@
 
   .closing {
     padding-block: 5.5rem;
-  }
-
-  .chapter {
-    grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1.68fr);
-    gap: 2.5rem;
-    align-items: baseline;
   }
 }
 
