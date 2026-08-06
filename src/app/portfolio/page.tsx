@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
-import { Reveal } from "@/components/reveal";
+import { LivePreview } from "@/components/live-preview";
 import { portfolioProjects, site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
+import styles from "./portfolio-index.module.css";
 
 const description =
-  "Explore digital products Carter Steinhoff designed and built end to end across WordPress, Next.js, custom CMS, backend systems, and cloud architecture.";
+  "Explore digital products Carter Steinhoff designed and built across WordPress, Next.js, custom CMS platforms, backend systems, and cloud architecture.";
 
 export const metadata = createPageMetadata({
   title: "Portfolio",
@@ -20,220 +21,169 @@ export const metadata = createPageMetadata({
   },
 });
 
+type PortfolioProject = (typeof portfolioProjects)[number];
+
+function getProject(slug: string): PortfolioProject {
+  const project = portfolioProjects.find((item) => item.slug === slug);
+
+  if (!project) {
+    throw new Error(`Missing portfolio project: ${slug}`);
+  }
+
+  return project;
+}
+
+/* Editorial order. Every entry is presented identically, so position is
+ * the only ranking signal. */
+const orderedProjects = [
+  getProject("retailboss"),
+  getProject("openworkspace"),
+  getProject("pay-it-forward-card-shows"),
+  getProject("anne-newgarden"),
+  getProject("provepharm"),
+];
+
+/* Numbered by position on this page, not by the stored `number`. */
+const displayNumbers = new Map(
+  orderedProjects.map((project, index) => [project.slug, String(index + 1).padStart(2, "0")]),
+);
+
+/**
+ * Sites that refuse embedding. Verified by request, not assumed:
+ * annenewgarden.vercel.app returns `X-Frame-Options: DENY` and
+ * `Content-Security-Policy: frame-ancestors 'none'`, so a frame there
+ * renders only a browser error. The other four embed cleanly.
+ * Re-check with `curl -I` if a project's hosting changes.
+ */
+const nonEmbeddableSlugs = new Set<string>(["anne-newgarden"]);
+
 export default function PortfolioPage() {
-  const featuredProject = portfolioProjects[0];
-  const secondaryProjects = portfolioProjects.slice(1);
-
   return (
-    <main className="portfolio-index bg-[var(--dusk)] text-[var(--sand)]">
-      <section className="portfolio-intro page-hero" aria-labelledby="portfolio-title">
-        <div className="portfolio-intro-inner page-hero-inner">
-          <p className="portfolio-intro-kicker page-kicker">Portfolio · Selected work</p>
-          <div className="portfolio-intro-grid">
-            <div className="portfolio-intro-copy">
-              <h1 id="portfolio-title" className="portfolio-intro-title page-title">
-                Selected products, built end to end.
-              </h1>
-              <p className="portfolio-intro-lead section-lead">
-                I turn product ideas into complete working systems—from interface and CMS to
-                backend, automation, and cloud infrastructure.
+    <main className={styles.root}>
+      {/* Mirrors the services hero: grid-line texture, angled gradient,
+       * accent-coloured closing word, and a rule-topped summary column. */}
+      <section className={styles.hero} aria-labelledby="portfolio-title">
+        <div className={styles.heroGridLines} aria-hidden="true" />
+        <div className={`${styles.frame} ${styles.heroInner}`}>
+          <div className={styles.heroStatement}>
+            <h1 id="portfolio-title" className={`display-1 ${styles.heroTitle}`}>
+              Products from interface to <em>infrastructure.</em>
+            </h1>
+            <div className={styles.heroSummary}>
+              <p>
+                I design the experience, build the system behind it, and take both into production.
               </p>
-              <ArrowLink href="#selected-work">Explore the work</ArrowLink>
-            </div>
-
-            <div className="portfolio-intro-proof">
-              <p className="portfolio-intro-proof-label">Across the work</p>
-              <ul className="portfolio-intro-proof-list">
-                <li>Product design</li>
-                <li>Full-stack development</li>
-                <li>Custom CMS systems</li>
-                <li>AI automation</li>
-                <li>Cloud architecture</li>
-              </ul>
+              <div className={styles.heroActions}>
+                <ArrowLink href="/contact">Start a project</ArrowLink>
+                <Link href="/services" className={styles.textLink}>
+                  See services <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section
-        id="selected-work"
-        className="portfolio-featured-section"
-        aria-labelledby="featured-project-title"
-      >
-        <div className="portfolio-featured-shell">
-          <article className="portfolio-featured" data-project={featuredProject.slug}>
-            <header className="portfolio-featured-header">
-              <div className="portfolio-featured-labels">
-                <span>{featuredProject.number} · Featured project</span>
-                <span>
-                  {featuredProject.status} · {featuredProject.platform}
-                </span>
-              </div>
-              <h2 id="featured-project-title" className="portfolio-featured-title">
-                {featuredProject.title}
-              </h2>
-              <p className="portfolio-featured-summary">{featuredProject.summary}</p>
-            </header>
+      <section className={styles.work} aria-label="Selected work">
+        <div className={`${styles.frame} ${styles.workGrid}`}>
+          {orderedProjects.map((project) => {
+            const isLive = project.status === "Live";
 
-            <Link
-              className="portfolio-featured-media group"
-              href={`/portfolio/${featuredProject.slug}`}
-              aria-label={`View the ${featuredProject.title} case study`}
-            >
-              <span className="project-browser">
-                <span className="project-browser-bar">
-                  <span className="project-browser-dots" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                  <span>{featuredProject.domain}</span>
-                  <span aria-hidden="true">↗</span>
-                </span>
-                <span className="project-browser-image">
-                  <Image
-                    src={featuredProject.image}
-                    alt={featuredProject.imageAlt}
-                    fill
-                    preload
-                    unoptimized
-                    sizes="(max-width: 767px) 100vw, (max-width: 1279px) 92vw, 82vw"
-                    className="object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.018]"
-                  />
-                </span>
-              </span>
-            </Link>
-
-            <div className="portfolio-featured-content">
-              <p className="portfolio-featured-description">{featuredProject.description}</p>
-              <div className="portfolio-featured-details">
-                <ul className="portfolio-featured-services" aria-label="Services provided">
-                  {featuredProject.services.map((service) => (
-                    <li key={service}>{service}</li>
-                  ))}
-                </ul>
-                <div className="portfolio-project-links">
-                  <ArrowLink href={`/portfolio/${featuredProject.slug}`}>View case study</ArrowLink>
-                  <a
-                    className="portfolio-live-link"
-                    href={featuredProject.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Live site ↗<span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section className="portfolio-secondary" aria-labelledby="more-work-title">
-        <div className="portfolio-secondary-inner">
-          <Reveal className="portfolio-secondary-header">
-            <p className="portfolio-secondary-kicker page-kicker">More selected work</p>
-            <h2 id="more-work-title" className="portfolio-secondary-title">
-              Different products. The same end-to-end ownership.
-            </h2>
-          </Reveal>
-
-          <Reveal className="portfolio-secondary-grid">
-            {secondaryProjects.map((project) => (
+            return (
               <article
                 key={project.slug}
-                className="portfolio-secondary-item"
-                data-project={project.slug}
+                id={`work-${project.slug}`}
+                className={styles.card}
                 aria-labelledby={`project-${project.slug}`}
               >
-                <Link
-                  className="portfolio-secondary-media group"
-                  href={`/portfolio/${project.slug}`}
-                  aria-label={`View the ${project.title} case study`}
+                <LivePreview
+                  url={project.url}
+                  domain={project.domain}
+                  frameable={!nonEmbeddableSlugs.has(project.slug)}
+                  title={project.title}
                 >
-                  <span className="project-browser">
-                    <span className="project-browser-bar">
-                      <span className="project-browser-dots" aria-hidden="true">
+                  {/* Browser chrome frames the screenshot as a product,
+                   * which is what keeps a bright site from reading as a
+                   * glaring rectangle on an ink-black page. */}
+                  <div className={styles.browser}>
+                    <div className={styles.browserBar}>
+                      <span className={styles.browserDots} aria-hidden="true">
                         <i />
                         <i />
                         <i />
                       </span>
-                      <span>{project.domain}</span>
-                      <span aria-hidden="true">↗</span>
-                    </span>
-                    <span className="project-browser-image">
+                      <span className={styles.browserDomain}>{project.domain}</span>
+                      <span
+                        className={`${styles.browserStatus} ${isLive ? styles.statusLive : ""}`}
+                      >
+                        {project.status}
+                      </span>
+                    </div>
+                    <div className={styles.shot}>
                       <Image
                         src={project.image}
                         alt={project.imageAlt}
                         fill
-                        unoptimized
-                        sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.018]"
+                        sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), 40vw"
+                        className={styles.shotImage}
                       />
-                    </span>
-                  </span>
-                </Link>
+                    </div>
+                  </div>
+                </LivePreview>
 
-                <div className="portfolio-secondary-content">
-                  <div className="portfolio-secondary-meta">
-                    <span>{project.number}</span>
-                    <span>
-                      {project.status} · {project.platform}
-                    </span>
+                <p className={styles.cardMeta}>
+                  <span className={styles.cardNumber}>{displayNumbers.get(project.slug)}</span>
+                  <span>{project.shortPlatform}</span>
+                </p>
+
+                <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
+                  {project.title}
+                </h2>
+                <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
+                <p className={styles.cardSummary}>{project.summary}</p>
+
+                <dl className={styles.cardFacts}>
+                  <div>
+                    <dt>Role</dt>
+                    <dd>{project.caseStudy.role}</dd>
                   </div>
-                  <h3 id={`project-${project.slug}`} className="portfolio-secondary-item-title">
-                    <Link href={`/portfolio/${project.slug}`}>{project.title}</Link>
-                  </h3>
-                  <p className="portfolio-secondary-summary">{project.summary}</p>
-                  <ul className="portfolio-secondary-services" aria-label="Services provided">
-                    {project.services.map((service) => (
-                      <li key={service}>{service}</li>
-                    ))}
-                  </ul>
-                  <div className="portfolio-project-links">
-                    <ArrowLink href={`/portfolio/${project.slug}`}>View case study</ArrowLink>
-                    <a
-                      className="portfolio-live-link"
-                      href={project.url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {project.externalLabel} ↗
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
+                  <div>
+                    <dt>System</dt>
+                    <dd>{project.caseStudy.system}</dd>
                   </div>
+                </dl>
+
+                <div className={styles.cardActions}>
+                  <ArrowLink href={`/portfolio/${project.slug}`}>Read the case study</ArrowLink>
                 </div>
               </article>
-            ))}
-          </Reveal>
+            );
+          })}
         </div>
       </section>
 
-      <section className="portfolio-final-cta sunset-band bg-[var(--sunset-deep)]">
-        <Reveal className="portfolio-final-cta-inner">
-          <div className="portfolio-final-cta-copy">
-            <p className="page-kicker">Have a product in mind?</p>
-            <h2 className="portfolio-cta-title section-title">
-              Let’s build the
-              <span className="italic"> next one.</span>
+      <section className={styles.finalCta} aria-labelledby="portfolio-cta-title">
+        <div className={`${styles.frame} ${styles.finalCtaLayout}`}>
+          <div>
+            <p className="eyebrow">Have a product in mind?</p>
+            <h2 id="portfolio-cta-title" className="display-3">
+              Let’s build the <span>next one.</span>
             </h2>
           </div>
-          <div className="portfolio-final-cta-actions">
-            <ArrowLink href="/contact">Tell me about it</ArrowLink>
-            <nav className="portfolio-profile-links" aria-label="Professional profiles">
-              <a className="profile-link" href={site.linkedinUrl} target="_blank" rel="noreferrer">
-                <span>LinkedIn</span>
-                <span aria-hidden="true">↗</span>
+          <div className={styles.finalCtaActions}>
+            <ArrowLink href="/contact">Tell me about your project</ArrowLink>
+            <nav className={styles.profileLinks} aria-label="Professional profiles">
+              <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
+                LinkedIn <span aria-hidden="true">↗</span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
-              <a className="profile-link" href={site.upworkUrl} target="_blank" rel="noreferrer">
-                <span>Hire through Upwork</span>
-                <span aria-hidden="true">↗</span>
+              <a href={site.upworkUrl} target="_blank" rel="noreferrer">
+                Hire through Upwork <span aria-hidden="true">↗</span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </nav>
           </div>
-        </Reveal>
+        </div>
       </section>
     </main>
   );

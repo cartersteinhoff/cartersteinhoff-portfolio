@@ -205,12 +205,8 @@ export default function ServicesPage() {
       <section className={styles.intro} aria-labelledby="services-title">
         <div className={styles.introGridLines} aria-hidden="true" />
         <div className={`${styles.shell} ${styles.introInner}`}>
-          <div className={styles.introMeta}>
-            <p className={styles.kicker}>Services · Available individually or together</p>
-            <p>Independent studio · Phoenix, Arizona</p>
-          </div>
           <div className={styles.introStatement}>
-            <h1 id="services-title">
+            <h1 id="services-title" className={`display-1 ${styles.introTitle}`}>
               Design, development, automation, and <em>cloud.</em>
             </h1>
             <div className={styles.introSummary}>
@@ -232,8 +228,10 @@ export default function ServicesPage() {
       <section className={styles.offer} aria-labelledby="offer-title">
         <div className={`${styles.shell} ${styles.offerGrid}`}>
           <div className={styles.offerIntro}>
-            <p className={styles.kicker}>Service catalog</p>
-            <h2 id="offer-title">Choose the help you need.</h2>
+            <p className="eyebrow">Service catalog</p>
+            <h2 id="offer-title" className="display-2">
+              Choose the help you need.
+            </h2>
             <p>
               Every service can stand on its own. Start with one, or combine services when the scope
               genuinely calls for it.
@@ -250,7 +248,9 @@ export default function ServicesPage() {
               >
                 <span className={styles.serviceNumber}>{service.number}</span>
                 <div className={styles.serviceCopy}>
-                  <h3 id={`${service.id}-title`}>{service.title}</h3>
+                  <h3 id={`${service.id}-title`} className="display-3">
+                    {service.title}
+                  </h3>
                   <p>{service.summary}</p>
                 </div>
                 <div className={styles.serviceIncludes}>
@@ -270,8 +270,10 @@ export default function ServicesPage() {
       <section className={styles.proof} aria-labelledby="proof-title">
         <div className={styles.shell}>
           <div className={styles.sectionHeading}>
-            <p className={styles.kicker}>Selected case studies</p>
-            <h2 id="proof-title">See the work behind the offer.</h2>
+            <p className="eyebrow">Selected case studies</p>
+            <h2 id="proof-title" className="display-2">
+              See the work behind the offer.
+            </h2>
             <p>
               Three shipped systems. Each case study shows the interface and what runs behind it.
             </p>
@@ -311,7 +313,7 @@ export default function ServicesPage() {
                     </Link>
                     <div className={styles.proofCopy}>
                       <p>{proof.eyebrow}</p>
-                      <h3>{proof.headline}</h3>
+                      <h3 className="display-4">{proof.headline}</h3>
                       <p>{proof.copy}</p>
                       <Link href={`/portfolio/${project.slug}`}>
                         View {project.title} case study <span aria-hidden="true">↗</span>
@@ -328,15 +330,17 @@ export default function ServicesPage() {
       <section className={styles.engagements} aria-labelledby="engagements-title">
         <div className={`${styles.shell} ${styles.engagementGrid}`}>
           <div className={styles.engagementHeading}>
-            <p className={styles.kicker}>Engagement options</p>
-            <h2 id="engagements-title">Choose how you want to work.</h2>
+            <p className="eyebrow">Engagement options</p>
+            <h2 id="engagements-title" className={`display-2 ${styles.engagementTitle}`}>
+              Choose how you want to work.
+            </h2>
           </div>
           <div className={styles.engagementList}>
             {engagements.map((engagement) => (
               <div key={engagement.number} className={styles.engagementRow}>
                 <article>
                   <span>{engagement.number}</span>
-                  <h3>{engagement.title}</h3>
+                  <h3 className="display-4">{engagement.title}</h3>
                   <p>{engagement.copy}</p>
                   <div>
                     <strong>Best for</strong>
@@ -353,8 +357,10 @@ export default function ServicesPage() {
         <div className={styles.shell}>
           <div className={styles.teachingGrid}>
             <div>
-              <p className={styles.kicker}>Former Nucamp web development instructor</p>
-              <h2 id="teaching-title">Clear thinking. Maintainable handoffs.</h2>
+              <p className="eyebrow">Former Nucamp web development instructor</p>
+              <h2 id="teaching-title" className={`display-3 ${styles.teachingTitle}`}>
+                Clear thinking. Maintainable handoffs.
+              </h2>
             </div>
             <p>
               Teaching sharpened how I explain tradeoffs and document decisions. You get a system
@@ -380,8 +386,8 @@ export default function ServicesPage() {
       <section className={styles.finalCta} aria-labelledby="services-final-title">
         <div className={`${styles.shell} ${styles.finalInner}`}>
           <div>
-            <p className={styles.kicker}>Bring me the messy version</p>
-            <h2 id="services-final-title">
+            <p className="eyebrow">Bring me the messy version</p>
+            <h2 id="services-final-title" className={`display-2 ${styles.finalTitle}`}>
               I’ll help turn it into a clear plan and a working system.
             </h2>
           </div>

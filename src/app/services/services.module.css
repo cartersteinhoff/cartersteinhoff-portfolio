@@ -1,3 +1,7 @@
+/* Typography comes from the global scale: display-* utilities on the
+ * headings in page.tsx, and --text-* tokens for everything below them.
+ * This module carries layout, measures, and surfaces only. */
+
 .page {
   overflow: clip;
   color: var(--sand);
@@ -8,15 +12,6 @@
   width: min(100%, 93.75rem);
   margin-inline: auto;
   padding-inline: 1.25rem;
-}
-
-.kicker {
-  color: var(--muted-soft);
-  font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: 0.13em;
-  line-height: 1.5;
-  text-transform: uppercase;
 }
 
 .intro {
@@ -45,22 +40,6 @@
   padding-top: 7.5rem;
 }
 
-.introMeta {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  padding-bottom: 1rem;
-}
-
-.introMeta > p:last-child {
-  color: var(--muted-soft);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
 .introStatement {
   display: grid;
   gap: 2.5rem;
@@ -69,31 +48,26 @@
   animation: intro-rise 720ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 
-.introStatement h1 {
+.introTitle {
   max-width: 17ch;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(3.8rem, 5.7vw, 6.25rem);
-  font-weight: 400;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
-  text-wrap: balance;
 }
 
-.introStatement h1 em {
+.introTitle em {
   color: var(--accent);
+  font-style: normal;
   font-weight: inherit;
 }
 
 .introSummary {
-  max-width: 37rem;
+  max-width: var(--measure-lead);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   padding-top: 1.25rem;
 }
 
 .introSummary > p {
   color: var(--muted);
-  font-size: clamp(1rem, 1.3vw, 1.18rem);
-  line-height: 1.7;
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
 }
 
 .introActions {
@@ -110,9 +84,9 @@
   align-items: center;
   gap: 0.65rem;
   color: var(--muted-soft);
-  font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: 0.1em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
   transition: color 180ms ease;
 }
@@ -134,7 +108,6 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.24);
   background: #09090b;
-  box-shadow: 0 2.25rem 6rem rgba(0, 0, 0, 0.34);
   transition:
     border-color 180ms ease,
     transform 500ms cubic-bezier(0.2, 0.75, 0.25, 1);
@@ -153,8 +126,8 @@
   align-items: center;
   padding-inline: 0.85rem;
   color: var(--muted-soft);
-  font-size: 0.65rem;
-  font-weight: 700;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -199,28 +172,15 @@
   margin-bottom: 2.5rem;
 }
 
-.offerIntro h2,
-.sectionHeading h2,
-.engagementHeading h2,
-.teachingGrid h2,
-.finalInner h2 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 400;
-  line-height: 0.94;
-  letter-spacing: -0.042em;
-  text-wrap: balance;
-}
-
 .offerIntro h2 {
   max-width: 13ch;
-  font-size: clamp(3rem, 4.4vw, 4.8rem);
 }
 
 .offerIntro > p:last-child {
   max-width: 31rem;
   color: var(--muted);
-  font-size: 0.94rem;
-  line-height: 1.72;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 .serviceCatalog {
@@ -246,9 +206,9 @@
 .serviceNumber {
   padding-top: 0.3rem;
   color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
 }
 
 .serviceCopy {
@@ -257,20 +217,14 @@
 
 .serviceCopy h3 {
   max-width: 18ch;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2rem, 2.7vw, 3.15rem);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.038em;
-  text-wrap: balance;
 }
 
 .serviceCopy > p {
-  max-width: 35rem;
+  max-width: var(--measure-lead);
   margin-top: 0.8rem;
   color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.68;
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
 }
 
 .serviceIncludes {
@@ -283,9 +237,9 @@
   display: block;
   margin-bottom: 0.7rem;
   color: var(--muted-soft);
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.11em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
 }
 
@@ -300,7 +254,7 @@
   position: relative;
   padding-left: 0.85rem;
   color: rgba(242, 236, 228, 0.86);
-  font-size: 0.76rem;
+  font-size: var(--text-small);
   line-height: 1.5;
 }
 
@@ -331,14 +285,13 @@
 
 .sectionHeading h2 {
   max-width: 16ch;
-  font-size: clamp(3rem, 4.3vw, 4.7rem);
 }
 
 .sectionHeading > p:last-child {
-  max-width: 37rem;
+  max-width: var(--measure-lead);
   color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.7;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 .proofGrid {
@@ -370,29 +323,23 @@
 
 .proofCopy > p:first-child {
   color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
 }
 
 .proofCopy h3 {
   max-width: 17ch;
   margin-top: 0.65rem;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2rem, 2.5vw, 2.8rem);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.038em;
-  text-wrap: balance;
 }
 
 .proofCopy h3 + p {
-  max-width: 42rem;
+  max-width: var(--measure-body);
   margin-top: 0.7rem;
   color: var(--muted);
-  font-size: 0.86rem;
-  line-height: 1.7;
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
 }
 
 .proofCopy > a {
@@ -401,8 +348,8 @@
   align-items: center;
   margin-top: 0.7rem;
   color: var(--sand);
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   transition: color 180ms ease;
@@ -423,10 +370,9 @@
   padding-bottom: 4rem;
 }
 
-.engagementHeading h2 {
+.engagementTitle {
   max-width: 12ch;
   margin-top: 1.25rem;
-  font-size: clamp(3rem, 4.2vw, 4.7rem);
 }
 
 .engagementList {
@@ -444,24 +390,16 @@
 
 .engagementRow article > span {
   color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.engagementRow h3 {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(1.8rem, 2.3vw, 2.7rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.03em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
 }
 
 .engagementRow article > p,
 .engagementRow article > div p {
   color: var(--muted);
-  font-size: 0.8rem;
-  line-height: 1.65;
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
 }
 
 .engagementRow article > div {
@@ -473,9 +411,9 @@
   display: block;
   margin-bottom: 0.45rem;
   color: var(--muted-soft);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
 }
 
@@ -492,22 +430,16 @@
   align-items: start;
 }
 
-.teachingGrid h2 {
+.teachingTitle {
   max-width: 14ch;
   margin-top: 1rem;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.6rem, 3.8vw, 4.2rem);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  text-wrap: balance;
 }
 
 .teachingGrid > p {
-  max-width: 37rem;
+  max-width: var(--measure-lead);
   color: var(--muted);
-  font-size: 0.92rem;
-  line-height: 1.7;
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
 }
 
 .teachingGrid ul {
@@ -521,8 +453,8 @@
 
 .teachingGrid ul > li {
   color: rgba(242, 236, 228, 0.86);
-  font-size: 0.72rem;
-  font-weight: 750;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -543,16 +475,16 @@
 
 .trustStack dt {
   color: var(--accent);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
   text-transform: uppercase;
 }
 
 .trustStack dd {
   color: rgba(242, 236, 228, 0.84);
-  font-size: 0.78rem;
-  line-height: 1.6;
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
 }
 
 .finalCta {
@@ -568,10 +500,9 @@
   align-items: end;
 }
 
-.finalInner h2 {
+.finalTitle {
   max-width: 18ch;
   margin-top: 1.4rem;
-  font-size: clamp(3.35rem, 5.8vw, 6.2rem);
 }
 
 .finalActions {
@@ -592,8 +523,8 @@
   min-height: 2.75rem;
   align-items: center;
   color: var(--muted-soft);
-  font-size: 0.75rem;
-  font-weight: 750;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
   letter-spacing: 0.09em;
   text-transform: uppercase;
   transition: color 180ms ease;
@@ -626,7 +557,7 @@
     align-items: end;
   }
 
-  .offerIntro > .kicker {
+  .offerIntro > p:first-child {
     grid-column: 1 / -1;
   }
 
@@ -705,19 +636,9 @@
   }
 }
 
-@media (min-width: 1280px) {
-  .introStatement h1 {
-    font-size: clamp(5.2rem, 5.7vw, 6.25rem);
-  }
-}
-
 @media (max-width: 767px) {
   .introInner {
     padding-top: 4.8rem;
-  }
-
-  .introMeta > p:last-child {
-    display: none;
   }
 
   .introStatement {
@@ -725,18 +646,12 @@
     padding-block: 1.5rem 1.65rem;
   }
 
-  .introStatement h1 {
+  .introTitle {
     max-width: 15ch;
-    font-size: clamp(2.55rem, 10.8vw, 3.25rem);
-    line-height: 0.92;
   }
 
   .introSummary {
     padding-top: 0.9rem;
-  }
-
-  .introSummary > p {
-    line-height: 1.58;
   }
 
   .introActions {
@@ -754,18 +669,10 @@
     margin-bottom: 1.5rem;
   }
 
-  .offerIntro h2 {
-    font-size: clamp(2.5rem, 10.5vw, 3.2rem);
-  }
-
   .serviceItem {
     grid-template-columns: 1.75rem minmax(0, 1fr);
     gap: 1rem 0.75rem;
     padding: 1.5rem 1.15rem;
-  }
-
-  .serviceCopy h3 {
-    font-size: clamp(1.95rem, 9vw, 2.65rem);
   }
 
   .serviceIncludes ul {
@@ -794,19 +701,6 @@
     gap: 1.1rem;
   }
 
-  .proofImage {
-    aspect-ratio: 16 / 9;
-  }
-
-  .proofCopy h3 {
-    margin-top: 0.65rem;
-    font-size: clamp(2rem, 9vw, 2.7rem);
-  }
-
-  .proofCopy h3 + p {
-    margin-top: 0.75rem;
-  }
-
   .engagementRow article {
     grid-template-columns: 2rem minmax(0, 1fr);
     gap: 0.55rem 0.75rem;
@@ -832,11 +726,6 @@
     margin-bottom: 0;
   }
 
-  .teachingGrid h2,
-  .finalInner h2 {
-    font-size: clamp(2.9rem, 12.5vw, 4.2rem);
-  }
-
   .teaching {
     padding-block: 3.25rem;
   }
@@ -847,10 +736,6 @@
 }
 
 @media (max-width: 430px) {
-  .introStatement h1 {
-    font-size: clamp(2.7rem, 11.6vw, 3.35rem);
-  }
-
   .browserBar {
     grid-template-columns: 1fr auto;
   }
