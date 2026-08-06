@@ -30,8 +30,8 @@ export default function AboutPage() {
             </h1>
             <div className={styles.heroSummary}>
               <p>
-                A winding route through COBOL, WordPress, a layoff, a classroom, and eventually a
-                practice of my own.
+                Ten years from COBOL on an American Express mainframe to designing and building
+                complete products — by way of a layoff, a classroom, and a studio.
               </p>
             </div>
           </div>
@@ -42,34 +42,39 @@ export default function AboutPage() {
         <div className={styles.shell}>
           <div className={styles.column}>
             <div className={styles.intro}>
+              <p className={styles.chapterLabel}>American Express · 2015</p>
               <p>
                 I did not start on the web. I started on a mainframe, writing COBOL as an intern at
                 American Express.
               </p>
               <p>
-                It was not glamorous work, and that turned out to be the point. Mainframe code runs
-                the parts of a business that cannot be down, on systems that were old before I got
-                there and will outlive anything I have written since. You learn to read code you did
-                not write, change it carefully, and respect the blast radius of a mistake. I still
-                think about software that way.
+                Eight weeks of dedicated mainframe training, then four months on a team writing
+                COBOL for high-volume transaction programs. It was not glamorous, and that turned
+                out to be the point. Mainframe code runs the parts of a business that cannot be
+                down, on systems that were old before I got there and will outlive anything I have
+                written since. You learn to read code you did not write, change it carefully, and
+                respect the blast radius of a mistake. I still think about software that way. They
+                offered me a job as a junior mainframe engineer when it ended. I took a position
+                elsewhere.
               </p>
             </div>
 
             <div className={styles.chapter}>
-              <p className={styles.chapterLabel}>Passport Health</p>
+              <p className={styles.chapterLabel}>Passport Health · 2016–2017</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Finding the web.</h2>
               <p>
-                My next job moved me onto the web, doing development in a WordPress environment. It
-                was the first time I owned something people actually looked at — templates, content
-                models, the small daily negotiation between what a design wants and what a CMS will
-                comfortably do. I liked it immediately, and I learned the publishing side of the web
-                the way you only can by maintaining a real site.
+                That position put me on the web as a front-end developer, working in WordPress. I
+                built page templates used across 250 clinics and the central site, and picked up the
+                unglamorous half of the job along the way: content models, local and organic SEO,
+                analytics, and the small daily negotiation between what a design wants and what a
+                CMS will comfortably do. I liked it immediately, and I learned the publishing side
+                of the web the way you only can by maintaining a real site.
               </p>
               <p>Then I was let go.</p>
             </div>
 
             <div className={styles.chapter}>
-              <p className={styles.chapterLabel}>Starting over</p>
+              <p className={styles.chapterLabel}>Starting over · 2017–2019</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Back to being a student.</h2>
               <p>
                 I enrolled in a web development bootcamp. Going back to a classroom after having had
@@ -86,50 +91,66 @@ export default function AboutPage() {
             </div>
 
             <div className={styles.chapter}>
-              <p className={styles.chapterLabel}>Nucamp</p>
+              <p className={styles.chapterLabel}>Upwork · 2019</p>
+              <h2 className={`display-4 ${styles.chapterTitle}`}>Working for myself.</h2>
+              <p>
+                In 2019 I started freelancing, mostly through Upwork. It began as a way to keep
+                building on my own terms and became the thing I was actually suited to: talking
+                directly to the person who needs the work, scoping it honestly, and owning the
+                outcome instead of a ticket.
+              </p>
+            </div>
+
+            <div className={styles.chapter}>
+              <p className={styles.chapterLabel}>Nucamp · 2020–present</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>
                 The other side of the classroom.
               </h2>
               <p>
-                Then I ended up back at a bootcamp — this time teaching. I became a web development
-                instructor at Nucamp, working with people making the same career change I had made a
-                few years earlier.
+                In 2020 I ended up back at a bootcamp — this time teaching. I have been an
+                instructor at Nucamp ever since, running a weekly workshop in React, React Native,
+                DevOps, and cybersecurity for people making the same career change I had made a few
+                years earlier.
               </p>
               <p>
                 Teaching changed how I work more than any job before it. You cannot hand-wave in
                 front of a class. If you cannot explain why one approach beats another in plain
-                language, you do not understand it well enough yet, and thirty people will find the
-                hole in your reasoning before you do. That pressure is why I still write things down
-                the way I do: clear tradeoffs, documented decisions, and a handoff someone else can
-                actually pick up.
+                language, you do not understand it well enough yet, and a room full of students will
+                find the hole in your reasoning before you do. That pressure is why I still write
+                things down the way I do: clear tradeoffs, documented decisions, and a handoff
+                someone else can actually pick up.
               </p>
             </div>
 
             <div className={styles.chapter}>
-              <p className={styles.chapterLabel}>Going independent</p>
-              <h2 className={`display-4 ${styles.chapterTitle}`}>A student, and a first client.</h2>
+              <p className={styles.chapterLabel}>Life Sciences Web Studio · 2023–2024</p>
+              <h2 className={`display-4 ${styles.chapterTitle}`}>A student, and a partner.</h2>
               <p>
-                One of my students wanted to try freelancing. So we tried it together — real
-                projects, real clients, the two of us figuring out the parts of the work that no
-                curriculum covers: scoping, pricing, saying no, and shipping something you are
-                willing to put your name on.
+                One of my students wanted to try freelancing for real. So we built something
+                together — a studio making websites for the life sciences sector, the two of us
+                working through the parts no curriculum covers: pricing, scoping, saying no,
+                security and compliance, and putting your name on something a client depends on.
               </p>
               <p>
-                That became a practice. I put it on Upwork, kept taking on work, and gradually
-                stopped thinking of it as a side project. Today I run it independently from{" "}
-                {site.location}, designing products and building the systems behind them — the same
-                two halves of the job I have been circling since the mainframe.
+                I co-owned it for a little over a year. Running a studio with someone you taught is
+                a strange and clarifying experience — every shortcut you ever demonstrated comes
+                back to you as a question.
               </p>
             </div>
 
             <div className={styles.chapter}>
-              <p className={styles.chapterLabel}>Now</p>
+              <p className={styles.chapterLabel}>Now · {site.location}</p>
               <h2 className={`display-4 ${styles.chapterTitle}`}>Why the range matters.</h2>
+              <p>
+                After two years as a full-stack engineer and product designer at City Press Media, I
+                am back to running my own practice — still teaching at Nucamp, and taking on product
+                and platform work independently.
+              </p>
               <p>
                 The odd shape of this path is the useful part. COBOL taught me to respect systems I
                 did not write. WordPress taught me what editors and content teams actually need.
-                Agency work taught me to scope and finish. Teaching taught me to explain.
-                Freelancing taught me to own the whole outcome.
+                Agency work taught me to scope and finish. Teaching taught me to explain. Running a
+                studio taught me to own the whole outcome.
               </p>
               <p>
                 It means I can sit with a design decision and an infrastructure decision in the same

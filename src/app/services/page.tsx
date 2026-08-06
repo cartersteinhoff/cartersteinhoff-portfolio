@@ -356,13 +356,13 @@ export default function ServicesPage() {
         <div className={styles.shell}>
           <div className={styles.teachingGrid}>
             <div>
-              <p className="eyebrow">Former Nucamp web development instructor</p>
+              <p className="eyebrow">Nucamp web development instructor</p>
               <h2 id="teaching-title" className={`display-3 ${styles.teachingTitle}`}>
                 Clear thinking. Maintainable handoffs.
               </h2>
             </div>
             <p>
-              Teaching sharpened how I explain tradeoffs and document decisions. You get a system
+              Teaching sharpens how I explain tradeoffs and document decisions. You get a system
               your team can understand and extend.
             </p>
             <ul aria-label="Handoff principles">
