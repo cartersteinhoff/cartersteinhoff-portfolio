@@ -28,6 +28,15 @@ export default function Home() {
             className="hero-scene hero-scene-moonrise"
             data-hero-scene="moonrise"
           />
+          <Image
+            src="/images/desk-night-hero.webp"
+            alt=""
+            fill
+            loading="eager"
+            sizes="100vw"
+            className="hero-scene hero-scene-desk"
+            data-hero-scene="desk"
+          />
           <div className="hero-light-shift" />
         </div>
         <div className="hero-scrim" />
