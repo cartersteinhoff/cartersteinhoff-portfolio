@@ -1,0 +1,235 @@
+/* About — the services/portfolio hero treatment, then a single column of
+ * prose. Typography comes from the global display-* utilities and
+ * --text-* tokens; this module carries layout and surfaces only. */
+
+.page {
+  overflow: clip;
+  background: var(--ink);
+  color: var(--sand);
+}
+
+.shell {
+  width: min(100%, 93.75rem);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Hero */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  background:
+    radial-gradient(circle at 86% 0%, rgba(219, 82, 48, 0.22), transparent 30rem),
+    linear-gradient(116deg, #09090b 0%, #130f14 64%, #231216 100%);
+}
+
+.heroGridLines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+  background-size: 5.5rem 5.5rem;
+  mask-image: linear-gradient(110deg, transparent, black 62%, black);
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  padding-top: 7.5rem;
+}
+
+.heroStatement {
+  display: grid;
+  gap: 2.5rem;
+  align-items: end;
+  padding-block: clamp(2.5rem, 3.4vw, 3.5rem);
+  animation: about-rise 720ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.heroTitle {
+  max-width: 17ch;
+  margin: 0;
+}
+
+.heroTitle em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.heroSummary {
+  max-width: var(--measure-lead);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 1.25rem;
+}
+
+.heroSummary > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+}
+
+/* Story */
+
+.story {
+  padding-block: 4rem;
+  background:
+    radial-gradient(circle at 96% 4%, rgba(141, 49, 81, 0.12), transparent 32rem), var(--dusk);
+}
+
+/* A single measured column. Long-form reading wants one comfortable line
+ * length, not the full 93.75rem frame. */
+.prose {
+  max-width: var(--measure-body);
+}
+
+.prose p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+/* The opening paragraph carries a little more weight, so the eye has an
+ * obvious place to start. */
+.prose p:first-child {
+  color: var(--sand);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+}
+
+.prose strong {
+  color: var(--sand);
+  font-weight: 600;
+}
+
+/* Chapter rules between phases of the story. */
+.chapter {
+  display: grid;
+  gap: 0.9rem;
+  border-top: 1px solid rgba(242, 236, 228, 0.16);
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+}
+
+.chapterLabel {
+  margin: 0;
+  color: var(--accent);
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
+  line-height: var(--text-meta--line-height);
+  text-transform: uppercase;
+}
+
+.chapterTitle {
+  max-width: 20ch;
+  /* The prose paragraphs carry no top margin, so the gap under a chapter
+   * title has to come from here or the two would touch. */
+  margin: 0 0 1.1rem;
+}
+
+/* Closing */
+
+.closing {
+  padding-block: 4rem;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(220, 90, 53, 0.22), transparent 28rem),
+    linear-gradient(145deg, var(--sunset-deep), var(--ink) 78%);
+}
+
+.closingLayout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.closingLayout > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.closing h2 {
+  max-width: 14ch;
+  margin: 0;
+}
+
+.closing h2 span {
+  font-style: italic;
+}
+
+@media (min-width: 640px) {
+  .shell {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .story {
+    padding-block: 5.5rem;
+  }
+
+  .closing {
+    padding-block: 5.5rem;
+  }
+
+  .chapter {
+    grid-template-columns: minmax(10rem, 0.32fr) minmax(0, 1.68fr);
+    gap: 2.5rem;
+    align-items: baseline;
+  }
+}
+
+@media (min-width: 900px) {
+  .heroStatement {
+    grid-template-columns: minmax(0, 1.35fr) minmax(24rem, 0.65fr);
+    gap: clamp(3rem, 7vw, 8rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .heroInner {
+    padding-top: 4.8rem;
+  }
+
+  .heroStatement {
+    gap: 1.25rem;
+    padding-block: 1.5rem 1.65rem;
+  }
+
+  .heroTitle {
+    max-width: 15ch;
+  }
+
+  .heroSummary {
+    padding-top: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroStatement {
+    animation: none;
+  }
+}
+
+@keyframes about-rise {
+  from {
+    transform: translateY(1.25rem);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}

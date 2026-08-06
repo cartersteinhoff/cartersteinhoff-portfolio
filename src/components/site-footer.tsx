@@ -18,6 +18,9 @@ export function SiteFooter() {
           <Link className="footer-link" href="/services">
             Services
           </Link>
+          <Link className="footer-link" href="/about">
+            About
+          </Link>
           <Link className="footer-link" href="/contact">
             Contact
           </Link>

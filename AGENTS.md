@@ -50,7 +50,7 @@ The contact form posts JSON to `/api/contact`, verifies requests with BotID Basi
 
 - Never commit `.env*` values or `.vercel` project metadata.
 - Set `NEXT_PUBLIC_SITE_URL` to the deployed/custom origin and `NEXT_PUBLIC_CONTACT_EMAIL` to Carter's confirmed inbox.
-- Before a production deploy, verify `/`, `/portfolio`, every `/portfolio/[slug]` case study, `/services`, `/contact`, `/robots.txt`, and `/sitemap.xml` locally and again on the deployed origin.
+- Before a production deploy, verify `/`, `/portfolio`, every `/portfolio/[slug]` case study, `/services`, `/about`, `/contact`, `/robots.txt`, and `/sitemap.xml` locally and again on the deployed origin.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
