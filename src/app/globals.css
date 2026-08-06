@@ -2879,6 +2879,8 @@ textarea:focus-visible {
   letter-spacing: 0.1em;
 }
 
+/* biome-ignore lint/style/noDescendingSpecificity: scoped to a different
+   component than `.case-screen figcaption p`; no element matches both. */
 .case-ownership-item p {
   color: #d6d3d1;
   font-size: clamp(1rem, 1.3vw, 1.15rem);
@@ -3130,6 +3132,8 @@ textarea:focus-visible {
   letter-spacing: -0.035em;
 }
 
+/* biome-ignore lint/style/noDescendingSpecificity: scoped to a different
+   component than `.case-screen figcaption p`; no element matches both. */
 .case-status-action p {
   max-width: 38rem;
   color: var(--muted);
