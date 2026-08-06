@@ -82,7 +82,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         "@id": personId,
         name: site.name,
         url: `${siteUrl}/`,
-        image: getAbsoluteUrl(site.personImage),
         jobTitle: site.role,
         description: site.description,
         email: site.email,

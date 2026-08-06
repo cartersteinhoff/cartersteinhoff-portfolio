@@ -8,15 +8,29 @@ export default function Home() {
   return (
     <main>
       <section className="home-hero">
-        <Image
-          src="/images/studio-hero.webp"
-          alt="Carter Steinhoff working at a desk in his Phoenix studio"
-          fill
-          preload
-          unoptimized
-          sizes="100vw"
-          className="hero-image object-cover"
-        />
+        <div className="hero-scenes" aria-hidden="true">
+          <Image
+            src="/images/studio-hero.webp"
+            alt=""
+            fill
+            preload
+            unoptimized
+            sizes="100vw"
+            className="hero-scene hero-scene-studio"
+            data-hero-scene="studio"
+          />
+          <Image
+            src="/images/phoenix-moonrise-hero.webp"
+            alt=""
+            fill
+            loading="eager"
+            unoptimized
+            sizes="100vw"
+            className="hero-scene hero-scene-moonrise"
+            data-hero-scene="moonrise"
+          />
+          <div className="hero-light-shift" />
+        </div>
         <div className="hero-scrim" />
 
         <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-end px-5 pb-8 pt-32 md:px-8 md:pb-10">
@@ -106,88 +120,6 @@ export default function Home() {
 
           <Reveal className="mt-10 flex justify-end md:mt-12">
             <ArrowLink href="/portfolio">See the portfolio</ArrowLink>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="sunset-band relative overflow-hidden bg-[var(--sunset-deep)] px-5 py-16 text-[var(--sand)] md:px-8 md:py-20">
-        <div className="desert-orbit" aria-hidden="true" />
-        <div className="relative z-10 mx-auto max-w-[1500px]">
-          <Reveal className="grid gap-7 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-            <div>
-              <p className="section-label">Services</p>
-              <h2 className="section-title mt-7">
-                Design the screen.
-                <br />
-                Build the system.
-              </h2>
-            </div>
-            <p className="section-lead md:ml-auto">
-              Web design, custom CMS development, AI automation, and cloud delivery—one connected
-              practice.
-            </p>
-          </Reveal>
-
-          <div className="home-service-list mt-12 md:mt-16">
-            {[
-              [
-                "01",
-                "Design & product",
-                "Website design, product UX, visual direction, prototyping, and design systems.",
-              ],
-              [
-                "02",
-                "Web, CMS & custom plugins",
-                "Next.js, React, WordPress, custom themes and plugins, APIs, and editorial systems.",
-              ],
-              [
-                "03",
-                "AI, automation & cloud",
-                "AI workflows, systems integration, AWS, Azure, Google Cloud, Vercel, and CI/CD.",
-              ],
-            ].map(([number, title, copy]) => (
-              <Reveal key={number} className="home-service-row">
-                <span>{number}</span>
-                <h3>{title}</h3>
-                <p>{copy}</p>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal className="mt-10 flex justify-end md:mt-12">
-            <ArrowLink href="/services">Explore all services</ArrowLink>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="grid bg-[var(--ink)] text-stone-100 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative min-h-[22rem] overflow-hidden md:min-h-[28rem]">
-          <Image
-            src="/images/phoenix-night.webp"
-            alt="Phoenix city lights and the Sonoran Desert at night"
-            fill
-            unoptimized
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-[center_68%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
-        </div>
-        <div className="flex items-center px-5 py-16 md:px-14 md:py-16">
-          <Reveal>
-            <p className="section-label">Experience</p>
-            <h2 className="section-title mt-7 max-w-3xl">Teaching made the work sharper.</h2>
-            <p className="mt-7 text-[0.72rem] font-bold tracking-[0.12em] text-[var(--accent)] uppercase">
-              Former web development instructor · Nucamp
-            </p>
-            <p className="section-lead mt-5">
-              It still shapes how I build: make the idea clear, the system understandable, and the
-              handoff useful.
-            </p>
-            <div className="mt-8">
-              <ArrowLink href="/about" inverse>
-                More about me
-              </ArrowLink>
-            </div>
           </Reveal>
         </div>
       </section>
