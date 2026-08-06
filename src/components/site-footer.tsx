@@ -47,7 +47,12 @@ export function SiteFooter() {
             Terms
           </Link>
         </nav>
-        <span className="ml-auto">Made in the desert</span>
+        <span className="ml-auto">
+          Made in the desert{" "}
+          <span aria-hidden="true" className="not-italic">
+            🌵
+          </span>
+        </span>
       </div>
     </footer>
   );
