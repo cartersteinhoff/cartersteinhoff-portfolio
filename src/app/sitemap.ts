@@ -21,9 +21,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/services`,
       changeFrequency: "monthly",
       priority: 0.8,
+      /* Must match what the page actually renders — the proof cards. */
       images: [
-        getAbsoluteUrl("/images/services-cms-system.webp"),
-        getAbsoluteUrl("/images/services-ai-workflow.webp"),
+        getAbsoluteUrl("/images/retailboss-research.webp"),
+        getAbsoluteUrl("/images/pay-it-forward-shows.webp"),
+        getAbsoluteUrl("/images/openworkspace-how-it-works.webp"),
       ],
     },
     {
