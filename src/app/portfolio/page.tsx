@@ -78,6 +78,36 @@ export default function PortfolioPage() {
                   domain={project.domain}
                   frameable={!nonEmbeddableSlugs.has(project.slug)}
                   title={project.title}
+                  /* One thing to scan, then one thing to read. The title
+                   * is the only large type on the card, so the eye lands
+                   * there first; the meta line hangs off it as a caption,
+                   * and the headline is the single sentence of substance.
+                   * The role line that used to sit here said "Design,
+                   * development & …" on every card, so it read as noise
+                   * rather than information — it lives on the case study
+                   * page, where it's about one project. */
+                  copy={
+                    <div className={styles.cardBody}>
+                      <h2
+                        id={`project-${project.slug}`}
+                        className={`display-4 ${styles.cardTitle}`}
+                      >
+                        {project.title}
+                      </h2>
+                      <p className={styles.cardMeta}>
+                        <span className={styles.cardNumber}>{project.number}</span>
+                        <span>{project.shortPlatform}</span>
+                        <span>{project.year}</span>
+                      </p>
+                      <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
+                    </div>
+                  }
+                  primaryAction={
+                    <ArrowLink href={`/portfolio/${project.slug}`}>
+                      Case study
+                      <span className="sr-only">: {project.title}</span>
+                    </ArrowLink>
+                  }
                 >
                   {/* Browser chrome frames the screenshot as a product,
                    * which is what keeps a bright site from reading as a
@@ -107,33 +137,6 @@ export default function PortfolioPage() {
                     </div>
                   </div>
                 </LivePreview>
-
-                <p className={styles.cardMeta}>
-                  <span className={styles.cardNumber}>{project.number}</span>
-                  <span>{project.shortPlatform}</span>
-                  <span className={styles.cardYear}>{project.year}</span>
-                </p>
-
-                <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
-                  {project.title}
-                </h2>
-                <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
-                <p className={styles.cardSummary}>{project.summary}</p>
-
-                <dl className={styles.cardFacts}>
-                  <div>
-                    <dt>Role</dt>
-                    <dd>{project.caseStudy.role}</dd>
-                  </div>
-                  <div>
-                    <dt>System</dt>
-                    <dd>{project.caseStudy.system}</dd>
-                  </div>
-                </dl>
-
-                <div className={styles.cardActions}>
-                  <ArrowLink href={`/portfolio/${project.slug}`}>Read the case study</ArrowLink>
-                </div>
               </article>
             );
           })}

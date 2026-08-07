@@ -15,6 +15,22 @@ type LivePreviewProps = {
   title: string;
   /** The static, art-directed plate shown until the visitor opts in. */
   children: ReactNode;
+  /**
+   * The card's title and copy. It sits between the plate and the action
+   * row, so it is passed in rather than placed by the caller: the three
+   * blocks have to be siblings in *this* order for keyboard focus and
+   * screen-reader reading order to match what's on screen. Doing it with
+   * CSS `order` instead would send focus to the bottom action row before
+   * the title above it.
+   */
+  copy?: ReactNode;
+  /**
+   * The card's primary action, rendered first in the same row as the
+   * preview controls. Each card used to carry two separate action rows —
+   * one under the plate, one under the copy — which read as three
+   * competing links with no primary. One row, primary first.
+   */
+  primaryAction?: ReactNode;
   className?: string;
 };
 
@@ -32,39 +48,32 @@ export function LivePreview({
   frameable,
   title,
   children,
+  copy,
+  primaryAction,
   className = "",
 }: LivePreviewProps) {
   const [live, setLive] = useState(false);
   const regionId = useId();
 
+  /* "Visit site", not "Open retailboss.co" — the domain is already
+   * printed in the browser bar directly above, and repeating it made two
+   * of the card's shouty uppercase fragments say the same thing. */
   const externalLink = (
     <a className="live-preview-link" href={url} target="_blank" rel="noreferrer">
-      Open {domain}
+      Visit site
       <span aria-hidden="true">↗</span>
-      <span className="sr-only"> (opens in a new tab)</span>
+      <span className="sr-only"> ({domain}, opens in a new tab)</span>
     </a>
   );
 
-  if (!frameable) {
-    /* No toggle, but the bar keeps its single-row shape so this card
-     * still lines up with the rest of the gallery. */
-    return (
-      <div className={className}>
-        {children}
-        <div className="live-preview-bar">
-          <span className="live-preview-note" title="This site sends X-Frame-Options: DENY">
-            Preview unavailable
-          </span>
-          {externalLink}
-        </div>
-      </div>
-    );
-  }
-
+  /* `display: contents` on the wrapper: the plate, the copy, and the
+   * action row become direct children of the card's grid, so the card
+   * still controls their spacing and the middle block still stretches to
+   * keep action rows aligned across a row of cards. */
   return (
-    <div className={className}>
-      <div id={regionId}>
-        {live ? (
+    <div className={`live-preview ${className}`}>
+      <div id={regionId} className="live-preview-region">
+        {live && frameable ? (
           <div className="live-preview-stage">
             <iframe
               src={url}
@@ -80,18 +89,31 @@ export function LivePreview({
         )}
       </div>
 
+      {copy}
+
       <div className="live-preview-bar">
-        <button
-          type="button"
-          className="live-preview-toggle"
-          aria-expanded={live}
-          aria-controls={regionId}
-          onClick={() => setLive((value) => !value)}
-        >
-          {live ? "Close live preview" : "Explore live site"}
-          <span aria-hidden="true">{live ? "×" : "→"}</span>
-        </button>
-        {externalLink}
+        {primaryAction}
+        <span className="live-preview-secondary">
+          {frameable ? (
+            <button
+              type="button"
+              className="live-preview-toggle"
+              aria-expanded={live}
+              aria-controls={regionId}
+              onClick={() => setLive((value) => !value)}
+            >
+              {live ? "Close preview" : "Preview here"}
+            </button>
+          ) : (
+            /* Sites that send X-Frame-Options: DENY get the outbound
+             * link only, but the row keeps its shape so the gallery
+             * stays aligned. */
+            <span className="live-preview-note" title="This site cannot be embedded">
+              Preview unavailable
+            </span>
+          )}
+          {externalLink}
+        </span>
       </div>
     </div>
   );

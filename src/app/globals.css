@@ -175,23 +175,50 @@
   background: #fff;
 }
 
+/* The wrapper contributes no box of its own: the plate and this action
+ * row become items in whatever grid the card sets up, so the card can
+ * place its title and copy between them. */
+.live-preview {
+  display: contents;
+}
+
+.live-preview-region {
+  min-width: 0;
+}
+
+/* One action row per card, primary first. The card used to carry two —
+ * these controls under the plate and a "Read the case study" link under
+ * the copy — which read as three competing links with no primary. The
+ * rule above it is what separates the actions from the copy, so the row
+ * itself can stay tight. */
 .live-preview-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 1.5rem;
+  gap: 0.25rem 1.5rem;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(242, 236, 228, 0.16);
-  padding-block: 0.6rem 0.7rem;
+  border-top: 1px solid rgba(242, 236, 228, 0.12);
+  padding-top: 0.35rem;
 }
 
+/* The two quiet controls stay together at the far end, so the row reads
+ * as "one primary action, then options" rather than three peers. */
+.live-preview-secondary {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.15rem;
+  align-items: center;
+}
+
+/* 2.25rem = 36px. Below the 44px AAA target but comfortably above the
+ * 24px WCAG 2.2 AA minimum, and it takes 26px off every card. */
 .live-preview-toggle,
 .live-preview-link {
   display: inline-flex;
-  min-height: 2.75rem;
+  min-height: 2.25rem;
   align-items: center;
-  gap: 0.6rem;
-  color: var(--accent);
+  gap: 0.45rem;
+  color: var(--muted-soft);
   font-size: var(--text-meta);
   font-weight: var(--text-meta--font-weight);
   letter-spacing: var(--text-meta--letter-spacing);
@@ -204,10 +231,6 @@
   border: 0;
   background: none;
   cursor: pointer;
-}
-
-.live-preview-link {
-  color: var(--muted-soft);
 }
 
 .live-preview-note {
