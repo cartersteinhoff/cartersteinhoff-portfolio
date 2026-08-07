@@ -125,6 +125,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
             <dl className="case-hero-facts">
               <div>
+                <dt>Year</dt>
+                <dd>{project.year}</dd>
+              </div>
+              <div>
                 <dt>Role</dt>
                 <dd>{project.caseStudy.role}</dd>
               </div>

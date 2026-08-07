@@ -104,6 +104,7 @@ export const portfolioProjects = [
   {
     number: "01",
     slug: "retailboss",
+    year: "2026",
     title: "RetailBoss",
     url: "https://retailboss.co/",
     domain: "retailboss.co",
@@ -195,6 +196,7 @@ export const portfolioProjects = [
   {
     number: "02",
     slug: "pay-it-forward-card-shows",
+    year: "2026",
     title: "Pay It Forward Card Shows",
     url: "https://www.payitforwardcardshows.com/",
     domain: "payitforwardcardshows.com",
@@ -287,6 +289,7 @@ export const portfolioProjects = [
   {
     number: "03",
     slug: "openworkspace",
+    year: "2026",
     title: "OpenWorkspace",
     url: "https://openworkspace.com/",
     domain: "openworkspace.com",
@@ -377,6 +380,7 @@ export const portfolioProjects = [
   {
     number: "04",
     slug: "provepharm",
+    year: "2024",
     title: "Provepharm",
     url: "https://provepharm.vercel.app/",
     domain: "provepharm.vercel.app",
@@ -468,6 +472,7 @@ export const portfolioProjects = [
   {
     number: "05",
     slug: "anne-newgarden",
+    year: "2026",
     title: "Anne Newgarden",
     url: "https://annenewgarden.vercel.app/",
     domain: "annenewgarden.vercel.app",
@@ -579,6 +584,7 @@ export const portfolioProjects = [
   {
     number: "06",
     slug: "local-city-places",
+    year: "2026",
     title: "Local City Places",
     url: "https://localcityplaces.com/",
     domain: "localcityplaces.com",

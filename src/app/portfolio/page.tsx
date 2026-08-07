@@ -32,11 +32,11 @@ function getProject(slug: string): PortfolioProject {
  * the only ranking signal. */
 const orderedProjects = [
   getProject("retailboss"),
-  getProject("local-city-places"),
   getProject("openworkspace"),
   getProject("pay-it-forward-card-shows"),
   getProject("anne-newgarden"),
   getProject("provepharm"),
+  getProject("local-city-places"),
 ];
 
 /* Numbered by position on this page, not by the stored `number`. */
@@ -130,6 +130,7 @@ export default function PortfolioPage() {
                 <p className={styles.cardMeta}>
                   <span className={styles.cardNumber}>{displayNumbers.get(project.slug)}</span>
                   <span>{project.shortPlatform}</span>
+                  <span className={styles.cardYear}>{project.year}</span>
                 </p>
 
                 <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
