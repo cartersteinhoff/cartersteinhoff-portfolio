@@ -576,4 +576,96 @@ export const portfolioProjects = [
       ],
     },
   },
+  {
+    number: "06",
+    slug: "local-city-places",
+    title: "Local City Places",
+    url: "https://localcityplaces.com/",
+    domain: "localcityplaces.com",
+    platform: "Next.js · Postgres · Stripe",
+    shortPlatform: "Next.js · Postgres · Stripe",
+    externalLabel: "Live site",
+    status: "Live",
+    statusDetail: "Live and in production",
+    summary: "A local business directory and membership rewards platform for the Phoenix metro.",
+    seoDescription:
+      "Local City Places case study: a Next.js directory and membership rewards platform with merchant self-service pages, Stripe billing, and role-based dashboards on Postgres.",
+    description:
+      "I designed and built Local City Places end to end — a Phoenix-metro business directory where merchants claim and run their own listing, members earn rewards, and admins operate the whole thing from role-based dashboards.",
+    services: ["Product design", "Full-stack development", "Custom CMS", "Payments & cloud"],
+    image: "/images/local-city-places-project.webp",
+    imageAlt:
+      "Local City Places homepage showing a grid of Phoenix metro merchants with photos, cities, and categories",
+    caseStudy: {
+      role: "Product design & full-stack development",
+      system: "Next.js · Drizzle · Neon Postgres · Stripe · Vercel",
+      headline: "A directory, a rewards programme, and three dashboards in one platform.",
+      overview:
+        "Local City Places is a business directory for the Phoenix metro built around three different people: the resident browsing merchants, the merchant running their own listing, and the administrator operating the platform. Each gets a separate dashboard on a shared data model.",
+      detail:
+        "The work covers the public directory, a multi-step merchant onboarding flow with address autocomplete, member accounts with referral codes and sweepstakes entries, merchant offers and claims, reviews with photos, Stripe billing, and an email campaign system with per-recipient logging and preferences.",
+      contributions: [
+        "Product design and full-stack Next.js development across public site and dashboards",
+        "Role-based admin, merchant, and member areas on one Postgres schema",
+        "Merchant onboarding, offers, claims, and review systems with Stripe billing",
+        "Passwordless magic-link authentication and a logged email campaign system",
+      ],
+      statusCopy:
+        "Live in production with merchants across the Phoenix metro; the screens here are the current experience.",
+      architecture: {
+        headline: "One schema, three audiences.",
+        summary:
+          "A single Next.js application serves the public directory and all three dashboards, with a typed Postgres schema underneath so merchants, members, offers, and campaigns stay consistent across every surface.",
+        items: [
+          {
+            label: "Experience",
+            value: "Next.js App Router, React, TypeScript, Tailwind, and Radix primitives",
+          },
+          {
+            label: "Application layer",
+            value: "Role-based admin, merchant, and member dashboards with magic-link auth",
+          },
+          {
+            label: "Data",
+            value:
+              "Drizzle ORM over Neon Postgres covering merchants, members, offers, and reviews",
+          },
+          {
+            label: "Operations",
+            value: "Stripe billing, transactional and campaign email, Vercel delivery",
+          },
+        ],
+      } satisfies ProjectArchitecture,
+      screens: [
+        {
+          image: "/images/local-city-places-project.webp",
+          title: "Merchant directory",
+          caption:
+            "The public directory leads with real merchants, their city, and their category rather than a search box.",
+          alt: "Local City Places homepage with a grid of Phoenix metro merchants including restaurants, nurseries, and services",
+        },
+        {
+          image: "/images/local-city-places-request.webp",
+          title: "Founding merchant request",
+          caption:
+            "A four-step request flow uses address autocomplete and timestamps each submission so category priority is first come, first served.",
+          alt: "Local City Places founding merchant request form showing step one of four with category and business address fields",
+        },
+        {
+          image: "/images/local-city-places-merchant.webp",
+          title: "Merchant access",
+          caption:
+            "Merchants reach their own page by business phone number, so claiming a listing needs no account first.",
+          alt: "Local City Places merchant access page with a phone number lookup to find a business listing",
+        },
+        {
+          image: "/images/local-city-places-sweepstakes.webp",
+          title: "Member rewards",
+          caption:
+            "Member signup, referral codes, and merchant nominations feed a recurring sweepstakes in a single flow.",
+          alt: "Local City Places sweepstakes page inviting members to back a favorite merchant with a signup form",
+        },
+      ],
+    },
+  },
 ] as const;

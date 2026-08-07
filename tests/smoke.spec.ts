@@ -1,4 +1,5 @@
 import { expect, type Page, test } from "@playwright/test";
+import { portfolioProjects } from "../src/data/site";
 
 /**
  * These assert the classes of defect this site actually shipped, rather
@@ -12,6 +13,8 @@ import { expect, type Page, test } from "@playwright/test";
  * Every one of those reached main at least once and was caught by hand.
  */
 
+/* Case study routes come from the data rather than a hand-kept list, so
+ * adding a project cannot silently leave its page untested. */
 const ROUTES = [
   "/",
   "/portfolio",
@@ -20,11 +23,7 @@ const ROUTES = [
   "/contact",
   "/privacy",
   "/terms",
-  "/portfolio/retailboss",
-  "/portfolio/openworkspace",
-  "/portfolio/pay-it-forward-card-shows",
-  "/portfolio/anne-newgarden",
-  "/portfolio/provepharm",
+  ...portfolioProjects.map((project) => `/portfolio/${project.slug}`),
 ];
 
 /** Console errors, minus noise from browser extensions we do not control. */

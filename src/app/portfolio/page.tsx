@@ -32,6 +32,7 @@ function getProject(slug: string): PortfolioProject {
  * the only ranking signal. */
 const orderedProjects = [
   getProject("retailboss"),
+  getProject("local-city-places"),
   getProject("openworkspace"),
   getProject("pay-it-forward-card-shows"),
   getProject("anne-newgarden"),
