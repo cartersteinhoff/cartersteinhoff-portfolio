@@ -22,6 +22,46 @@ export const site = {
   ],
 };
 
+/**
+ * Verified Upwork standing, transcribed from the public profile at
+ * site.upworkUrl. Every figure here must match that page — nothing is
+ * rounded, estimated, or inferred. The profile is the source of truth,
+ * so re-check these when `asOf` starts looking old and update both
+ * together.
+ *
+ * Testimonials are excerpts. Upwork truncates feedback for logged-out
+ * visitors, so each quote is the complete opening sentence of a longer
+ * review rather than an abridged version of the whole thing. Clients are
+ * attributed by project type rather than name.
+ */
+export const upwork = {
+  asOf: "August 2026",
+  jobSuccess: "100%",
+  badge: "Top Rated",
+  rating: "4.9",
+  reviewCount: 28,
+  totalJobs: 37,
+  totalHours: 600,
+  stats: [
+    { label: "Job success", value: "100%" },
+    { label: "Rating", value: "4.9 / 5" },
+    { label: "Reviews", value: "28" },
+    { label: "Hours", value: "600" },
+  ],
+  testimonials: [
+    {
+      quote: "Working with Carter has been one of the best decisions we've made for BrandLift.",
+      context: "Platform maintenance & model validation",
+      date: "June 2026",
+    },
+    {
+      quote: "Carter has become my go-to for any website and CMS troubleshooting.",
+      context: "WordPress & Elementor troubleshooting",
+      date: "May 2026",
+    },
+  ],
+} as const;
+
 function normalizeSiteUrl(value: string) {
   const url =
     value.startsWith("http://") || value.startsWith("https://")

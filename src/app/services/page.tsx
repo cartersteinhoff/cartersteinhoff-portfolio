@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
-import { portfolioProjects, site } from "@/data/site";
+import { portfolioProjects, site, upwork } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import styles from "./services.module.css";
 
@@ -323,6 +323,58 @@ export default function ServicesPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Third-party proof, placed after the work so the evidence stacks:
+       * here is what I built, and here is what the clients said. Every
+       * figure links back to the profile it came from, so the claim is
+       * checkable rather than asserted. */}
+      <section className={styles.proofBand} aria-labelledby="upwork-proof-title">
+        <div className={styles.shell}>
+          <div className={styles.proofBandHead}>
+            <div>
+              <p className="eyebrow">Verified on Upwork</p>
+              <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
+                {upwork.badge}, and a {upwork.jobSuccess} job success score.
+              </h2>
+            </div>
+            <a
+              className={styles.proofBandLink}
+              href={site.upworkUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              See the profile <span aria-hidden="true">↗</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+
+          <dl className={styles.proofStats}>
+            {upwork.stats.map((stat) => (
+              <div key={stat.label}>
+                <dt>{stat.label}</dt>
+                <dd>{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className={styles.proofQuotes}>
+            {upwork.testimonials.map((item) => (
+              <figure key={item.quote} className={styles.proofQuote}>
+                <blockquote>
+                  <p className="display-5">“{item.quote}”</p>
+                </blockquote>
+                <figcaption>
+                  {item.context} · {item.date}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <p className={styles.proofFootnote}>
+            {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
+          </p>
         </div>
       </section>
 
