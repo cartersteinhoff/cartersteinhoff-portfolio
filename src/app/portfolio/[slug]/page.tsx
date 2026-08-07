@@ -340,11 +340,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </Reveal>
       </section>
 
-      <section className="case-next-section px-5 py-16 md:px-8 md:py-20">
+      {/* "Next case study" is a label, not a section heading. As an <h2>
+       * it rendered at 12px beside 84px siblings and put a rank-2 entry
+       * in the document outline that carried no content. The project name
+       * is the actual heading here. */}
+      <section
+        className="case-next-section px-5 py-16 md:px-8 md:py-20"
+        aria-labelledby="next-case"
+      >
         <div className="mx-auto max-w-[1500px]">
-          <h2 className="section-label">Next case study</h2>
+          <p className="section-label">Next case study</p>
           <Link className="case-next-link group" href={`/portfolio/${nextProject.slug}`}>
-            <span>{nextProject.title}</span>
+            <h2 id="next-case" className="case-next-title">
+              {nextProject.title}
+            </h2>
             <span className="case-next-arrow" aria-hidden="true">
               ↗
             </span>

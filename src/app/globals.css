@@ -822,6 +822,14 @@ textarea:focus-visible {
   letter-spacing: -0.04em;
 }
 
+/* The link owns the display typography; the heading inside it only
+ * carries the semantics, so it inherits rather than restyles. */
+.case-next-title {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
 .case-next-arrow {
   flex: none;
   color: var(--accent);
