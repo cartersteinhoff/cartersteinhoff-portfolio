@@ -383,6 +383,25 @@ textarea:focus-visible {
   animation: hero-copy-in 1s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 
+/* The scene cycle runs infinitely, which is exactly the case
+ * prefers-reduced-motion exists for. Cancelling every hero animation
+ * leaves each element at its declared resting state: the studio scene
+ * sits at opacity 1, the other two at 0, and the copy at full opacity —
+ * so the hero renders as a still photograph with no further work. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-scenes,
+  .hero-scene-studio,
+  .hero-scene-moonrise,
+  .hero-scene-desk,
+  .hero-light-shift,
+  .hero-kicker,
+  .hero-title,
+  .hero-bottom {
+    animation: none;
+    transform: none;
+  }
+}
+
 .hero-title {
   animation-delay: 100ms;
 }

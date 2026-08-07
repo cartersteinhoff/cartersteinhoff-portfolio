@@ -19,11 +19,17 @@ export default function Home() {
             className="hero-scene hero-scene-studio"
             data-hero-scene="studio"
           />
+          {/* Scenes two and three are invisible for the first 10 and 20
+           * seconds, so they must not compete with the LCP image above.
+           * They still overlap the viewport, so lazy loading alone would
+           * not defer them — fetchPriority is what actually drops them
+           * behind the critical resources. */}
           <Image
             src="/images/phoenix-moonrise-hero.webp"
             alt=""
             fill
-            loading="eager"
+            loading="lazy"
+            fetchPriority="low"
             sizes="100vw"
             className="hero-scene hero-scene-moonrise"
             data-hero-scene="moonrise"
@@ -32,7 +38,8 @@ export default function Home() {
             src="/images/desk-night-hero.webp"
             alt=""
             fill
-            loading="eager"
+            loading="lazy"
+            fetchPriority="low"
             sizes="100vw"
             className="hero-scene hero-scene-desk"
             data-hero-scene="desk"
