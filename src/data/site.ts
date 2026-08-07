@@ -566,11 +566,18 @@ export const portfolioProjects = [
           alt: "Local City Places founding merchant request form showing step one of four with category and business address fields",
         },
         {
-          image: "/images/local-city-places-merchant.webp",
-          title: "Merchant access",
+          image: "/images/local-city-places-dashboard.webp",
+          title: "Merchant dashboard",
           caption:
-            "Merchants reach their own page by business phone number, so claiming a listing needs no account first.",
-          alt: "Local City Places merchant access page with a phone number lookup to find a business listing",
+            "Merchants issue gift card rewards, run surveys, and watch remaining inventory by denomination.",
+          alt: "Local City Places merchant dashboard showing gift card inventory by denomination, quick actions, and recent activity",
+        },
+        {
+          image: "/images/local-city-places-admin.webp",
+          title: "Admin operations",
+          caption:
+            "A separate admin surface handles receipts, gift card fulfilment, users, and email campaigns.",
+          alt: "Local City Places admin dashboard with pending receipts, active member and merchant counts, and quick actions",
         },
         {
           image: "/images/local-city-places-sweepstakes.webp",
