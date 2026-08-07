@@ -10,12 +10,6 @@ export const metadata = createPageMetadata({
   title: "Contact",
   description,
   path: "/contact",
-  image: {
-    url: "/images/phoenix-night.webp",
-    width: 1672,
-    height: 941,
-    alt: "Phoenix city lights beyond the Sonoran Desert at night",
-  },
 });
 
 export default function ContactPage() {

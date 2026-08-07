@@ -9,16 +9,11 @@ import styles from "./portfolio-index.module.css";
 const description =
   "Explore digital products Carter Steinhoff designed and built across WordPress, Next.js, custom CMS platforms, backend systems, and cloud architecture.";
 
+/* No `image` — the route's own opengraph-image.tsx supplies the card. */
 export const metadata = createPageMetadata({
   title: "Portfolio",
   description,
   path: "/portfolio",
-  image: {
-    url: "/images/retailboss-project.webp",
-    width: 1440,
-    height: 1000,
-    alt: "RetailBoss homepage designed and developed by Carter Steinhoff",
-  },
 });
 
 type PortfolioProject = (typeof portfolioProjects)[number];

@@ -6,16 +6,11 @@ import styles from "./about.module.css";
 const description =
   "How Carter Steinhoff went from COBOL on an American Express mainframe to running an independent product design and full-stack development practice in Phoenix.";
 
+/* No `image` — the route's own opengraph-image.tsx supplies the card. */
 export const metadata = createPageMetadata({
   title: "About",
   description,
   path: "/about",
-  image: {
-    url: "/images/phoenix-night.webp",
-    width: 1672,
-    height: 941,
-    alt: "Phoenix city lights and the Sonoran Desert at night",
-  },
 });
 
 export default function AboutPage() {

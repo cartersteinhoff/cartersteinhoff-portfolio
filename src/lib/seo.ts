@@ -27,10 +27,19 @@ export function createPageMetadata({
   title,
   description,
   path,
-  image = defaultSocialImage,
+  image,
   type = "website",
 }: PageMetadata): Metadata {
   const socialTitle = `${title} | ${site.name}`;
+
+  /**
+   * When no image is passed we deliberately omit `images` entirely rather
+   * than defaulting to the root card. Routes carry their own
+   * `opengraph-image.tsx`, and Next only injects that file-based image if
+   * the metadata export has not already declared one — setting a default
+   * here would silently give every page the homepage's card.
+   */
+  const social = image ? { images: [image] } : ({} as { images?: SocialImage[] });
 
   return {
     title,
@@ -45,13 +54,13 @@ export function createPageMetadata({
       url: path,
       siteName: site.name,
       locale: "en_US",
-      images: [image],
+      ...social,
     },
     twitter: {
       card: "summary_large_image",
       title: socialTitle,
       description,
-      images: [{ url: image.url, alt: image.alt }],
+      ...(image ? { images: [{ url: image.url, alt: image.alt }] } : {}),
     },
   };
 }

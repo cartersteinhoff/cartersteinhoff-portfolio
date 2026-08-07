@@ -12,12 +12,6 @@ export const metadata = createPageMetadata({
   title: "Services",
   description,
   path: "/services",
-  image: {
-    url: "/images/openworkspace-product-ui.webp",
-    width: 1440,
-    height: 1000,
-    alt: "OpenWorkspace product interface designed and developed by Carter Steinhoff",
-  },
 });
 
 type ProjectSlug = (typeof portfolioProjects)[number]["slug"];
