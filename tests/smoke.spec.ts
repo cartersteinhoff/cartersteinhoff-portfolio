@@ -83,6 +83,26 @@ test("headings descend in rank on a content page", async ({ page }) => {
   }
 });
 
+test("project numbers match their position in the data", () => {
+  // The index, the "next case study" link, and the sitemap all walk
+  // portfolioProjects in array order, so a stored number that disagrees
+  // with position means the cards are labelled wrong somewhere.
+  for (const [index, project] of portfolioProjects.entries()) {
+    const expected = String(index + 1).padStart(2, "0");
+    expect(project.number, `${project.slug} is at position ${index + 1}`).toBe(expected);
+  }
+});
+
+test("the portfolio index lists projects in data order", async ({ page }) => {
+  await page.goto("/portfolio");
+  const rendered = await page.evaluate(() =>
+    [...document.querySelectorAll("main article h2[id^='project-']")].map((h) =>
+      h.id.replace("project-", ""),
+    ),
+  );
+  expect(rendered).toEqual(portfolioProjects.map((project) => project.slug));
+});
+
 test("internal links all resolve", async ({ page, request }) => {
   await page.goto("/");
   const hrefs = await page.evaluate(() =>

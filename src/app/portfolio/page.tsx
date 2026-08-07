@@ -16,33 +16,14 @@ export const metadata = createPageMetadata({
   path: "/portfolio",
 });
 
-type PortfolioProject = (typeof portfolioProjects)[number];
-
-function getProject(slug: string): PortfolioProject {
-  const project = portfolioProjects.find((item) => item.slug === slug);
-
-  if (!project) {
-    throw new Error(`Missing portfolio project: ${slug}`);
-  }
-
-  return project;
-}
-
-/* Editorial order. Every entry is presented identically, so position is
- * the only ranking signal. */
-const orderedProjects = [
-  getProject("retailboss"),
-  getProject("openworkspace"),
-  getProject("pay-it-forward-card-shows"),
-  getProject("anne-newgarden"),
-  getProject("provepharm"),
-  getProject("local-city-places"),
-];
-
-/* Numbered by position on this page, not by the stored `number`. */
-const displayNumbers = new Map(
-  orderedProjects.map((project, index) => [project.slug, String(index + 1).padStart(2, "0")]),
-);
+/**
+ * Order and numbering both come from `portfolioProjects` itself. This
+ * page used to keep its own list, which meant the index, the "next case
+ * study" link, and the sitemap could each walk the projects in a
+ * different order — and the stored `number` drifted out of step with
+ * what the cards displayed.
+ */
+const orderedProjects = portfolioProjects;
 
 /**
  * Sites that refuse embedding. Verified by request, not assumed:
@@ -128,7 +109,7 @@ export default function PortfolioPage() {
                 </LivePreview>
 
                 <p className={styles.cardMeta}>
-                  <span className={styles.cardNumber}>{displayNumbers.get(project.slug)}</span>
+                  <span className={styles.cardNumber}>{project.number}</span>
                   <span>{project.shortPlatform}</span>
                   <span className={styles.cardYear}>{project.year}</span>
                 </p>
