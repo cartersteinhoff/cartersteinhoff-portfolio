@@ -573,18 +573,18 @@ export const portfolioProjects = [
           alt: "Local City Places merchant dashboard showing gift card inventory by denomination, quick actions, and recent activity",
         },
         {
+          image: "/images/local-city-places-activation.webp",
+          title: "Certificate activation",
+          caption:
+            "The customer's side of the loop: a rebate certificate arrives with its value, term, and monthly amount stated before anyone signs up.",
+          alt: "Local City Places certificate claim page showing a $100 grocery rebate certificate paid $25 a month over four months",
+        },
+        {
           image: "/images/local-city-places-admin.webp",
           title: "Admin operations",
           caption:
-            "A separate admin surface handles receipts, gift card fulfilment, users, and email campaigns.",
+            "A separate admin surface handles receipts, certificate fulfilment, users, and email campaigns.",
           alt: "Local City Places admin dashboard with pending receipts, active member and merchant counts, and quick actions",
-        },
-        {
-          image: "/images/local-city-places-sweepstakes.webp",
-          title: "Member rewards",
-          caption:
-            "Member signup, referral codes, and merchant nominations feed a recurring sweepstakes in a single flow.",
-          alt: "Local City Places sweepstakes page inviting members to back a favorite merchant with a signup form",
         },
       ],
     },
