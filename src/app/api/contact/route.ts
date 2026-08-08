@@ -28,8 +28,61 @@ const noStoreHeaders = {
   "Cache-Control": "no-store",
 };
 
-function respond(body: ContactResponse, status = 200) {
-  return Response.json(body, { status, headers: noStoreHeaders });
+function respond(body: ContactResponse, status = 200, extraHeaders?: Record<string, string>) {
+  return Response.json(body, { status, headers: { ...noStoreHeaders, ...extraHeaders } });
+}
+
+/* ---------------------------------------------------------------------
+ * Best-effort throttle.
+ *
+ * Read this before relying on it: the counter lives in the memory of one
+ * serverless instance. Vercel will happily run several, each with its
+ * own map, and a cold start resets the count — so the real ceiling is
+ * (limit x instances), not `limit`. It stops someone looping curl from a
+ * single machine, which is the realistic abuse case for a portfolio
+ * contact form. It does not stop a distributed flood.
+ *
+ * The durable version of this is a Vercel WAF rate-limit rule, which
+ * needs no code at all. This exists because that route is unavailable
+ * here, not because it is the better design.
+ * ------------------------------------------------------------------- */
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+/* Bounds memory if a flood arrives with spoofed forwarding headers. */
+const RATE_LIMIT_MAX_KEYS = 5_000;
+
+const recentRequests = new Map<string, { count: number; resetAt: number }>();
+
+function clientKey(request: Request) {
+  const forwarded = request.headers.get("x-forwarded-for") ?? "";
+  return forwarded.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+}
+
+function rateLimit(request: Request) {
+  const now = Date.now();
+
+  for (const [key, entry] of recentRequests) {
+    if (entry.resetAt <= now) recentRequests.delete(key);
+  }
+
+  const key = clientKey(request);
+  const entry = recentRequests.get(key);
+
+  if (!entry || entry.resetAt <= now) {
+    if (recentRequests.size >= RATE_LIMIT_MAX_KEYS) {
+      /* Full and nothing expired: let it through rather than lock out
+       * real people. BotID is still ahead of the mailer. */
+      return { limited: false, retryAfter: 0 };
+    }
+    recentRequests.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return { limited: false, retryAfter: 0 };
+  }
+
+  entry.count += 1;
+  return {
+    limited: entry.count > RATE_LIMIT_MAX,
+    retryAfter: Math.ceil((entry.resetAt - now) / 1000),
+  };
 }
 
 function asTrimmedString(value: unknown) {
@@ -101,6 +154,20 @@ export async function POST(request: Request) {
   const contentLength = Number(request.headers.get("content-length") ?? 0);
   if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
     return respond({ ok: false, message: "That message is too large to send." }, 413);
+  }
+
+  /* Ahead of BotID deliberately: it is the cheaper check, and it keeps a
+   * flood from burning the BotID quota as well as the mail quota. */
+  const throttle = rateLimit(request);
+  if (throttle.limited) {
+    return respond(
+      {
+        ok: false,
+        message: "Too many messages from this connection. Wait a minute and try again.",
+      },
+      429,
+      { "Retry-After": String(throttle.retryAfter) },
+    );
   }
 
   try {

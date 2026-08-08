@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
+import { site } from "@/data/site";
 
 type ContactField = "name" | "email" | "projectType" | "message";
 
@@ -187,6 +188,20 @@ export function ContactForm() {
       </button>
       <p className="form-note" aria-live="polite" data-status={status.tone}>
         {status.message}
+        {/* A failure here can be nothing to do with what was typed — the
+         * route returns 503 when bot verification is unreachable, and 429
+         * when throttled. Neither is actionable, so the error state hands
+         * over a route that does not depend on this endpoint at all. */}
+        {status.tone === "error" ? (
+          <>
+            {" "}
+            You can also email{" "}
+            <a className="form-note-link" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+            .
+          </>
+        ) : null}
       </p>
       <p className="contact-privacy-note">
         See how submitted information is handled in the <Link href="/privacy">Privacy Policy</Link>.
