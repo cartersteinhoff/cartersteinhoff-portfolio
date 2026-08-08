@@ -243,6 +243,24 @@ export const portfolioProjects = [
       ],
       statusCopy:
         "Available in production today; the live experience reflects the system shown throughout this case study.",
+      decisions: [
+        {
+          title: "A shipped desktop app is a fixed constraint",
+          body: "The C++ desktop client is installed on machines I do not control and cannot be updated without a release. That inverts the usual order of work: the server had to change around a client that was already frozen. Before removing anything from a response, I read the client's own validation source to confirm it never touched that field. Every fix on this list had to be provably invisible to an install that would never be patched.",
+        },
+        {
+          title: "AWS keys were being handed to every client",
+          body: "License validation returned raw IAM access keys to every desktop install on every call — credentials sitting in memory on thousands of machines for no reason. The function that injected them is gone. Deleting it was only safe because the client source proved the field went unread, which is exactly why the constraint above came first: on a frozen client, verification is the only alternative to guessing.",
+        },
+        {
+          title: "A missing return left admin routes open",
+          body: "The authentication decorators sent a 401 and then fell through, so the handler ran anyway and every admin route was effectively unprotected. The fix is one keyword. It is worth stating plainly because it is the shape these bugs take — not a subtle cryptographic mistake but a control-flow slip that looks correct in review and passes any test that only asserts on status codes.",
+        },
+        {
+          title: "Three ways to create a license became one",
+          body: "Checkout, the external API, and the admin UI each built licenses their own way, with different fields, different preset resolution, and different response shapes — and checkout reached its own server over HTTP to do it, paying DNS, nginx, and about 50ms to call a function in the same process. Every new column meant editing three inserts and missing one. Now they all import the same function.",
+        },
+      ] satisfies readonly ProjectDecision[],
       architecture: {
         headline: "A web-to-desktop product architecture.",
         summary:
@@ -336,6 +354,24 @@ export const portfolioProjects = [
       ],
       statusCopy:
         "Available in production today; the live experience reflects the system shown throughout this case study.",
+      decisions: [
+        {
+          title: "A saved form is a success, even if the email fails",
+          body: "Public forms used to return a 500 when the transactional email failed, after the submission had already been written to the database. The person on the other end sees an error and submits again — so the failure mode of a flaky email provider was duplicate records, not a lost one. Persistence and delivery are now separate guarded steps: the row is saved, delivery is attempted, and a delivery failure is logged rather than shown.",
+        },
+        {
+          title: "Every event time is one timezone, in one place",
+          body: "Date logic was duplicated across the homepage, the events page, and the structured data, and the copies disagreed — same-day shows would appear upcoming in one view and past in another, and the drift got worse around daylight saving. It is now one set of utilities anchored to America/New_York, one query path shared by 'next event' and 'upcoming events', and DST-correct offsets in the event JSON-LD. Public copy says ET so nobody has to infer it.",
+        },
+        {
+          title: "Reset links expire when the password changes",
+          body: "A reset token stayed usable until its clock ran out, so a link sitting in an old inbox was still a working key after the password had already been changed. The token is now versioned against the current password hash, which invalidates it the moment the password moves. No extra table, no new expiry to tune, and nothing the person resetting their password has to notice.",
+        },
+        {
+          title: "User text is escaped before it reaches email HTML",
+          body: "Form values were interpolated straight into HTML email bodies, which makes every notification a delivery vehicle for whatever someone typed into a public form. Values, subjects, and link attributes are escaped now. Rate limiting on the login and password-recovery routes is durable rather than a process-local map, so it survives the serverless instance it started on.",
+        },
+      ] satisfies readonly ProjectDecision[],
       architecture: {
         headline: "A custom event stack from page to database.",
         summary:
@@ -429,6 +465,24 @@ export const portfolioProjects = [
       ],
       statusCopy:
         "The redesigned experience is publicly available on Vercel while annenewgarden.com continues to serve the original WordPress site pending domain cutover.",
+      decisions: [
+        {
+          title: "No generated likeness of the author",
+          body: "Image generation was excluded from the author portrait, the books, and every documentary photograph — those are real, reviewed source images. One Soul Salon hero is a conceptual illustration because no authentic wide image existed; it carries a visible disclosure, says so in its alt text, and its prompt is kept in the repo. Blog images are deliberately conceptual for the same reason: on a site about personal accounts, a synthetic photograph of a named person, or of a reported event, would read as evidence.",
+        },
+        {
+          title: "Share cards that carry the work, not the face",
+          body: "Social previews use a paper-sculpture motif — a gold thread crossing from a warm page into an unknown — generated at build time in the site's own typefaces. It gives each page a recognisable card without pushing the author's likeness into third-party sharing surfaces that cache and redistribute whatever they are given. Book cards keep the real covers, because those are the work.",
+        },
+        {
+          title: "Conflicting sources stayed conflicted",
+          body: "The old site said 'nearly 100' readings in one place and 'hundreds' in another; a book's release information disagreed with itself. A rewrite is the moment those quietly become a single confident number, and it would be the writer's reputation carrying the invention, not mine. Each conflict was left unresolved rather than averaged, and personal and health-related accounts stayed attributed to the speaker instead of being recast as settled fact.",
+        },
+        {
+          title: "Static by default, with one authorised exception",
+          body: "The rebuild retired the CMS, the database, and the newsletter runtime. The newsletter form was removed rather than reproduced as a control that accepts an address and does nothing with it — a false success state is worse than an absent feature. Contact is the single dynamic path: one function and a delivery service, added after explicit sign-off, reporting success only once the message is genuinely accepted, with the retention boundary written on the privacy page.",
+        },
+      ] satisfies readonly ProjectDecision[],
       comparison: {
         headline: "Same body of work. A clearer way into it.",
         summary:
