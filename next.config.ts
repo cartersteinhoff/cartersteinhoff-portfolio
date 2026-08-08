@@ -30,11 +30,18 @@ const nextConfig: NextConfig = {
    * runtime test that only covers the homepage into a build error
    * anywhere a route is renamed or mistyped. */
   typedRoutes: true,
-  /* `experimental.inlineCss` was measured and rejected: it inlines the
-   * whole stylesheet into every page, which defeats both Next's
-   * per-route CSS splitting and the browser cache. Portfolio page went
-   * 10KB -> 46KB gzipped, paid again on every navigation, to save one
-   * request for a 3KB stylesheet. */
+  /* `experimental.inlineCss` was measured and rejected. Do not re-add it
+   * without re-measuring.
+   *
+   * Two problems, the second worse than the first. It makes the CSS part
+   * of the document, so the 11KB gzipped shared sheet stops being cached
+   * across navigations and is re-sent with every page. And every rule
+   * lands in the HTML three times over — once as the rendered <style>
+   * and twice more serialised into the RSC flight payload — so the cost
+   * is roughly triple the stylesheet, not equal to it.
+   *
+   * Net: portfolio.html 10KB -> 46KB gzipped, paid on every page view,
+   * to save one cached request on the first one. */
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
