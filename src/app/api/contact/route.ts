@@ -35,20 +35,31 @@ function respond(body: ContactResponse, status = 200, extraHeaders?: Record<stri
 /* ---------------------------------------------------------------------
  * Best-effort throttle.
  *
+ * What this is NOT for: a scripted client with no BotID token. BotID
+ * already answers those with a 403, so raw curl in a loop never reaches
+ * the mailer with or without this.
+ *
+ * What it is for: automation driving a real browser. `checkLevel` below
+ * is "basic", the lighter check, and a Playwright-driven Chrome can
+ * plausibly pass it — at which point BotID says "not a bot" and nothing
+ * else caps volume. Secondarily it contains cost, because it rejects
+ * before the outbound BotID call rather than after it.
+ *
  * Read this before relying on it: the counter lives in the memory of one
  * serverless instance. Vercel will happily run several, each with its
  * own map, and a cold start resets the count — so the real ceiling is
- * (limit x instances), not `limit`. It stops someone looping curl from a
- * single machine, which is the realistic abuse case for a portfolio
- * contact form. It does not stop a distributed flood.
+ * (limit x instances), not `limit`, and a distributed flood walks
+ * straight through.
  *
- * The durable version of this is a Vercel WAF rate-limit rule, which
- * needs no code at all. This exists because that route is unavailable
- * here, not because it is the better design.
+ * The durable version is a Vercel WAF rate-limit rule, which needs no
+ * code at all. This exists because that route is unavailable here, not
+ * because it is the better design.
  * ------------------------------------------------------------------- */
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60_000;
-/* Bounds memory if a flood arrives with spoofed forwarding headers. */
+/* Bounds memory under a flood from many distinct IPs. Spoofing is not
+ * the concern: Vercel overwrites x-forwarded-for and does not forward
+ * external IPs, so the key below is platform-set, not caller-set. */
 const RATE_LIMIT_MAX_KEYS = 5_000;
 
 const recentRequests = new Map<string, { count: number; resetAt: number }>();
