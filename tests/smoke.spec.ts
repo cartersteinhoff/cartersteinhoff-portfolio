@@ -65,6 +65,97 @@ for (const route of ROUTES) {
   });
 }
 
+test("every image referenced in project data resolves", async ({ request }) => {
+  // Screens get deleted and replaced as projects change -- three were
+  // swapped out in one sitting -- and a stale path renders as a broken
+  // image rather than failing the build.
+  const paths = new Set<string>();
+  for (const project of portfolioProjects) {
+    paths.add(project.image);
+    for (const screen of project.caseStudy.screens) {
+      paths.add(screen.image);
+    }
+    if ("comparison" in project.caseStudy) {
+      paths.add(project.caseStudy.comparison.before.image);
+      paths.add(project.caseStudy.comparison.after.image);
+    }
+  }
+
+  for (const path of paths) {
+    const res = await request.get(path);
+    expect(res.status(), `${path} is referenced in site data but 404s`).toBe(200);
+  }
+});
+
+test("case study headings descend h1 to h2 to h3", async ({ page }) => {
+  // The Decisions section introduced the first h3 on these pages. If its
+  // styling ever outgrows the h2 above it, the visual hierarchy inverts
+  // while the markup still looks correct.
+  await page.goto("/portfolio/local-city-places");
+
+  const ranks = await page.evaluate(() =>
+    [...document.querySelectorAll("main h1, main h2, main h3")].map((el) => ({
+      level: Number(el.tagName[1]),
+      size: Math.round(Number.parseFloat(getComputedStyle(el).fontSize)),
+    })),
+  );
+
+  const smallestOf = (level: number) =>
+    Math.min(...ranks.filter((r) => r.level === level).map((r) => r.size));
+  const largestOf = (level: number) =>
+    Math.max(...ranks.filter((r) => r.level === level).map((r) => r.size));
+
+  expect(ranks.filter((r) => r.level === 3).length).toBeGreaterThan(0);
+  expect(smallestOf(1)).toBeGreaterThanOrEqual(largestOf(2));
+  expect(smallestOf(2)).toBeGreaterThanOrEqual(largestOf(3));
+});
+
+test("the decisions section appears only where the data has one", async ({ page }) => {
+  // `decisions` is optional so a project without recoverable reasoning
+  // gets no section at all. An empty heading with nothing under it would
+  // be worse than the omission it is meant to represent.
+  for (const project of portfolioProjects) {
+    await page.goto(`/portfolio/${project.slug}`);
+    const section = page.locator(".case-decisions-section");
+    const hasData = "decisions" in project.caseStudy;
+
+    await expect(section, `${project.slug} decisions section presence`).toHaveCount(
+      hasData ? 1 : 0,
+    );
+
+    if (hasData) {
+      await expect(page.locator(".case-decision")).toHaveCount(project.caseStudy.decisions.length);
+    }
+  }
+});
+
+test("each project card has one case study link, after its title", async ({ page }) => {
+  // Cards once carried two action rows and three peer links with no
+  // primary, and the action row sat above the title in the DOM -- so
+  // keyboard focus reached it before the heading it belonged to.
+  await page.goto("/portfolio");
+
+  const cards = page.locator("main article[id^='work-']");
+  await expect(cards).toHaveCount(portfolioProjects.length);
+
+  for (const project of portfolioProjects) {
+    const card = page.locator(`#work-${project.slug}`);
+    await expect(
+      card.locator(`a[href="/portfolio/${project.slug}"]`),
+      `${project.slug} should link to its case study exactly once`,
+    ).toHaveCount(1);
+
+    const titleBeforeActions = await card.evaluate((el) => {
+      const title = el.querySelector("h2[id^='project-']");
+      const bar = el.querySelector(".live-preview-bar");
+      if (!title || !bar) return false;
+      // DOCUMENT_POSITION_FOLLOWING: the bar comes after the title.
+      return Boolean(title.compareDocumentPosition(bar) & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+    expect(titleBeforeActions, `${project.slug} title must precede its action row`).toBe(true);
+  }
+});
+
 test("headings descend in rank on a content page", async ({ page }) => {
   await page.goto("/services");
 

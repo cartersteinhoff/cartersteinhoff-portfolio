@@ -679,16 +679,15 @@ export const portfolioProjects = [
     number: "06",
     slug: "cartersteinhoff",
     year: "2026",
-    title: "This Site",
+    title: "Carter Steinhoff",
     url: "https://cartersteinhoff.co/",
     domain: "cartersteinhoff.co",
     platform: "Next.js · TypeScript · Tailwind CSS",
     shortPlatform: "Next.js · Tailwind",
-    externalLabel: "You are here",
+    externalLabel: "Live site",
     status: "Live",
     statusDetail: "Live and in production",
-    summary:
-      "A static portfolio built to argue that the work behind a product is worth reading about.",
+    summary: "An independent studio site built to the standard of the work inside it.",
     seoDescription:
       "Carter Steinhoff portfolio case study: a statically generated Next.js 16 and React 19 site on Tailwind CSS v4, typed with TypeScript 7, checked by Biome and Playwright, delivered on Vercel.",
     description:
@@ -700,7 +699,7 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Design, development & writing",
       system: "Next.js 16 · React 19 · TypeScript 7 · Tailwind CSS 4 · Biome · Playwright · Vercel",
-      headline: "Everything static but the contact form.",
+      headline: "A studio site built to the standard of the work inside it.",
       overview:
         "A portfolio is a strange product: the artefact and the argument are the same thing. Somebody deciding whether to hire me is judging the build as much as reading it, so the site had to be defensible under exactly the scrutiny it invites — which mostly meant refusing the shortcuts that would have been invisible to anyone not looking closely.",
       detail:
@@ -711,7 +710,8 @@ export const portfolioProjects = [
         "A shared fluid type scale as Tailwind v4 theme tokens, consumed by utilities and CSS Modules alike",
         "Build-time social cards, structured data, and a 38-test Playwright suite on desktop and mobile",
       ],
-      statusCopy: "Live in production. You are reading it.",
+      statusCopy:
+        "Live in production; the site you are reading is the system shown throughout this case study.",
       decisions: [
         {
           title: "The type scale is tokens, not conventions",
