@@ -1,10 +1,13 @@
 "use client";
 
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-const links = [
+/* Typed as Route so a renamed page breaks the build here rather than
+ * shipping a nav item that 404s. */
+const links: { href: Route; label: string }[] = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
