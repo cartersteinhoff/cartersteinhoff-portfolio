@@ -539,7 +539,7 @@ export const portfolioProjects = [
         "Passwordless magic-link authentication and a logged email campaign system",
       ],
       statusCopy:
-        "Live in production with merchants across the Phoenix metro. Dashboard screens are captured from the live build against seeded demo records — no real merchant or member data appears here.",
+        "Live in production with merchants across the Phoenix metro; the screens here are captured from the current build.",
       decisions: [
         {
           title: "Category priority is an index, not a promise",
