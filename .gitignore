@@ -42,3 +42,7 @@ Thumbs.db
 /playwright-report/
 /blob-report/
 /.playwright/
+
+# Managed by Next.js; flips between .next/types and .next/dev/types
+# depending on whether dev or build ran last. Next's docs say not to track it.
+next-env.d.ts
