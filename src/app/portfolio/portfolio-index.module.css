@@ -145,11 +145,8 @@
 }
 
 /* Plate → copy → actions, in that order, with the action row pinned to
- * the bottom so every card in a row ends on the same line.
- *
- * LivePreview is `display: contents`, so the plate, the copy, and the
- * action row are all direct grid items here — in DOM order, which is why
- * focus order matches what's on screen. */
+ * the bottom so every card in a row ends on the same line. DOM order is
+ * visual order, so focus order needs no correcting. */
 .card {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -162,6 +159,30 @@
   display: grid;
   align-content: start;
   gap: 0.55rem;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(242, 236, 228, 0.12);
+  padding-top: 0.35rem;
+}
+
+.visitLink {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--muted-soft);
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
+  line-height: 1.4;
+  text-transform: uppercase;
+  transition: color 180ms ease;
 }
 
 /* ---------------------------------------------------------------------
@@ -240,8 +261,14 @@
   color: var(--accent);
 }
 
+/* The whole screenshot is the click target for the case study. */
+.shotLink {
+  display: block;
+}
+
 .shot {
   position: relative;
+  display: block;
   overflow: hidden;
   aspect-ratio: 16 / 10;
   background: var(--ink);
@@ -434,10 +461,22 @@
     transform: scale(1.02);
   }
 
+  .visitLink:hover {
+    color: var(--sand);
+  }
+
   .profileLinks a:hover {
     border-color: var(--accent);
     color: var(--sand);
   }
+}
+
+/* The screenshot link is aria-hidden and not focusable, so it never
+ * shows a focus ring of its own. Focusing the card's real "Case study"
+ * link lights the plate instead, so a sighted keyboard user can see
+ * which card they are on. */
+.card:focus-within .browser {
+  border-color: rgba(244, 162, 97, 0.55);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
-import { LivePreview } from "@/components/live-preview";
 import { portfolioProjects, site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import styles from "./portfolio-index.module.css";
@@ -24,15 +23,6 @@ export const metadata = createPageMetadata({
  * what the cards displayed.
  */
 const orderedProjects = portfolioProjects;
-
-/**
- * Sites that refuse embedding. Verified by request, not assumed:
- * annenewgarden.vercel.app returns `X-Frame-Options: DENY` and
- * `Content-Security-Policy: frame-ancestors 'none'`, so a frame there
- * renders only a browser error. The other four embed cleanly.
- * Re-check with `curl -I` if a project's hosting changes.
- */
-const nonEmbeddableSlugs = new Set<string>(["anne-newgarden"]);
 
 export default function PortfolioPage() {
   return (
@@ -73,60 +63,35 @@ export default function PortfolioPage() {
                 className={styles.card}
                 aria-labelledby={`project-${project.slug}`}
               >
-                <LivePreview
-                  url={project.url}
-                  domain={project.domain}
-                  frameable={!nonEmbeddableSlugs.has(project.slug)}
-                  title={project.title}
-                  /* One thing to scan, then one thing to read. The title
-                   * is the only large type on the card, so the eye lands
-                   * there first; the meta line hangs off it as a caption,
-                   * and the headline is the single sentence of substance.
-                   * The role line that used to sit here said "Design,
-                   * development & …" on every card, so it read as noise
-                   * rather than information — it lives on the case study
-                   * page, where it's about one project. */
-                  copy={
-                    <div className={styles.cardBody}>
-                      <h2
-                        id={`project-${project.slug}`}
-                        className={`display-4 ${styles.cardTitle}`}
-                      >
-                        {project.title}
-                      </h2>
-                      <p className={styles.cardMeta}>
-                        <span className={styles.cardNumber}>{project.number}</span>
-                        <span>{project.shortPlatform}</span>
-                        <span>{project.year}</span>
-                      </p>
-                      <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
-                    </div>
-                  }
-                  primaryAction={
-                    <ArrowLink href={`/portfolio/${project.slug}`}>
-                      Case study
-                      <span className="sr-only">: {project.title}</span>
-                    </ArrowLink>
-                  }
-                >
-                  {/* Browser chrome frames the screenshot as a product,
-                   * which is what keeps a bright site from reading as a
-                   * glaring rectangle on an ink-black page. */}
-                  <div className={styles.browser}>
-                    <div className={styles.browserBar}>
-                      <span className={styles.browserDots} aria-hidden="true">
-                        <i />
-                        <i />
-                        <i />
-                      </span>
-                      <span className={styles.browserDomain}>{project.domain}</span>
-                      <span
-                        className={`${styles.browserStatus} ${isLive ? styles.statusLive : ""}`}
-                      >
-                        {project.status}
-                      </span>
-                    </div>
-                    <div className={styles.shot}>
+                {/* Browser chrome frames the screenshot as a product,
+                 * which is what keeps a bright site from reading as a
+                 * glaring rectangle on an ink-black page. */}
+                <div className={styles.browser}>
+                  <div className={styles.browserBar}>
+                    <span className={styles.browserDots} aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    <span className={styles.browserDomain}>{project.domain}</span>
+                    <span className={`${styles.browserStatus} ${isLive ? styles.statusLive : ""}`}>
+                      {project.status}
+                    </span>
+                  </div>
+                  {/* The screenshot is a redundant click target for the
+                   * case study, so it is hidden from assistive tech and
+                   * skipped by the keyboard: the "Case study" link below
+                   * goes to the same place, and two tab stops per card
+                   * pointing at one destination is noise. The chrome bar
+                   * above stays announced — the domain and status are
+                   * real information. */}
+                  <Link
+                    href={`/portfolio/${project.slug}`}
+                    className={styles.shotLink}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
+                    <span className={styles.shot}>
                       <Image
                         src={project.image}
                         alt={project.imageAlt}
@@ -134,9 +99,41 @@ export default function PortfolioPage() {
                         sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), 40vw"
                         className={styles.shotImage}
                       />
-                    </div>
-                  </div>
-                </LivePreview>
+                    </span>
+                  </Link>
+                </div>
+
+                {/* One thing to scan, then one thing to read. The title is
+                 * the only large type on the card, so the eye lands there
+                 * first; the meta line hangs off it as a caption, and the
+                 * headline is the single sentence of substance. */}
+                <div className={styles.cardBody}>
+                  <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
+                    {project.title}
+                  </h2>
+                  <p className={styles.cardMeta}>
+                    <span className={styles.cardNumber}>{project.number}</span>
+                    <span>{project.shortPlatform}</span>
+                    <span>{project.year}</span>
+                  </p>
+                  <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
+                </div>
+
+                <div className={styles.cardActions}>
+                  <ArrowLink href={`/portfolio/${project.slug}`}>
+                    Case study
+                    <span className="sr-only">: {project.title}</span>
+                  </ArrowLink>
+                  <a
+                    className={styles.visitLink}
+                    href={project.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Visit site <span aria-hidden="true">↗</span>
+                    <span className="sr-only"> ({project.domain}, opens in a new tab)</span>
+                  </a>
+                </div>
               </article>
             );
           })}

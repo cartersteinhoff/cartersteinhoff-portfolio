@@ -129,31 +129,50 @@ test("the decisions section appears only where the data has one", async ({ page 
   }
 });
 
-test("each project card has one case study link, after its title", async ({ page }) => {
-  // Cards once carried two action rows and three peer links with no
-  // primary, and the action row sat above the title in the DOM -- so
-  // keyboard focus reached it before the heading it belonged to.
+test("the card screenshot links to the case study without a second tab stop", async ({ page }) => {
+  // The screenshot is a redundant click target: it must go to the case
+  // study for a mouse, and be invisible to the keyboard and to assistive
+  // tech, because the "Case study" link below already goes there.
   await page.goto("/portfolio");
 
   const cards = page.locator("main article[id^='work-']");
   await expect(cards).toHaveCount(portfolioProjects.length);
 
   for (const project of portfolioProjects) {
+    const href = `/portfolio/${project.slug}`;
     const card = page.locator(`#work-${project.slug}`);
-    await expect(
-      card.locator(`a[href="/portfolio/${project.slug}"]`),
-      `${project.slug} should link to its case study exactly once`,
-    ).toHaveCount(1);
 
-    const titleBeforeActions = await card.evaluate((el) => {
-      const title = el.querySelector("h2[id^='project-']");
-      const bar = el.querySelector(".live-preview-bar");
-      if (!title || !bar) return false;
-      // DOCUMENT_POSITION_FOLLOWING: the bar comes after the title.
-      return Boolean(title.compareDocumentPosition(bar) & Node.DOCUMENT_POSITION_FOLLOWING);
-    });
-    expect(titleBeforeActions, `${project.slug} title must precede its action row`).toBe(true);
+    // The plate wraps the screenshot in a link to the case study...
+    const plateLink = card.locator(`a[href="${href}"][aria-hidden="true"]`);
+    await expect(plateLink, `${project.slug} screenshot should link to its case study`).toHaveCount(
+      1,
+    );
+    await expect(plateLink.locator("img")).toHaveCount(1);
+    await expect(plateLink).toHaveAttribute("tabindex", "-1");
+
+    // ...and exactly one link to that case study is reachable by keyboard.
+    const focusable = await card
+      .locator(`a[href="${href}"]:not([tabindex="-1"]):not([aria-hidden="true"])`)
+      .count();
+    expect(focusable, `${project.slug} should have one focusable case study link`).toBe(1);
   }
+});
+
+test("clicking a card screenshot opens its case study", async ({ page }) => {
+  await page.goto("/portfolio");
+  const [first] = portfolioProjects;
+  await page.locator(`#work-${first.slug} a[aria-hidden="true"] img`).click();
+  await page.waitForURL(`**/portfolio/${first.slug}`);
+  await expect(page.locator("h1")).toHaveCount(1);
+});
+
+test("the preview iframe feature is fully removed", async ({ page }) => {
+  // Deleting a feature means deleting its markup and its styles, not
+  // leaving dead classes behind for the next person to puzzle over.
+  await page.goto("/portfolio");
+  expect(await page.locator("iframe").count()).toBe(0);
+  expect(await page.locator("[class*='live-preview']").count()).toBe(0);
+  expect(await page.getByRole("button", { name: /preview/i }).count()).toBe(0);
 });
 
 test("headings descend in rank on a content page", async ({ page }) => {
