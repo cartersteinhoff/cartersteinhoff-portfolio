@@ -24,9 +24,6 @@ export function SiteFooter() {
           <Link className="footer-link" href="/contact">
             Contact
           </Link>
-          <a className="footer-link" href={`mailto:${site.email}`}>
-            Email
-          </a>
           <a className="footer-link" href={site.linkedinUrl} target="_blank" rel="noreferrer">
             LinkedIn
             <span className="sr-only"> (opens in a new tab)</span>
