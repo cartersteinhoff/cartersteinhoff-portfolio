@@ -100,6 +100,20 @@ export type ProjectArchitecture = {
   }[];
 };
 
+/**
+ * The reasoning behind a build — the one thing screenshots can't carry.
+ * `title` states the decision; `body` gives the constraint that forced it
+ * and what it bought, rather than restating the feature.
+ *
+ * Optional on purpose. An entry belongs here only when the reasoning is
+ * genuinely recoverable from the work; a plausible rationale invented
+ * afterwards is worse than no section at all.
+ */
+export type ProjectDecision = {
+  readonly title: string;
+  readonly body: string;
+};
+
 export const portfolioProjects = [
   {
     number: "01",
@@ -513,19 +527,37 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Product design & full-stack development",
       system: "Next.js · Drizzle · Neon Postgres · Stripe · Vercel",
-      headline: "A directory, a rewards programme, and three dashboards in one platform.",
+      headline: "A directory that sells one business per category, per city.",
       overview:
-        "Local City Places is a business directory for the Phoenix metro built around three different people: the resident browsing merchants, the merchant running their own listing, and the administrator operating the platform. Each gets a separate dashboard on a shared data model.",
+        "Local City Places looks like a Phoenix metro business directory, and for residents that is exactly what it is. For merchants it is something narrower and more valuable: the platform sells an exclusive category position in a single city, so one barber shop in Phoenix, one bike shop in Scottsdale. That promise is the product, and almost every hard decision in the build comes from having to keep it.",
       detail:
-        "The work covers the public directory, a multi-step merchant onboarding flow with address autocomplete, member accounts with referral codes and sweepstakes entries, merchant offers and claims, reviews with photos, Stripe billing, and an email campaign system with per-recipient logging and preferences.",
+        "Three audiences use one application. Residents browse merchant pages and nominate favourites into a monthly sweepstakes. Merchants run their own page and watch their category lock, radio spot, and campaign audio from a dashboard. Admins work a timestamped queue of category requests, moderate reviews, and send logged email campaigns. Underneath, one Postgres schema keeps a merchant's page, position, and history in a single place, because reconciling those across separate systems is how an exclusivity promise quietly breaks.",
       contributions: [
-        "Product design and full-stack Next.js development across public site and dashboards",
+        "Product design and full-stack Next.js development across the public site and all three dashboards",
         "Role-based admin, merchant, and member areas on one Postgres schema",
-        "Merchant onboarding, offers, claims, and review systems with Stripe billing",
+        "Timestamped category-request queue with waitlisting, invites, and merchant onboarding",
         "Passwordless magic-link authentication and a logged email campaign system",
       ],
       statusCopy:
-        "Live in production with merchants across the Phoenix metro; the screens here are the current experience.",
+        "Live in production with merchants across the Phoenix metro. Dashboard screens are captured from the live build against seeded demo records — no real merchant or member data appears here.",
+      decisions: [
+        {
+          title: "Category priority is an index, not a promise",
+          body: "Selling one business per category per city only works if you can answer 'who asked first?' months later, under pressure, when two owners disagree. So requests are their own table, timestamped on arrival, with a composite index on city, state, category, and creation time. The ordering is a query rather than a judgement call — which is why the admin queue can show a Tempe dining request as fulfilled and the next one as waitlisted without anyone arbitrating.",
+        },
+        {
+          title: "A business exists before its owner does",
+          body: "Requests, invites, and merchants are three separate tables rather than one row with status flags. A business can hold a public page with no account attached, then become a real merchant with owners and billing once an invite is accepted. Collapsing those into a single record would have meant either creating accounts for people who never asked for one, or leaving the directory empty until merchants signed up — and a directory nobody has heard of cannot attract the merchants that would fill it.",
+        },
+        {
+          title: "The daily entry cap is a unique index",
+          body: "The sweepstakes allows one entry per member per day, which is the kind of rule that quietly fails under two concurrent requests if you enforce it with a lookup and an insert. It is a unique index on member and entry date instead, so the database refuses the duplicate. The date is stored as a plain Arizona-time day rather than a timestamp: Arizona does not observe daylight saving, so 'a day' never shifts underneath the rule.",
+        },
+        {
+          title: "One identity, three dashboards, no passwords",
+          body: "Members, merchants, and admins are the same user record with a role and a profile, reached by magic link — there is no password column in the schema. Three separate applications would have meant three auth systems and constant reconciliation between a merchant's page, their category position, and the member activity pointing at them. Those three things are the product; keeping them in one schema is what makes the loop hold together.",
+        },
+      ] satisfies readonly ProjectDecision[],
       architecture: {
         headline: "One schema, three audiences.",
         summary:
@@ -566,25 +598,25 @@ export const portfolioProjects = [
           alt: "Local City Places founding merchant request form showing step one of four with category and business address fields",
         },
         {
-          image: "/images/local-city-places-dashboard.webp",
-          title: "Merchant dashboard",
+          image: "/images/local-city-places-requests.webp",
+          title: "The category queue",
           caption:
-            "Merchants issue gift card rewards, run surveys, and watch remaining inventory by denomination.",
-          alt: "Local City Places merchant dashboard showing gift card inventory by denomination, quick actions, and recent activity",
+            "Two Tempe dining requests, a week apart: the first is fulfilled, the second waitlisted. Priority is decided by submission time, not by who follows up hardest.",
+          alt: "Local City Places admin merchant requests table showing seven businesses with categories, submission dates, and statuses including one waitlisted",
         },
         {
-          image: "/images/local-city-places-activation.webp",
-          title: "Certificate activation",
+          image: "/images/local-city-places-marketlock.webp",
+          title: "What the merchant buys",
           caption:
-            "The customer's side of the loop: a rebate certificate arrives with its value, term, and monthly amount stated before anyone signs up.",
-          alt: "Local City Places certificate claim page showing a $100 grocery rebate certificate paid $25 a month over four months",
+            "The offer stated plainly inside the merchant's own dashboard — exclusivity first, then the channels that come with it.",
+          alt: "MarketLock360 page in the merchant dashboard headlined Lock in your city, listing eight growth channels, 5,000 homes mailed monthly, and radio airplay",
         },
         {
-          image: "/images/local-city-places-admin.webp",
-          title: "Admin operations",
+          image: "/images/local-city-places-member.webp",
+          title: "Why residents come back",
           caption:
-            "A separate admin surface handles receipts, certificate fulfilment, users, and email campaigns.",
-          alt: "Local City Places admin dashboard with pending receipts, active member and merchant counts, and quick actions",
+            "Members nominate favourite businesses into a monthly sweepstakes. Entries and referrals are what turn a directory listing into repeat traffic.",
+          alt: "Local City Places member dashboard showing sweepstakes cycle entry status, a referral link, and a leaderboard of five members",
         },
       ],
     },

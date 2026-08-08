@@ -56,6 +56,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const projectIndex = portfolioProjects.findIndex((item) => item.slug === project.slug);
   const nextProject = portfolioProjects[(projectIndex + 1) % portfolioProjects.length];
   const comparison = "comparison" in project.caseStudy ? project.caseStudy.comparison : null;
+  const decisions = "decisions" in project.caseStudy ? project.caseStudy.decisions : null;
   const siteUrl = getSiteUrl();
   const caseStudyUrl = getAbsoluteUrl(`/portfolio/${project.slug}`);
   const structuredData = {
@@ -227,6 +228,33 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 </figcaption>
               </figure>
             </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+      {/* The reasoning, where there is reasoning worth reading. Screens
+       * show what a thing does; only this explains why it is built that
+       * way, which is the part a prospective client is actually judging. */}
+      {decisions ? (
+        <section
+          className="case-decisions-section px-5 py-16 md:px-8 md:py-24"
+          aria-labelledby="case-decisions-title"
+        >
+          <div className="mx-auto max-w-[1500px]">
+            <Reveal className="case-decisions-heading">
+              <p className="section-label">Decisions</p>
+              <h2 id="case-decisions-title">Why it is built this way.</h2>
+            </Reveal>
+
+            <div className="case-decisions-grid">
+              {decisions.map((decision, index) => (
+                <Reveal className="case-decision" delay={index * 70} key={decision.title}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{decision.title}</h3>
+                  <p>{decision.body}</p>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
       ) : null}
