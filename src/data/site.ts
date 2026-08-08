@@ -677,6 +677,124 @@ export const portfolioProjects = [
   },
   {
     number: "06",
+    slug: "cartersteinhoff",
+    year: "2026",
+    title: "This Site",
+    url: "https://cartersteinhoff.co/",
+    domain: "cartersteinhoff.co",
+    platform: "Next.js · TypeScript · Tailwind CSS",
+    shortPlatform: "Next.js · Tailwind",
+    externalLabel: "You are here",
+    status: "Live",
+    statusDetail: "Live and in production",
+    summary:
+      "A static portfolio built to argue that the work behind a product is worth reading about.",
+    seoDescription:
+      "Carter Steinhoff portfolio case study: a statically generated Next.js 16 and React 19 site on Tailwind CSS v4, typed with TypeScript 7, checked by Biome and Playwright, delivered on Vercel.",
+    description:
+      "I designed and built this site end to end — a statically generated Next.js application with a single shared type scale, per-route social cards rendered at build time, and one dynamic route in the whole project.",
+    services: ["Product design", "Next.js", "Design systems", "Static architecture"],
+    image: "/images/cartersteinhoff-project.webp",
+    imageAlt:
+      "Carter Steinhoff homepage hero with the name set large in a serif display face over a photograph of a desk at night",
+    caseStudy: {
+      role: "Design, development & writing",
+      system: "Next.js 16 · React 19 · TypeScript 7 · Tailwind CSS 4 · Biome · Playwright · Vercel",
+      headline: "Everything static but the contact form.",
+      overview:
+        "A portfolio is a strange product: the artefact and the argument are the same thing. Somebody deciding whether to hire me is judging the build as much as reading it, so the site had to be defensible under exactly the scrutiny it invites — which mostly meant refusing the shortcuts that would have been invisible to anyone not looking closely.",
+      detail:
+        "Eight routes, all statically generated except a single contact function. React Server Components by default, with five client components across the whole project. The type scale lives in one place as Tailwind v4 theme tokens, so headings cannot drift. Social cards render at build time from the site's own fonts. A Playwright suite runs every route on desktop and mobile against a production build.",
+      contributions: [
+        "Product direction, editorial writing, and the full responsive visual system",
+        "Statically generated Next.js App Router architecture with one dynamic route",
+        "A shared fluid type scale as Tailwind v4 theme tokens, consumed by utilities and CSS Modules alike",
+        "Build-time social cards, structured data, and a 38-test Playwright suite on desktop and mobile",
+      ],
+      statusCopy: "Live in production. You are reading it.",
+      decisions: [
+        {
+          title: "The type scale is tokens, not conventions",
+          body: "Every heading size, its line height, and its tracking are bound together as Tailwind v4 theme tokens, which makes each one both a utility for markup and a variable for CSS Modules. A hand-rolled font-size is the moment a design system starts dying, so there is nowhere in this project to write one that looks like it belongs. Ranks are chosen, not invented.",
+        },
+        {
+          title: "One dynamic route in the whole site",
+          body: "Everything is prerendered except the contact endpoint. Not for a performance score — for a smaller set of things that can break while I am not looking. A static page has no database to go down, no cold start, no runtime secret to leak. The contact form earns its exception because a portfolio without a way to reach me is decorative.",
+        },
+        {
+          title: "Tests assert on structure, not on screenshots",
+          body: "The suite checks that heading ranks descend without skipping, that internal links resolve, that the hero image is the only prioritised one, that motion actually stops under a reduced-motion preference, and that project numbers match their position in the data. Two of those exist because the numbering silently drifted from the ordering once already. Pixel snapshots would have caught none of it.",
+        },
+        {
+          title: "The case studies say why, or say nothing",
+          body: "Screenshots show what a thing does; only prose explains why it is built that way, and that is the part a client is actually evaluating. So the Decisions section is optional in the data model. Two projects here do not have one, because their source is not in front of me and a plausible-sounding rationale reconstructed after the fact would be worth less than an honest gap.",
+        },
+      ] satisfies readonly ProjectDecision[],
+      architecture: {
+        headline: "A build-time site with one moving part.",
+        summary:
+          "The pages, the social cards, and the type scale are all resolved before a visitor arrives. The only thing that runs on request is the contact form, and the only thing that runs in their browser is the handful of components that genuinely need state.",
+        items: [
+          {
+            label: "Experience",
+            value:
+              "Next.js 16 App Router and React 19 Server Components, five client components total",
+          },
+          {
+            label: "Design system",
+            value:
+              "Tailwind CSS v4 theme tokens for a fluid type scale, with CSS Modules per route",
+          },
+          {
+            label: "Build output",
+            value: "Static prerendering for every route plus build-time OpenGraph cards",
+          },
+          {
+            label: "Quality gates",
+            value: "TypeScript 7, Biome, and 38 Playwright tests on desktop and mobile",
+          },
+        ],
+      } satisfies ProjectArchitecture,
+      screens: [
+        {
+          image: "/images/cartersteinhoff-project.webp",
+          title: "Homepage",
+          caption:
+            "The hero cycles through three scenes on a timer and stops entirely when the visitor prefers reduced motion — a behaviour the test suite asserts rather than trusts.",
+          alt: "Homepage hero with the name in a large serif display face over a photograph of a desk at night, above a short positioning line and two calls to action",
+        },
+        {
+          image: "/images/cartersteinhoff-gallery.webp",
+          title: "The work gallery",
+          caption:
+            "Each project sits in browser chrome with its real domain, and can be opened as a live embed in place. Nothing loads from those sites until a visitor asks for it.",
+          alt: "Portfolio index showing project cards in browser chrome, each with a screenshot, title, platform, year, and one line of summary",
+        },
+        {
+          image: "/images/cartersteinhoff-decisions.webp",
+          title: "Decisions",
+          caption:
+            "The section this whole site exists to carry: the reasoning behind a build, in two columns of real paragraphs rather than a bulleted feature list.",
+          alt: "Case study Decisions section headed Why it is built this way, with four numbered entries in two columns",
+        },
+        {
+          image: "/images/cartersteinhoff-services.webp",
+          title: "Services",
+          caption: "What I actually do, stated without the padding that usually surrounds it.",
+          alt: "Services page with an oversized statement heading and a rule-topped summary column",
+        },
+        {
+          image: "/images/cartersteinhoff-about.webp",
+          title: "About",
+          caption:
+            "The career story as dated chapters, from a COBOL internship on a mainframe to an independent studio in Phoenix.",
+          alt: "About page showing centered chapter labels with years and left-aligned prose beneath each",
+        },
+      ],
+    },
+  },
+  {
+    number: "07",
     slug: "provepharm",
     year: "2024",
     title: "Provepharm",
