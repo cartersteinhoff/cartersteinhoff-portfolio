@@ -38,9 +38,6 @@ export const upwork = {
   asOf: "August 2026",
   jobSuccess: "100%",
   badge: "Top Rated",
-  profileScreenshot: "/images/upwork-profile-screenshot.png",
-  profileScreenshotAlt:
-    "Screenshot of Carter Steinhoff's Upwork profile showing verification badges and client feedback",
   rating: "4.9",
   reviewCount: 28,
   totalJobs: 37,

@@ -348,29 +348,15 @@ export default function ServicesPage() {
           </div>
 
           <a
-            className={styles.upworkCardLink}
+            className={styles.proofBandFallback}
             href={site.upworkUrl}
             target="_blank"
             rel="noreferrer"
             aria-label="Open Carter's Upwork profile (opens in a new tab)"
           >
-            <span className={styles.upworkCard}>
-              <span className={styles.upworkCardBadge}>
-                {upwork.badge} · {upwork.jobSuccess} Job Success
-              </span>
-              <span className={styles.upworkCardImageWrap}>
-                <Image
-                  src={upwork.profileScreenshot}
-                  alt={upwork.profileScreenshotAlt}
-                  fill
-                  sizes="(max-width: 767px) 92vw, (max-width: 1199px) 55vw, 32vw"
-                  className={styles.upworkCardImage}
-                />
-              </span>
-              <span className={styles.upworkCardCaption}>
-                Profile details and ratings (opens in a new tab)
-              </span>
-            </span>
+            Open verified Upwork profile for live metrics and reputation details.{" "}
+            <span aria-hidden="true">↗</span>
+            <span className="sr-only"> (opens in a new tab)</span>
           </a>
 
           <dl className={styles.proofStats}>
