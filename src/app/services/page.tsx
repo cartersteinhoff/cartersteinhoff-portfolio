@@ -332,6 +332,9 @@ export default function ServicesPage() {
               <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
                 {upwork.badge}, and a {upwork.jobSuccess} job success score.
               </h2>
+              <p className={styles.proofBandLead}>
+                Public reputation metrics and client feedback from my active Upwork profile.
+              </p>
             </div>
             <a
               className={styles.proofBandLink}
@@ -343,6 +346,32 @@ export default function ServicesPage() {
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
+
+          <a
+            className={styles.upworkCardLink}
+            href={site.upworkUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open Carter's Upwork profile (opens in a new tab)"
+          >
+            <span className={styles.upworkCard}>
+              <span className={styles.upworkCardBadge}>
+                {upwork.badge} · {upwork.jobSuccess} Job Success
+              </span>
+              <span className={styles.upworkCardImageWrap}>
+                <Image
+                  src={upwork.profileScreenshot}
+                  alt={upwork.profileScreenshotAlt}
+                  fill
+                  sizes="(max-width: 767px) 92vw, (max-width: 1199px) 55vw, 32vw"
+                  className={styles.upworkCardImage}
+                />
+              </span>
+              <span className={styles.upworkCardCaption}>
+                Profile details and ratings (opens in a new tab)
+              </span>
+            </span>
+          </a>
 
           <dl className={styles.proofStats}>
             {upwork.stats.map((stat) => (
