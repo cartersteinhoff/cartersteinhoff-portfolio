@@ -330,10 +330,11 @@ export default function ServicesPage() {
             <div>
               <p className="eyebrow">Verified on Upwork</p>
               <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
-                {upwork.badge}, and a {upwork.jobSuccess} job success score.
+                {upwork.badge} on Upwork, with a {upwork.jobSuccess} job success score.
               </h2>
               <p className={styles.proofBandLead}>
-                Public reputation metrics and client feedback from my active Upwork profile.
+                A current capture of my public Upwork profile, with live metrics and client feedback
+                linked at the source.
               </p>
             </div>
             <a
@@ -342,21 +343,35 @@ export default function ServicesPage() {
               target="_blank"
               rel="noreferrer"
             >
-              See the profile <span aria-hidden="true">↗</span>
+              View live Upwork profile <span aria-hidden="true">↗</span>
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
 
           <a
-            className={styles.proofBandFallback}
+            className={styles.proofProfile}
             href={site.upworkUrl}
             target="_blank"
             rel="noreferrer"
             aria-label="Open Carter's Upwork profile (opens in a new tab)"
           >
-            Open verified Upwork profile for live metrics and reputation details.{" "}
-            <span aria-hidden="true">↗</span>
-            <span className="sr-only"> (opens in a new tab)</span>
+            <span className={styles.proofProfileHeader} aria-hidden="true">
+              <span className={styles.proofProfileIdentity}>
+                <strong>Carter S. on Upwork</strong>
+                <span>upwork.com/freelancers/cartersteinhoff</span>
+              </span>
+              <span className={styles.proofProfileAction}>Open live profile ↗</span>
+            </span>
+            <span className={styles.proofProfileImage}>
+              <Image
+                src={upwork.profileScreenshot.src}
+                alt={upwork.profileScreenshot.alt}
+                width={upwork.profileScreenshot.width}
+                height={upwork.profileScreenshot.height}
+                sizes="(max-width: 767px) 100vw, (max-width: 1599px) 94vw, 1500px"
+                className={styles.proofProfileImageAsset}
+              />
+            </span>
           </a>
 
           <dl className={styles.proofStats}>
