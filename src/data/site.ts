@@ -891,4 +891,115 @@ export const portfolioProjects = [
       ],
     },
   },
+  {
+    number: "08",
+    slug: "anne-ross",
+    year: "2024",
+    title: "Anne Ross Creative",
+    url: "https://anneross.com/",
+    domain: "anneross.com",
+    platform: "WordPress · Elementor · Hello theme",
+    shortPlatform: "WordPress · Elementor",
+    externalLabel: "Live site",
+    status: "Live",
+    statusDetail: "Live and in production",
+    summary: "An image-first portfolio for a prop, set, and interior stylist.",
+    seoDescription:
+      "Anne Ross Creative case study: a WordPress and Elementor portfolio redesigned around responsive galleries for prop, set, interior, lifestyle, and still-life work.",
+    description:
+      "I redesigned and rebuilt Anne Ross Creative as an image-first WordPress portfolio, replacing the former theme-led gallery with a restrained Elementor system for her prop, set, interior, lifestyle, and still-life work.",
+    services: ["Web design", "WordPress", "Elementor", "Content architecture"],
+    image: "/images/anne-ross-project.webp",
+    imageAlt:
+      "Anne Ross Creative homepage with fixed sage navigation beside a three-column gallery of styled interiors, bedding, and tabletop photography",
+    caseStudy: {
+      role: "Web design & WordPress development",
+      system: "WordPress · Elementor · Hello theme",
+      headline: "A visual portfolio that gives the styling room to lead.",
+      overview:
+        "Anne Ross is a Los Angeles-based prop, set, and interior stylist whose work spans home and garden, lifestyle, still life, sets, and motion. I redesigned and rebuilt her portfolio around that work, giving the imagery a restrained frame and direct category-level browsing.",
+      detail:
+        "The previous WordPress experience ran on the ePix theme and Visual Composer. The current system moves to Elementor and the Hello theme, with persistent desktop navigation, a compact mobile menu, responsive galleries, professional context, and a clear contact path.",
+      contributions: [
+        "Visual direction and responsive portfolio design",
+        "WordPress and Elementor implementation with reusable gallery pages",
+        "Content organization across Home & Garden, Lifestyle, Still Life, Sets, and Motion",
+        "Responsive navigation plus dedicated bio, client-list, and contact paths",
+      ],
+      statusCopy:
+        "The redesigned portfolio is live on anneross.com, with current work organized across focused visual galleries.",
+      comparison: {
+        headline: "From a theme-led gallery to a quieter frame.",
+        summary:
+          "The redesign replaces the former ePix portfolio shell with a restrained visual system, clearer disciplines, responsive navigation, and more direct paths to Anne’s biography, clients, and contact details.",
+        before: {
+          image: "/images/anne-ross-before.webp",
+          label: "Before · ePix",
+          alt: "Archived Anne Ross portfolio with a gray navigation rail, pale blue typography, and monochrome catalog gallery",
+          url: "https://web.archive.org/web/20230320194455/https://anneross.com/",
+          technology: "WordPress · ePix · Visual Composer",
+        },
+        after: {
+          image: "/images/anne-ross-project.webp",
+          label: "After · Elementor",
+          alt: "Current Anne Ross Creative portfolio with a sage navigation rail and full-color masonry gallery of interiors and styled environments",
+          url: "https://anneross.com/",
+          technology: "WordPress · Elementor · Hello",
+        },
+      },
+      architecture: {
+        headline: "A WordPress portfolio organized around the work.",
+        summary:
+          "The site pairs a lightweight page system with visual category archives, keeping navigation steady while each discipline gets its own evolving gallery.",
+        items: [
+          {
+            label: "Experience",
+            value: "Responsive three-column galleries with persistent desktop navigation",
+          },
+          {
+            label: "Publishing",
+            value: "Elementor page system on the lightweight Hello theme",
+          },
+          {
+            label: "Content",
+            value: "Home & Garden, Lifestyle, Still Life, Sets, Motion, bio, clients, and contact",
+          },
+          {
+            label: "Delivery",
+            value: "Production WordPress site with Cloudflare edge caching",
+          },
+        ],
+      } satisfies ProjectArchitecture,
+      screens: [
+        {
+          image: "/images/anne-ross-project.webp",
+          title: "Home & Garden",
+          caption:
+            "The portfolio opens directly on the work while a fixed desktop rail keeps every discipline close.",
+          alt: "Anne Ross Creative Home and Garden gallery with styled interiors, bedrooms, linens, and tabletop scenes",
+        },
+        {
+          image: "/images/anne-ross-lifestyle.webp",
+          title: "Lifestyle",
+          caption:
+            "A dedicated gallery carries the same visual rhythm across fashion, food, home, and location work.",
+          alt: "Anne Ross Creative Lifestyle gallery with colorful editorial photographs of models, flowers, food, and home scenes",
+        },
+        {
+          image: "/images/anne-ross-still-life.webp",
+          title: "Still Life",
+          caption:
+            "Product and tabletop compositions get a focused archive without changing the browsing model.",
+          alt: "Anne Ross Creative Still Life gallery with styled products, apparel, glassware, textiles, and tabletop compositions",
+        },
+        {
+          image: "/images/anne-ross-sets.webp",
+          title: "Sets",
+          caption:
+            "Campaign environments and studio-built scenes sit inside the same restrained gallery system.",
+          alt: "Anne Ross Creative Sets gallery with fashion campaigns, studio interiors, and winter landscape scenes",
+        },
+      ],
+    },
+  },
 ] as const;

@@ -54,7 +54,7 @@ export function BeforeAfterSlider({ before, after, ariaLabel }: BeforeAfterSlide
       </div>
 
       <label className="sr-only" htmlFor={inputId}>
-        Compare the original WordPress site with the Next.js redesign
+        Compare {before.label} with {after.label}
       </label>
       <input
         id={inputId}
@@ -66,7 +66,7 @@ export function BeforeAfterSlider({ before, after, ariaLabel }: BeforeAfterSlide
         value={position}
         onChange={(event) => setPosition(Number(event.currentTarget.value))}
         aria-describedby={instructionsId}
-        aria-valuetext={`${position}% of the original design visible; ${100 - position}% of the redesign visible`}
+        aria-valuetext={`${position}% of ${before.label} visible; ${100 - position}% of ${after.label} visible`}
       />
       <p className="sr-only" id={instructionsId}>
         Use the left and right arrow keys, Home, or End to change the comparison.

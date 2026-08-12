@@ -222,8 +222,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 <figcaption>
                   <span>Drag to compare</span>
                   <p>
-                    One matched viewport. The original WordPress site is still on the custom domain;
-                    the redesign is the public Vercel preview.
+                    One matched viewport. The archived experience is left; the current one is right.
                   </p>
                 </figcaption>
               </figure>
