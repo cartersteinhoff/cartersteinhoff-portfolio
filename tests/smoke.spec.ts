@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 import { portfolioProjects } from "../src/data/site";
+import { technologies } from "../src/data/technologies";
 
 /**
  * These assert the classes of defect this site actually shipped, rather
@@ -85,6 +86,62 @@ test("every image referenced in project data resolves", async ({ request }) => {
     const res = await request.get(path);
     expect(res.status(), `${path} is referenced in site data but 404s`).toBe(200);
   }
+});
+
+test("every case study has a concise story, six screens, and a verified stack", () => {
+  for (const project of portfolioProjects) {
+    const { caseStudy } = project;
+
+    expect(
+      caseStudy.screens.length,
+      `${project.slug} needs at least six screens`,
+    ).toBeGreaterThanOrEqual(6);
+    expect(caseStudy.screens[0].image, `${project.slug} cover should lead its gallery`).toBe(
+      project.image,
+    );
+    expect(
+      new Set(caseStudy.screens.map((screen) => screen.image)).size,
+      `${project.slug} screen images should be unique`,
+    ).toBe(caseStudy.screens.length);
+
+    expect(caseStudy.story, `${project.slug} needs three story chapters`).toHaveLength(3);
+    for (const chapter of caseStudy.story) {
+      expect(chapter.label.trim().length).toBeGreaterThan(0);
+      expect(chapter.title.trim().length).toBeGreaterThan(0);
+      expect(
+        chapter.body.trim().split(/\s+/).length,
+        `${project.slug}: ${chapter.title}`,
+      ).toBeLessThanOrEqual(45);
+    }
+
+    const stackIds = caseStudy.technologyStack.groups.flatMap((group) =>
+      group.technologies.map((technology) => technology.id),
+    );
+    expect(caseStudy.technologyStack.groups.length).toBeGreaterThanOrEqual(2);
+    expect(caseStudy.technologyStack.groups.length).toBeLessThanOrEqual(3);
+    expect(new Set(stackIds).size, `${project.slug} stack technologies should be unique`).toBe(
+      stackIds.length,
+    );
+    for (const id of stackIds) {
+      expect(
+        technologies[id],
+        `${project.slug} uses an unknown technology id: ${id}`,
+      ).toBeDefined();
+    }
+  }
+});
+
+test("technology stack logos are decorative and names stay visible", async ({ page }) => {
+  const project = portfolioProjects[0];
+  const expectedCount = project.caseStudy.technologyStack.groups.reduce(
+    (total, group) => total + group.technologies.length,
+    0,
+  );
+
+  await page.goto(`/portfolio/${project.slug}`);
+  await expect(page.locator(".case-stack-name")).toHaveCount(expectedCount);
+  await expect(page.locator('.case-stack-mark[aria-hidden="true"] svg')).toHaveCount(expectedCount);
+  await expect(page.locator(".case-stack-role")).toHaveCount(expectedCount);
 });
 
 test("case study headings descend h1 to h2 to h3", async ({ page }) => {

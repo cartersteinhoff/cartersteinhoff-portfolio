@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { BeforeAfterSlider } from "@/components/before-after-slider";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { TechnologyStack } from "@/components/technology-stack";
 import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -180,8 +181,32 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
           <div className="case-brief-grid">
             <Reveal className="case-brief-copy">
               <p>{project.caseStudy.overview}</p>
-              <p>{project.caseStudy.detail}</p>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="case-story-section px-5 py-16 md:px-8 md:py-24"
+        aria-labelledby="case-story-title"
+      >
+        <div className="mx-auto max-w-[1500px]">
+          <Reveal className="case-story-heading">
+            <p className="section-label">Project story</p>
+            <div>
+              <h2 id="case-story-title">What shaped the build.</h2>
+              <p>{project.caseStudy.detail}</p>
+            </div>
+          </Reveal>
+
+          <div className="case-story-list">
+            {project.caseStudy.story.map((chapter, index) => (
+              <Reveal className="case-story-item" delay={index * 70} key={chapter.title}>
+                <span>{chapter.label}</span>
+                <h3>{chapter.title}</h3>
+                <p>{chapter.body}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -276,24 +301,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className="case-architecture-section px-5 py-16 md:px-8 md:py-24">
+      <section className="case-stack-section px-5 py-16 md:px-8 md:py-24">
         <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-architecture-heading">
-            <p className="section-label">Architecture</p>
-            <div>
-              <h2>{project.caseStudy.architecture.headline}</h2>
-              <p className="case-architecture-intro">{project.caseStudy.architecture.summary}</p>
-            </div>
+          <Reveal>
+            <TechnologyStack
+              stack={project.caseStudy.technologyStack}
+              system={project.caseStudy.architecture}
+            />
           </Reveal>
-
-          <div className="case-architecture-grid">
-            {project.caseStudy.architecture.items.map((item, index) => (
-              <Reveal className="case-architecture-item" delay={index * 70} key={item.label}>
-                <span>{item.label}</span>
-                <strong>{item.value}</strong>
-              </Reveal>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -325,9 +340,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                     <Image
                       src={screen.image}
                       alt={screen.alt}
-                      width={1440}
-                      height={1000}
-                      unoptimized
+                      width={("width" in screen && screen.width) || 1440}
+                      height={("height" in screen && screen.height) || 1000}
                       sizes={
                         index === 0
                           ? "(max-width: 768px) 94vw, 92vw"
