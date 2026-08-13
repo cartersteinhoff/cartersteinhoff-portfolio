@@ -162,7 +162,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   alt={project.imageAlt}
                   fill
                   preload
-                  sizes="(max-width: 768px) 94vw, 92vw"
+                  sizes="(max-width: 768px) 94vw, (max-width: 1199px) 92vw, 1050px"
                   className="object-cover"
                 />
               </div>
@@ -344,8 +344,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       height={("height" in screen && screen.height) || 1000}
                       sizes={
                         index === 0
-                          ? "(max-width: 768px) 94vw, 92vw"
-                          : "(max-width: 768px) 94vw, 46vw"
+                          ? "(max-width: 768px) 94vw, (max-width: 1199px) 92vw, 960px"
+                          : "(max-width: 768px) 94vw, (max-width: 1199px) 46vw, 550px"
                       }
                       className="h-auto w-full"
                     />

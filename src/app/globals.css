@@ -1964,6 +1964,9 @@ textarea:focus-visible {
   }
 
   .case-hero-proof {
+    max-width: 70rem;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 2rem;
   }
 
@@ -1995,7 +1998,21 @@ textarea:focus-visible {
   }
 
   .case-gallery {
+    max-width: 70rem;
+    margin-right: auto;
+    margin-left: auto;
     margin-top: 3.5rem;
+  }
+
+  .case-screen-wide {
+    width: min(100%, 60rem);
+    justify-self: center;
+  }
+
+  .case-comparison-stage {
+    max-width: 70rem;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .contact-page-inner {
