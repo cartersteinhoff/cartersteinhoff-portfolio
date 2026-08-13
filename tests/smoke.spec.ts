@@ -144,25 +144,28 @@ test("technology stack logos are decorative and names stay visible", async ({ pa
   await expect(page.locator(".case-stack-role")).toHaveCount(expectedCount);
 });
 
-test("case-study screenshots stay framed at an editorial scale", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop", "Desktop owns the constrained media treatment");
+test("case-study media uses a full-bleed poster and varied editorial scale", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Desktop owns the editorial media rhythm");
 
   await page.goto("/portfolio/retailboss");
 
-  const hero = await page.locator(".case-hero-proof").boundingBox();
+  const hero = await page.locator("main > section").first().boundingBox();
   const leadScreen = await page.locator(".case-screen-wide").boundingBox();
   const supportingScreen = await page
     .locator(".case-screen:not(.case-screen-wide)")
     .first()
     .boundingBox();
 
-  expect(hero?.width).toBeLessThanOrEqual(1120);
-  expect(leadScreen?.width).toBeLessThanOrEqual(960);
-  expect(supportingScreen?.width).toBeLessThanOrEqual(550);
+  expect(hero?.width).toBeGreaterThanOrEqual(1400);
+  expect(leadScreen?.width).toBeGreaterThanOrEqual(1200);
+  expect(leadScreen?.width ?? 0).toBeGreaterThan((supportingScreen?.width ?? 0) * 1.45);
 
   await page.goto("/portfolio/anne-ross");
   const comparison = await page.locator(".case-comparison-stage").boundingBox();
-  expect(comparison?.width).toBeLessThanOrEqual(1120);
+  expect(comparison?.width).toBeGreaterThanOrEqual(900);
+  expect(comparison?.width).toBeLessThanOrEqual(1280);
 });
 
 test("case study headings descend h1 to h2 to h3", async ({ page }) => {

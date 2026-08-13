@@ -8,6 +8,7 @@ import { Reveal } from "@/components/reveal";
 import { TechnologyStack } from "@/components/technology-stack";
 import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
+import styles from "./case-study.module.css";
 
 type CaseStudyPageProps = {
   params: Promise<{ slug: string }>;
@@ -29,18 +30,17 @@ export async function generateMetadata({ params }: CaseStudyPageProps): Promise<
     notFound();
   }
 
-  const title = `${project.title} Case Study`;
-  const url = `/portfolio/${project.slug}`;
+  const cover = project.caseStudy.screens[0];
 
   return createPageMetadata({
-    title,
+    title: `${project.title} Case Study`,
     description: project.seoDescription,
-    path: url,
+    path: `/portfolio/${project.slug}`,
     type: "article",
     image: {
       url: project.image,
-      width: 1440,
-      height: 1000,
+      width: ("width" in cover && cover.width) || 1440,
+      height: ("height" in cover && cover.height) || 1000,
       alt: project.imageAlt,
     },
   });
@@ -89,166 +89,113 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   };
 
   return (
-    <main className="case-study bg-[var(--dusk)] text-[var(--sand)]" data-project={project.slug}>
+    <main className={`${styles.caseStudy} case-study`} data-project={project.slug}>
       <JsonLd id="case-study-structured-data" data={structuredData} />
-      <section className="case-hero px-5 pb-12 pt-24 md:px-8 md:pb-16 md:pt-28">
-        <div className="case-hero-shell mx-auto max-w-[1500px]">
-          <div className="case-hero-topline">
-            <Link className="case-back-link" href="/portfolio">
-              <span aria-hidden="true">←</span> All selected work
+
+      <section className={styles.hero} aria-labelledby="case-title">
+        <Image
+          src={project.image}
+          alt={project.imageAlt}
+          fill
+          preload
+          sizes="100vw"
+          className={styles.heroImage}
+        />
+        <div className={styles.heroScrim} aria-hidden="true" />
+
+        <div className={styles.heroInner}>
+          <div className={styles.heroTopline}>
+            <Link className={styles.backLink} href="/portfolio">
+              <span aria-hidden="true">←</span> Selected work
             </Link>
-            <p className="page-kicker">Case study · {project.number}</p>
+            <p className={styles.heroIndex}>Case study · {project.number}</p>
           </div>
 
-          <div className="case-hero-layout">
-            <div className="case-hero-copy">
-              <h1 className="case-title">{project.title}</h1>
-              <p className="case-summary">{project.summary}</p>
-              <div className="case-hero-actions">
-                <a className="case-hero-action" href={project.url} target="_blank" rel="noreferrer">
-                  {project.externalLabel}
+          <div className={styles.heroCopy}>
+            <p className={styles.heroEyebrow}>
+              {project.year} · {project.caseStudy.role}
+            </p>
+            <h1 id="case-title" className={styles.title}>
+              {project.title}
+            </h1>
+            <p className={styles.summary}>{project.summary}</p>
+            <div className={styles.heroActions}>
+              <a className={styles.primaryLink} href={project.url} target="_blank" rel="noreferrer">
+                {project.externalLabel}
+                <span aria-hidden="true"> ↗</span>
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              {comparison ? (
+                <a
+                  className={styles.secondaryLink}
+                  href={comparison.before.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View original
                   <span aria-hidden="true"> ↗</span>
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
-                {comparison ? (
-                  <a
-                    className="case-hero-action case-hero-action-secondary"
-                    href={comparison.before.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View original
-                    <span aria-hidden="true"> ↗</span>
-                    <span className="sr-only"> (opens in a new tab)</span>
-                  </a>
-                ) : null}
-              </div>
-            </div>
-
-            <dl className="case-hero-facts">
-              <div>
-                <dt>Year</dt>
-                <dd>{project.year}</dd>
-              </div>
-              <div>
-                <dt>Role</dt>
-                <dd>{project.caseStudy.role}</dd>
-              </div>
-              <div>
-                <dt>Stack</dt>
-                <dd>{project.caseStudy.system}</dd>
-              </div>
-              <div>
-                <dt>Status</dt>
-                <dd>{project.statusDetail}</dd>
-              </div>
-            </dl>
-          </div>
-
-          <div className="case-hero-proof">
-            <div className="case-browser">
-              <div className="project-browser-bar">
-                <span className="project-browser-dots" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-                <span>{project.domain}</span>
-                <span aria-hidden="true">01</span>
-              </div>
-              <div className="case-browser-image">
-                <Image
-                  src={project.image}
-                  alt={project.imageAlt}
-                  fill
-                  preload
-                  sizes="(max-width: 768px) 94vw, (max-width: 1199px) 92vw, 1050px"
-                  className="object-cover"
-                />
-              </div>
+              ) : null}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="case-brief-section px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-brief-heading">
-            <p className="section-label">Project brief</p>
-            <h2>{project.caseStudy.headline}</h2>
-          </Reveal>
-
-          <div className="case-brief-grid">
-            <Reveal className="case-brief-copy">
-              <p>{project.caseStudy.overview}</p>
-            </Reveal>
-          </div>
+      <dl className={styles.facts} aria-label="Project details">
+        <div>
+          <dt>Year</dt>
+          <dd>{project.year}</dd>
         </div>
-      </section>
-
-      <section
-        className="case-story-section px-5 py-16 md:px-8 md:py-24"
-        aria-labelledby="case-story-title"
-      >
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-story-heading">
-            <p className="section-label">Project story</p>
-            <div>
-              <h2 id="case-story-title">What shaped the build.</h2>
-              <p>{project.caseStudy.detail}</p>
-            </div>
-          </Reveal>
-
-          <div className="case-story-list">
-            {project.caseStudy.story.map((chapter, index) => (
-              <Reveal className="case-story-item" delay={index * 70} key={chapter.title}>
-                <span>{chapter.label}</span>
-                <h3>{chapter.title}</h3>
-                <p>{chapter.body}</p>
-              </Reveal>
-            ))}
-          </div>
+        <div>
+          <dt>Role</dt>
+          <dd>{project.caseStudy.role}</dd>
         </div>
-      </section>
+        <div>
+          <dt>Stack</dt>
+          <dd>{project.caseStudy.system}</dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>{project.statusDetail}</dd>
+        </div>
+      </dl>
 
       {comparison ? (
         <section
-          className="case-comparison-section px-5 py-16 md:px-8 md:py-24"
+          className={`${styles.comparison} case-comparison-section`}
           aria-labelledby="case-comparison-title"
         >
-          <div className="mx-auto max-w-[1500px]">
-            <Reveal className="case-comparison-heading">
-              <p className="section-label">Before / after</p>
+          <div className={styles.sectionShell}>
+            <Reveal className={styles.sectionHeading}>
+              <p className={styles.sectionLabel}>Before / after</p>
               <div>
                 <h2 id="case-comparison-title">{comparison.headline}</h2>
                 <p>{comparison.summary}</p>
               </div>
             </Reveal>
 
-            <Reveal className="case-comparison-stage">
+            <Reveal className={`${styles.comparisonStage} case-comparison-stage`}>
               <figure>
-                <div className="case-comparison-key">
-                  {[comparison.before, comparison.after].map((state) => (
-                    <a href={state.url} target="_blank" rel="noreferrer" key={state.label}>
-                      <span className="case-comparison-state-label">{state.label}</span>
-                      <strong>{state.technology}</strong>
-                      <i aria-hidden="true">↗</i>
-                      <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                  ))}
-                </div>
-
                 <BeforeAfterSlider
                   before={{ src: comparison.before.image, label: comparison.before.label }}
                   after={{ src: comparison.after.image, label: comparison.after.label }}
                   ariaLabel={`${comparison.before.alt}. Compared with ${comparison.after.alt}.`}
                 />
-
-                <figcaption>
-                  <span>Drag to compare</span>
-                  <p>
-                    One matched viewport. The archived experience is left; the current one is right.
-                  </p>
+                <figcaption className={styles.comparisonCaption}>
+                  <p className={styles.comparisonNote}>Drag to compare the same viewport.</p>
+                  <div>
+                    {[comparison.before, comparison.after].map((state) => (
+                      <a href={state.url} target="_blank" rel="noreferrer" key={state.label}>
+                        <span>{state.label}</span>
+                        <strong className={styles.comparisonTechnology}>{state.technology}</strong>
+                        <i className={styles.comparisonArrow} aria-hidden="true">
+                          ↗
+                        </i>
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    ))}
+                  </div>
                 </figcaption>
               </figure>
             </Reveal>
@@ -256,87 +203,98 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </section>
       ) : null}
 
-      {/* The reasoning, where there is reasoning worth reading. Screens
-       * show what a thing does; only this explains why it is built that
-       * way, which is the part a prospective client is actually judging. */}
-      {decisions ? (
-        <section
-          className="case-decisions-section px-5 py-16 md:px-8 md:py-24"
-          aria-labelledby="case-decisions-title"
-        >
-          <div className="mx-auto max-w-[1500px]">
-            <Reveal className="case-decisions-heading">
-              <p className="section-label">Decisions</p>
-              <h2 id="case-decisions-title">Why it is built this way.</h2>
-            </Reveal>
-
-            <div className="case-decisions-grid">
-              {decisions.map((decision, index) => (
-                <Reveal className="case-decision" delay={index * 70} key={decision.title}>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  <h3>{decision.title}</h3>
-                  <p>{decision.body}</p>
-                </Reveal>
-              ))}
+      <section className={styles.story} aria-labelledby="case-story-title">
+        <div className={`${styles.sectionShell} ${styles.storyGrid}`}>
+          <Reveal className={styles.storyIntro}>
+            <div className={styles.stickyIntro}>
+              <p className={styles.sectionLabel}>Project story</p>
+              <h2 id="case-story-title">{project.caseStudy.headline}</h2>
+              <p className={styles.storyLead}>{project.caseStudy.overview}</p>
+              <p className={styles.storyDetail}>{project.caseStudy.detail}</p>
             </div>
-          </div>
-        </section>
-      ) : null}
-
-      <section className="case-ownership-section px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-ownership-heading">
-            <p className="section-label">What I owned</p>
-            <h2>The work behind the finished product.</h2>
           </Reveal>
 
-          <div className="case-ownership-grid">
-            {project.caseStudy.contributions.map((contribution, index) => (
-              <Reveal className="case-ownership-item" delay={index * 60} key={contribution}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <p>{contribution}</p>
+          <div className={styles.storyChapters}>
+            {project.caseStudy.story.map((chapter, index) => (
+              <Reveal className={styles.storyChapter} delay={index * 70} key={chapter.title}>
+                <p className={styles.chapterNumber}>{String(index + 1).padStart(2, "0")}</p>
+                <div>
+                  <span>{chapter.label}</span>
+                  <h3>{chapter.title}</h3>
+                  <p>{chapter.body}</p>
+                </div>
               </Reveal>
             ))}
+
+            {decisions ? (
+              <div className={`${styles.decisions} case-decisions-section`}>
+                <p className={styles.sectionLabel}>Decisions</p>
+                <div className={styles.decisionsGrid}>
+                  {decisions.map((decision, index) => (
+                    <Reveal
+                      className={`${styles.decision} case-decision`}
+                      delay={index * 60}
+                      key={decision.title}
+                    >
+                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                      <h3>{decision.title}</h3>
+                      <p>{decision.body}</p>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
 
-      <section className="case-stack-section px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal>
+      <section className={styles.build} aria-labelledby="case-build-title">
+        <div className={styles.sectionShell}>
+          <Reveal className={styles.buildHeading}>
+            <p className={styles.sectionLabel}>The build</p>
+            <div>
+              <h2 id="case-build-title">{project.caseStudy.technologyStack.headline}</h2>
+              <p>{project.caseStudy.technologyStack.summary}</p>
+            </div>
+          </Reveal>
+
+          <div className={styles.buildGrid}>
+            <div className={styles.contributions}>
+              <h3>What I owned</h3>
+              <ol>
+                {project.caseStudy.contributions.map((contribution, index) => (
+                  <li key={contribution}>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <p>{contribution}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
             <TechnologyStack
               stack={project.caseStudy.technologyStack}
               system={project.caseStudy.architecture}
             />
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      <section className="case-gallery-section px-5 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-[1500px]">
-          <Reveal className="case-gallery-heading">
-            <p className="section-label">Selected screens</p>
-            <h2>{project.title}, beyond the opening screen.</h2>
+      <section className={styles.gallerySection} aria-labelledby="case-gallery-title">
+        <div className={styles.sectionShell}>
+          <Reveal className={styles.galleryHeading}>
+            <p className={styles.sectionLabel}>Selected screens</p>
+            <h2 id="case-gallery-title">The work, beyond the opening frame.</h2>
           </Reveal>
 
-          <div className="case-gallery">
+          <div className={styles.gallery}>
             {project.caseStudy.screens.slice(1).map((screen, index) => (
-              <Reveal
-                className={`case-screen ${index === 0 ? "case-screen-wide" : ""}`}
-                delay={index * 80}
+              <article
+                className={`${styles.galleryItem} case-screen ${
+                  index === 0 ? `${styles.galleryItemLead} case-screen-wide` : ""
+                }`}
                 key={screen.image}
               >
                 <figure>
-                  <div className="case-screen-browser">
-                    <div className="project-browser-bar">
-                      <span className="project-browser-dots" aria-hidden="true">
-                        <i />
-                        <i />
-                        <i />
-                      </span>
-                      <span>{screen.title}</span>
-                      <span aria-hidden="true">{String(index + 2).padStart(2, "0")}</span>
-                    </div>
+                  <div className={styles.galleryMedia}>
                     <Image
                       src={screen.image}
                       alt={screen.alt}
@@ -344,64 +302,42 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       height={("height" in screen && screen.height) || 1000}
                       sizes={
                         index === 0
-                          ? "(max-width: 768px) 94vw, (max-width: 1199px) 92vw, 960px"
-                          : "(max-width: 768px) 94vw, (max-width: 1199px) 46vw, 550px"
+                          ? "(max-width: 767px) 100vw, 92vw"
+                          : "(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 620px"
                       }
-                      className="h-auto w-full"
                     />
                   </div>
                   <figcaption>
-                    <span>{screen.title}</span>
-                    <p>{screen.caption}</p>
+                    <span>{String(index + 2).padStart(2, "0")}</span>
+                    <div>
+                      <strong>{screen.title}</strong>
+                      <p>{screen.caption}</p>
+                    </div>
                   </figcaption>
                 </figure>
-              </Reveal>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="case-status-section px-5 py-16 md:px-8 md:py-20">
-        <div className="case-status-layout mx-auto max-w-[1500px]">
-          <Reveal className="case-status-copy">
-            <p className="section-label">Current status</p>
-            <h2>{project.statusDetail}</h2>
-          </Reveal>
-          <Reveal className="case-status-action">
+      <section className={styles.closing} aria-labelledby="next-case">
+        <Image src={nextProject.image} alt="" fill sizes="100vw" className={styles.nextImage} />
+        <div className={styles.closingScrim} aria-hidden="true" />
+        <div className={styles.closingInner}>
+          <div className={styles.closingStatus}>
+            <p className={styles.sectionLabel}>Current status</p>
+            <strong className={styles.closingStatusTitle}>{project.statusDetail}</strong>
             <p>{project.caseStudy.statusCopy}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="case-cta-section px-5 py-16 md:px-8 md:py-24">
-        <Reveal className="case-cta-layout mx-auto max-w-[1500px]">
-          <div>
-            <p className="section-label">Have a similar project?</p>
-            <h2>Let’s design and build the system behind it.</h2>
+            <Link href="/contact">Discuss a similar project ↗</Link>
           </div>
-          <Link className="case-cta-link" href="/contact">
-            Discuss your project <span aria-hidden="true">↗</span>
-          </Link>
-        </Reveal>
-      </section>
 
-      {/* "Next case study" is a label, not a section heading. As an <h2>
-       * it rendered at 12px beside 84px siblings and put a rank-2 entry
-       * in the document outline that carried no content. The project name
-       * is the actual heading here. */}
-      <section
-        className="case-next-section px-5 py-16 md:px-8 md:py-20"
-        aria-labelledby="next-case"
-      >
-        <div className="mx-auto max-w-[1500px]">
-          <p className="section-label">Next case study</p>
-          <Link className="case-next-link group" href={`/portfolio/${nextProject.slug}`}>
-            <h2 id="next-case" className="case-next-title">
-              {nextProject.title}
-            </h2>
-            <span className="case-next-arrow" aria-hidden="true">
+          <Link className={styles.nextLink} href={`/portfolio/${nextProject.slug}`}>
+            <span>Next case study</span>
+            <h2 id="next-case">{nextProject.title}</h2>
+            <i className={styles.nextArrow} aria-hidden="true">
               ↗
-            </span>
+            </i>
           </Link>
         </div>
       </section>
