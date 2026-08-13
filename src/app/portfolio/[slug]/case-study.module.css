@@ -209,13 +209,15 @@
   border: 0;
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
   background: var(--ink);
-  padding: clamp(4rem, 7vw, 7rem) 2rem;
+  padding: clamp(3rem, 5vw, 5rem) 2rem;
 }
 
-.sectionHeading {
+.sectionHeading,
+.galleryHeading,
+.buildHeading {
   display: grid;
-  grid-template-columns: minmax(10rem, 0.4fr) minmax(0, 1fr);
-  gap: 2rem 4rem;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
   align-items: start;
 }
 
@@ -232,7 +234,18 @@
   text-wrap: balance;
 }
 
+.sectionHeading h2,
+.galleryHeading h2,
+.buildHeading h2 {
+  max-width: min(100%, 22ch);
+}
+
+.buildHeading h2 {
+  max-width: min(100%, 28ch);
+}
+
 .sectionHeading > div > p,
+.galleryHeading > div > p,
 .buildHeading > div > p {
   max-width: var(--measure-body);
   margin-top: 1.4rem;
@@ -243,7 +256,7 @@
 
 .caseStudy .comparisonStage {
   width: min(100%, 80rem);
-  margin: clamp(3rem, 6vw, 6rem) auto 0;
+  margin: clamp(2.5rem, 4vw, 4rem) auto 0;
 }
 
 .caseStudy .comparisonStage figure {
@@ -311,13 +324,13 @@
 
 .story {
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
-  padding: clamp(4rem, 7vw, 7rem) 2rem;
+  padding: clamp(3rem, 5vw, 5rem) 2rem;
 }
 
 .storyGrid {
   display: grid;
   grid-template-columns: minmax(18rem, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(4rem, 10vw, 10rem);
+  gap: clamp(3rem, 6vw, 6rem);
   align-items: start;
 }
 
@@ -331,12 +344,12 @@
 }
 
 .storyIntro h2 {
-  margin-top: 1.75rem;
+  margin-top: 1.25rem;
 }
 
 .storyLead {
   max-width: 34rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   color: var(--sand);
   font-size: var(--text-6);
   line-height: var(--text-6--line-height);
@@ -345,7 +358,7 @@
 
 .storyDetail {
   max-width: 36rem;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
   color: var(--muted);
   font-size: var(--text-body);
   line-height: var(--text-body--line-height);
@@ -362,7 +375,7 @@
   grid-template-columns: 3rem minmax(0, 1fr);
   gap: 1.5rem;
   border-bottom: 1px solid rgba(242, 236, 228, 0.18);
-  padding: 2.25rem 0 2.5rem;
+  padding: 1.75rem 0 2rem;
 }
 
 .chapterNumber {
@@ -403,7 +416,7 @@
 }
 
 .decisions {
-  margin-top: clamp(4rem, 8vw, 7rem);
+  margin-top: clamp(3rem, 5vw, 5rem);
 }
 
 .decisionsGrid {
@@ -446,57 +459,59 @@
 
 .gallerySection {
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
-  padding: clamp(4rem, 7vw, 7rem) 2rem;
-}
-
-.galleryHeading {
-  display: grid;
-  grid-template-columns: minmax(10rem, 0.4fr) minmax(0, 1fr);
-  gap: 2rem 4rem;
-  align-items: start;
+  padding: clamp(3rem, 5vw, 5rem) 2rem;
 }
 
 .gallery {
   display: grid;
-  max-width: 82rem;
-  margin: clamp(3rem, 5vw, 5rem) auto 0;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: clamp(2.5rem, 4.5vw, 4.5rem) clamp(1.25rem, 3vw, 3rem);
+  max-width: 86rem;
+  margin: clamp(2.25rem, 3.5vw, 3.5rem) auto 0;
+  padding: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.75rem, 2.5vw, 2.75rem) clamp(1rem, 2vw, 1.75rem);
   align-items: start;
+  list-style: none;
 }
 
 .caseStudy .galleryItem {
   min-width: 0;
-  grid-column: span 6;
+  border-top: 1px solid rgba(242, 236, 228, 0.18);
+  padding-top: 1rem;
 }
 
 .caseStudy .galleryItemLead {
   width: 100%;
   grid-column: 1 / -1;
-  justify-self: stretch;
+  margin-bottom: clamp(0.5rem, 1.5vw, 1.25rem);
+  border-top: 0;
+  padding-top: 0;
 }
 
-.galleryItem:nth-child(2) {
-  grid-column: 1 / span 7;
+.galleryFigure {
+  display: grid;
+  min-width: 0;
+  gap: 0.9rem;
 }
 
-.galleryItem:nth-child(3) {
-  grid-column: 8 / -1;
-  margin-top: 3.5rem;
+.galleryItemLead .galleryFigure {
+  grid-template-columns: minmax(0, 3fr) minmax(14rem, 1fr);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  align-items: end;
 }
 
-.galleryItem:nth-child(4) {
-  grid-column: 1 / span 5;
-  margin-top: 1rem;
+.caseStudy .galleryItemTail {
+  grid-column: 1 / -1;
 }
 
-.galleryItem:nth-child(5) {
-  grid-column: 6 / -1;
+.galleryItemTail .galleryFigure {
+  grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 0.5fr);
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  align-items: end;
 }
 
 .galleryMedia {
+  min-width: 0;
   overflow: hidden;
-  border: 1px solid rgba(242, 236, 228, 0.2);
   background: var(--ink-soft);
 }
 
@@ -504,14 +519,28 @@
   display: block;
   width: 100%;
   height: auto;
+  transition:
+    filter 280ms ease,
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.galleryItem:hover .galleryMedia img {
+  filter: saturate(1.06) contrast(1.02);
+  transform: scale(1.008);
 }
 
 .caseStudy .galleryItem figcaption {
   display: grid;
   grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 1rem;
-  border-top: 0;
-  padding-top: 1.15rem;
+  gap: 0.75rem;
+  padding-top: 0.85rem;
+}
+
+.caseStudy .galleryItemLead figcaption {
+  align-self: end;
+  border-top: 1px solid rgba(242, 236, 228, 0.18);
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
 }
 
 .caseStudy .galleryItem figcaption > span {
@@ -522,41 +551,40 @@
   line-height: var(--text-meta--line-height);
 }
 
-.galleryItem figcaption strong {
-  display: block;
+.galleryItem figcaption h3 {
   color: var(--sand);
   font-family: var(--font-display-stack);
+  font-size: var(--text-6);
+  font-weight: var(--text-6--font-weight);
+  letter-spacing: var(--text-6--letter-spacing);
+  line-height: var(--text-6--line-height);
+  text-wrap: balance;
+}
+
+.galleryItemLead figcaption h3 {
   font-size: var(--text-5);
   font-weight: 400;
-  letter-spacing: var(--text-5--letter-spacing);
-  line-height: var(--text-5--line-height);
 }
 
 .caseStudy .galleryItem figcaption p {
-  max-width: 34rem;
-  margin-top: 0.55rem;
+  max-width: 30rem;
+  margin-top: 0.4rem;
   color: var(--muted-soft);
   font-size: var(--text-small);
   line-height: var(--text-small--line-height);
+  text-wrap: pretty;
 }
 
 .build {
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
-  padding: clamp(4rem, 7vw, 7rem) 2rem;
-}
-
-.buildHeading {
-  display: grid;
-  grid-template-columns: minmax(10rem, 0.4fr) minmax(0, 1fr);
-  gap: 2rem 4rem;
-  align-items: start;
+  padding: clamp(3rem, 5vw, 5rem) 2rem;
 }
 
 .buildGrid {
   display: grid;
-  margin-top: clamp(3rem, 5vw, 4.5rem);
-  grid-template-columns: minmax(16rem, 0.68fr) minmax(0, 1.32fr);
-  gap: clamp(2.5rem, 5vw, 5rem);
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.5rem, 4vw, 4rem);
   align-items: start;
 }
 
@@ -598,7 +626,7 @@
 
 .closing {
   position: relative;
-  min-height: max(38rem, 64svh);
+  min-height: max(34rem, 58svh);
   overflow: hidden;
   isolation: isolate;
   border-top: 1px solid rgba(242, 236, 228, 0.16);
@@ -630,12 +658,12 @@
 .closingInner {
   display: grid;
   width: min(100%, 93.75rem);
-  min-height: max(38rem, 64svh);
+  min-height: max(34rem, 58svh);
   margin-inline: auto;
   grid-template-columns: minmax(16rem, 0.45fr) minmax(0, 1fr);
-  gap: clamp(4rem, 9vw, 9rem);
+  gap: clamp(3rem, 6vw, 6rem);
   align-items: end;
-  padding: clamp(5rem, 9vw, 9rem) 2rem 3.5rem;
+  padding: clamp(4rem, 6vw, 6rem) 2rem 3rem;
 }
 
 .closingStatus {
@@ -847,7 +875,7 @@
   }
 
   .storyGrid {
-    gap: 3rem;
+    gap: 2.25rem;
   }
 
   .storyChapter {
@@ -865,40 +893,72 @@
   }
 
   .gallery {
-    display: grid;
-    margin-top: 3rem;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 0;
+    margin-top: 2rem;
   }
 
   .caseStudy .galleryItem,
-  .caseStudy .galleryItemLead,
-  .galleryItem:nth-child(n) {
+  .caseStudy .galleryItemLead {
     width: 100%;
     grid-column: 1;
-    margin-top: 0;
+    margin: 0;
+    border-top: 1px solid rgba(242, 236, 228, 0.18);
+    padding: 1rem 0;
   }
 
-  .galleryMedia {
+  .caseStudy .galleryItemLead {
+    margin-bottom: 1rem;
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .galleryItemLead .galleryFigure {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .galleryItemLead .galleryMedia {
     margin-inline: -1.25rem;
-    border-right: 0;
-    border-left: 0;
+  }
+
+  .galleryItem:not(.galleryItemLead) .galleryFigure {
+    grid-template-columns: minmax(7.5rem, 42%) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .caseStudy .galleryItem:not(.galleryItemLead) figcaption {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+    gap: 0.6rem;
+    padding-top: 0;
+  }
+
+  .galleryItem:not(.galleryItemLead) figcaption h3 {
+    font-size: 1.05rem;
+    line-height: 1.25;
+  }
+
+  .caseStudy .galleryItem:not(.galleryItemLead) figcaption p {
+    margin-top: 0.35rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
   }
 
   .buildGrid {
-    gap: 3rem;
+    gap: 2.25rem;
   }
 
   .closing {
-    min-height: 42rem;
+    min-height: 36rem;
   }
 
   .closingInner {
-    min-height: 42rem;
+    min-height: 36rem;
     grid-template-columns: 1fr;
-    gap: 4.5rem;
+    gap: 3rem;
     align-content: end;
-    padding: 5rem 1.25rem 2.5rem;
+    padding: 4rem 1.25rem 2.5rem;
   }
 
   .closingScrim {
@@ -921,8 +981,13 @@
   }
 
   .nextImage,
-  .nextLink .nextArrow {
+  .nextLink .nextArrow,
+  .galleryMedia img {
     transition: none;
+  }
+
+  .galleryItem:hover .galleryMedia img {
+    transform: none;
   }
 }
 

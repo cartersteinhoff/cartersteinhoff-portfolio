@@ -122,6 +122,13 @@ export type ProjectDecision = {
   readonly body: string;
 };
 
+/**
+ * The editorial arc of a case study. The headline states the project's
+ * distinctive thesis; the overview names the product, audience, and ownership;
+ * and the detail introduces the decisive constraint. The three chapters then
+ * move through situation, constraint, and response without repeating the build
+ * inventory, architecture, status, or screenshot captions.
+ */
 export type ProjectStory = readonly [
   {
     readonly label: string;
@@ -165,26 +172,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Design, development & platform systems",
       system: "WordPress · Custom plugins · Editorial backend",
-      headline: "A custom publishing system built for the pace of retail.",
+      headline: "One newsroom for fast-moving stories and durable retail intelligence.",
       overview:
-        "RetailBoss combines daily publishing with structured destinations for brands, research, jobs, and events. I designed the frontend and built the WordPress tools that keep those parts inside one editorial system.",
+        "I designed and built RetailBoss as a custom WordPress platform for daily publishing and structured destinations for brands, research, jobs, and events. The public experience and editorial tools had to support both without turning each new format into a separate product.",
       detail:
-        "The central problem was scale: add distinct products without creating separate publishing workflows.",
+        "The defining challenge was content structure: fast-moving articles and durable intelligence need different fields, filters, archives, and editorial workflows.",
       story: [
         {
-          label: "Context",
-          title: "The publication grew into a working intelligence platform.",
-          body: "News moves quickly; brand records, jobs, events, rankings, and reports need durable fields and archives. RetailBoss has to support both without splitting into separate systems.",
+          label: "Publishing model",
+          title: "News and intelligence do not behave like the same content.",
+          body: "Stories move through a chronological newsroom. Brand profiles, jobs, events, rankings, and reports remain useful as structured records. RetailBoss needed both publishing models without forcing durable information into article templates.",
         },
         {
-          label: "Challenge",
-          title: "Every new destination had to strengthen the same system.",
-          body: "Separate templates and duplicated fields would multiply editorial work. Each content type needed its own structure while sharing one navigation model and backend.",
+          label: "Product expansion",
+          title: "Every new destination adds structure without adding another CMS.",
+          body: "Each content product needs focused fields, archives, and discovery paths. Shared navigation and backend conventions keep the publication recognizable while editors continue working inside one WordPress environment.",
         },
         {
-          label: "Approach",
-          title: "Custom WordPress tools turn recurring work into reusable structure.",
-          body: "I built reusable templates and custom plugins around the same content model, so editors can publish each format without rebuilding its interface.",
+          label: "Response",
+          title: "Custom tools make recurring editorial work reusable.",
+          body: "I built the public templates and custom plugins behind the jobs board, event directory, brand records, research, and rankings, so each format has a defined workflow instead of a single page.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -309,26 +316,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Product design & full-stack development",
       system: "Next.js/Vercel · Fastify · AWS",
-      headline: "One product system connecting the web, cloud, and desktop.",
+      headline: "A product that spans the web, cloud, and installed desktop clients.",
       overview:
-        "OpenWorkspace saves apps, windows, tabs, and layouts as reusable workspaces. I built the Next.js web experience and Fastify service connecting licensing, account data, and the desktop clients.",
+        "I designed the Next.js product and account experience and built the Fastify service running on AWS. Together they support licensing, checkout, accounts, workspace data, and requests from the Windows and macOS clients.",
       detail:
-        "The key constraint is compatibility with installed Windows and macOS clients that do not update in lockstep.",
+        "The defining constraint is release timing: installed clients do not all update at once, so the API must evolve without silently breaking software already in use.",
       story: [
         {
-          label: "Context",
-          title: "The product crosses the website, cloud service, and desktop.",
-          body: "One product promise spans education, accounts, licensing, persistent data, and native clients. Those layers ship separately but must behave as one experience.",
+          label: "Product scope",
+          title: "One promise crosses four independently deployed layers.",
+          body: "The website explains the product and handles account flows. Fastify owns service APIs, PostgreSQL stores product state, and native clients perform desktop automation. Users experience those separately shipped layers as one product.",
         },
         {
-          label: "Constraint",
-          title: "A shipped desktop client makes compatibility non-negotiable.",
-          body: "Server changes must preserve contracts used by installed clients. Authentication, licensing, and workspace responses therefore evolve from the client code outward.",
+          label: "Compatibility",
+          title: "The installed client is part of every backend decision.",
+          body: "Before an API field changes, its Windows and macOS callers have to be traced. Server updates preserve the contracts existing clients expect while authentication, licensing, and workspace behavior evolve.",
         },
         {
-          label: "Approach",
-          title: "Treat every surface as part of one product system.",
-          body: "Next.js handles acquisition and account flows; Fastify centralizes service APIs; PostgreSQL stores product state; native clients perform the automation.",
+          label: "Response",
+          title: "Simplify the service without guessing what clients need.",
+          body: "I traced native callers before changing responses, consolidated license creation paths that had drifted, and tightened authentication control flow. Backend changes are grounded in the behavior of the installed software they serve.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -484,26 +491,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Design, full-stack development & CMS",
       system: "Next.js · Vercel Functions · Neon",
-      headline: "A lively event platform built around the next show.",
+      headline: "One event platform for collectors, dealers, and show operations.",
       overview:
-        "Pay It Forward serves collectors and dealers through one event platform. I designed the public experience and custom CMS so show details, dealer guidance, reservations, and community content stay coordinated.",
+        "I designed and built the public Next.js experience, custom CMS, serverless actions, and Neon data layer behind show discovery, venue details, dealer guidance, table reservations, and community content.",
       detail:
-        "Structured show records feed the public pages and backend workflows, with Neon Postgres for data and Vercel Functions for server-side actions.",
+        "Each show appears across public pages and operational workflows. Dates, venues, reservation paths, email, and structured data have to stay aligned while collectors and dealers receive different routes through the same event.",
       story: [
         {
-          label: "Context",
-          title: "Collectors and dealers arrive for the same show in different ways.",
-          body: "Collectors need dates, venues, and admission details. Dealers need table options and operating guidance. One site has to answer both paths without dividing the event.",
+          label: "Audiences",
+          title: "One show begins with two different questions.",
+          body: "Collectors need to know when to arrive, where to go, and what to expect. Dealers need table options, operating guidance, and a reservation path. The site serves both journeys without separating them from the event they share.",
         },
         {
-          label: "Challenge",
-          title: "Event information becomes operational data almost immediately.",
-          body: "One changed time or reservation link affects the homepage, archive, dealer guidance, email, and structured data. Duplicated event facts would drift quickly.",
+          label: "Event data",
+          title: "A date change is an operational change, not a copy edit.",
+          body: "Show records drive the homepage, upcoming-show archive, dealer paths, email, and JSON-LD. A shared date model keeps same-day events, daylight-saving offsets, and public Eastern Time labels consistent across those surfaces.",
         },
         {
-          label: "Approach",
-          title: "Make the show record the source of truth.",
-          body: "Structured event records drive the public site, CMS, and serverless workflows. Dates, venues, dealer paths, and community content share one data layer throughout.",
+          label: "Reliability",
+          title: "Persistence and delivery need separate failure boundaries.",
+          body: "Serverless workflows confirm a reservation in the database before attempting transactional email. A delivery problem is logged separately, so saved data is not presented to the visitor as a failed submission.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -651,26 +658,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Product design, content migration & development",
       system: "Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 · Vercel",
-      headline: "From a legacy publishing template to a distinctive author platform.",
+      headline: "A long-running author archive reorganized around the work readers need now.",
       overview:
-        "The WordPress site held years of books, essays, appearances, and Soul Salon material. I reorganized that archive around Anne’s current work and rebuilt it as a version-controlled Next.js site.",
+        "Anne Newgarden’s WordPress site held books, essays, appearances, Soul Salon material, news, events, and resources without a clear path through them. I redesigned the information architecture and visual system, then migrated the reviewed content into a version-controlled Next.js site.",
       detail:
-        "Reviewed content now generates static routes, with legacy paths preserved and contact isolated as the only server-side feature.",
+        "The central challenge was editorial: make current work easy to find while preserving years of published material, familiar URLs, and the distinction between verified source material and unresolved claims.",
       story: [
         {
-          label: "Context",
-          title: "Years of writing needed an editorial hierarchy, not a new skin.",
-          body: "The archive spans books, essays, appearances, Soul Salon material, news, events, and a practitioner directory. The redesign had to clarify current work without flattening that history.",
+          label: "Archive",
+          title: "Readers needed a clearer way into years of work.",
+          body: "Readers arriving for a book, current event, Soul Salon, or practitioner resource met many years of material at once. The site needed a clearer front door without treating older work as disposable.",
         },
         {
-          label: "Challenge",
-          title: "Retire the runtime while preserving the record.",
-          body: "Leaving WordPress meant preserving reviewed content, search value, and familiar paths. Inactive features were removed instead of rebuilt as controls that only appeared to work.",
+          label: "Integrity",
+          title: "A redesign could not rewrite the record.",
+          body: "Books, essays, events, and health-related accounts had to stay faithful to reviewed sources. Familiar paths and search value mattered; inactive features could not return as empty controls.",
         },
         {
-          label: "Approach",
-          title: "Turn the archive into versioned, prebuilt pages.",
-          body: "Reviewed content now generates static routes for books, articles, news, events, and the directory. Redirects preserve old paths; contact remains the only server-side exception.",
+          label: "Rebuild",
+          title: "Organize the archive first, then simplify the system.",
+          body: "I grouped the archive around current work, books, writing, events, and the directory, then gave each collection a clearer destination while preserving legacy paths into the new structure.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -706,19 +713,15 @@ export const portfolioProjects = [
         "The redesigned experience is publicly available on Vercel while annenewgarden.com continues to serve the original WordPress site pending domain cutover.",
       decisions: [
         {
-          title: "No generated likeness of the author",
-          body: "Portraits, book covers, and documentary images use reviewed source material. Generated artwork appears only where no authentic image existed, is disclosed in visible copy and alt text, and never depicts a named person or reported event as evidence.",
-        },
-        {
-          title: "Share cards that carry the work, not the face",
-          body: "Social cards use a build-time paper-sculpture motif instead of the author’s portrait; book pages retain real covers. That keeps previews recognizable without distributing her likeness through third-party caches.",
+          title: "Authentic source material stays distinct from generated art",
+          body: "Portraits, book covers, and documentary images use reviewed source material. A disclosed paper-sculpture motif appears only where no authentic image exists, including site-level share cards, and never depicts a named person or reported event as evidence.",
         },
         {
           title: "Conflicting sources stayed conflicted",
           body: "Conflicting source claims remained unresolved rather than being averaged into false certainty. Personal and health-related accounts stay attributed to the speaker.",
         },
         {
-          title: "Static by default, with one authorised exception",
+          title: "Static by default, with one authorized exception",
           body: "The inactive newsletter was removed rather than reproduced as a false control. Contact remains the single server-side path and reports success only after the delivery service accepts the message.",
         },
       ] satisfies readonly ProjectDecision[],
@@ -834,30 +837,30 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Product design & full-stack development",
       system: "Next.js · Drizzle · Neon Postgres · Stripe · Vercel",
-      headline: "A directory that sells one business per category, per city.",
+      headline: "A directory that makes category exclusivity operational.",
       overview:
-        "Local City Places is a Phoenix-metro directory built around one rule: one merchant per category in each city. Residents browse businesses; merchants and admins manage the requests, listings, memberships, and billing behind that promise.",
+        "Local City Places pairs a public Phoenix-metro directory with a scarce membership model: each city-and-category slot belongs to one merchant. I designed the resident experience and the request, waitlist, invitation, listing, and billing workflows that make that promise operable.",
       detail:
-        "One Next.js application serves the public directory and three role-based dashboards over a shared Postgres schema.",
+        "The hard part was not displaying businesses. It was keeping category availability, first-come priority, ownership, membership, and public listings consistent as residents, merchants, and administrators act on the same records.",
       story: [
         {
-          label: "Context",
-          title: "The directory is only the public edge of the product.",
-          body: "Residents browse local businesses, services, media, and offers. Merchants manage listings and campaigns; administrators coordinate requests, invitations, and category availability.",
+          label: "Marketplace",
+          title: "Every request changes what the directory can offer.",
+          body: "Residents browse local businesses; merchants request exclusive category positions; administrators coordinate invitations, listings, and billing. Once only one slot is available, every request can affect availability and another merchant’s place in line.",
         },
         {
-          label: "Product rule",
-          title: "Category exclusivity has to be enforceable, not promotional copy.",
-          body: "One business can hold a category in each city. Request time, location, category, fulfillment, and waitlist position therefore belong in durable product data.",
+          label: "Queue",
+          title: "Exclusivity needs a queue, not an inbox.",
+          body: "A slot may be open, requested, invited, filled, or waitlisted before a merchant ever has an account. Each state has to remain understandable to the next applicant and the team operating the directory.",
         },
         {
-          label: "Approach",
-          title: "One application keeps public pages and operations in sync.",
-          body: "One Next.js application and Postgres schema connect merchant records, requests, nominations, offers, media, and history while each role gets a purpose-built interface.",
+          label: "Operating model",
+          title: "Every role works from the same operating model.",
+          body: "An accepted request can move through invitation, listing ownership, billing, and publication without being re-entered at each stage. Each role gets the controls needed to move it forward.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
-        headline: "A typed product stack for three audiences.",
+        headline: "A typed product stack for a public directory and three dashboards.",
         summary:
           "The directory, role-based dashboards, merchant publishing, membership loop, and billing run in one Next.js application over a shared PostgreSQL model.",
         groups: [
@@ -910,7 +913,7 @@ export const portfolioProjects = [
         },
       ] satisfies readonly ProjectDecision[],
       architecture: {
-        headline: "One schema, three audiences.",
+        headline: "One schema, one directory, three dashboards.",
         summary:
           "A single Next.js application serves the public directory and all three dashboards, with a typed Postgres schema underneath so merchants, members, offers, and campaigns stay consistent across every surface.",
         items: [
@@ -1002,26 +1005,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Design, development & writing",
       system: "Next.js 16 · React 19 · TypeScript 7 · Tailwind CSS 4 · Biome · Playwright · Vercel",
-      headline: "A studio site built to the standard of the work inside it.",
+      headline: "A portfolio that exposes both the work and the decisions behind it.",
       overview:
-        "The portfolio is both the artifact and the argument: every design and engineering claim has to survive inspection in the site itself.",
+        "The site has to present a broad practice—product design, full-stack development, automation, and cloud work—without reading like a résumé or hiding behind surface polish. I built an editorial system where each case pairs the finished interface with its constraints and reasoning.",
       detail:
-        "The public pages and eight data-driven case studies are statically generated around a single contact function. React Server Components are the default, client code is reserved for a small set of interactive boundaries, and a production browser suite checks every route on desktop and mobile.",
+        "The design challenge is credibility: keep the identity unmistakable, let current screenshots lead, and make a sparse visual language support the evidence instead of competing with it.",
       story: [
         {
-          label: "Context",
-          title: "The portfolio has to prove the claim while making it.",
-          body: "Clients read the cases while judging the typography, images, performance, accessibility, and decisions used to present them. The portfolio is also a working product sample.",
+          label: "Proof",
+          title: "The portfolio itself is part of the evidence.",
+          body: "Prospective clients experience the typography, pacing, imagery, accessibility, and performance as evidence of the same skills the case studies describe. The site therefore has to act as proof, not merely as a wrapper around it.",
         },
         {
-          label: "Challenge",
-          title: "Editorial ambition cannot depend on a fragile runtime.",
-          body: "Large images, metadata, motion, structured data, and new case studies can create too much runtime complexity. The design needed character with a small production boundary.",
+          label: "Range",
+          title: "Different kinds of work still need one point of view.",
+          body: "The projects differ in audience, operating model, and technical depth. One editorial structure had to make those differences legible without giving every project a different template or reducing all of them to thumbnails.",
         },
         {
-          label: "Approach",
-          title: "Generate the publication; isolate the one live service.",
-          body: "Project data drives the index, routes, navigation, metadata, sitemap, and case studies. Static rendering handles the publication; four client components handle interactions; contact is the only request-time endpoint.",
+          label: "Editorial system",
+          title: "Give every case the same evidence hierarchy.",
+          body: "A shared case structure lets readers compare context, constraints, decisions, architecture, and screens across very different projects. That consistency makes the work easier to judge without erasing what makes each project distinct.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -1180,26 +1183,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Microsite development & headless CMS integration",
       system: "Next.js/Vercel · Faust.js · WordPress/WP Engine",
-      headline: "A pharmaceutical microsite split cleanly between experience and publishing.",
+      headline: "A focused pharmaceutical microsite with publishing kept behind the scenes.",
       overview:
-        "The former microsite separated a Next.js frontend on Vercel from a WordPress editorial backend on WP Engine.",
+        "I built Provepharm’s former microsite as a Next.js frontend for company, product, news, press-release, and event content, while the editorial team continued managing structured records in WordPress.",
       detail:
-        "Faust.js connected company, product, news, press-release, and event content to reusable frontend views.",
+        "Faust.js and GraphQL connected the Vercel frontend to WordPress on WP Engine. The deployment shown here is an archived implementation reference, not Provepharm’s current website.",
       story: [
         {
-          label: "Context",
-          title: "The microsite needed a focused frontend and a familiar newsroom.",
-          body: "The public experience covered corporate positioning, company history, pharmaceutical products, news, press releases, and events. Those pages needed a consistent presentation layer while still giving the editorial team a WordPress publishing environment for structured updates.",
+          label: "Brief",
+          title: "Corporate publishing and product detail shared one public experience.",
+          body: "The microsite combined mission, history, pharmaceutical products, press releases, news, and events. Reusable page patterns kept those formats related while allowing product pages to carry deeper information and required safety content.",
         },
         {
-          label: "Publishing model",
-          title: "Content and presentation run on separate platforms.",
-          body: "WordPress on WP Engine owned the editorial records. Faust.js and GraphQL fed a separately deployed Next.js frontend, allowing publishing and presentation to follow separate deployment paths.",
+          label: "Publishing",
+          title: "Editors kept WordPress; visitors received a focused frontend.",
+          body: "Company, product, and newsroom records remained in WordPress on WP Engine, preserving a familiar publishing environment while keeping the public presentation independent from the CMS.",
         },
         {
-          label: "Application",
-          title: "Reusable views carry both product depth and company news.",
-          body: "The frontend turned WordPress content into product, company, press, and event views. The archived deployment remains available, but Provepharm’s current corporate site now lives elsewhere.",
+          label: "Frontend",
+          title: "Treat the CMS as infrastructure, not the interface.",
+          body: "Faust.js and GraphQL delivered structured records to Next.js on Vercel. Shared views shaped product, company, press, and event content into one visual system across the separately deployed frontend.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -1325,26 +1328,26 @@ export const portfolioProjects = [
     caseStudy: {
       role: "Web design & WordPress development",
       system: "WordPress · Elementor · Hello theme",
-      headline: "A visual portfolio that gives the styling room to lead.",
+      headline: "A quieter portfolio that lets the work establish the range.",
       overview:
-        "I rebuilt Anne Ross’s portfolio around direct access to her prop, set, interior, lifestyle, still-life, and motion work.",
+        "I redesigned and rebuilt Anne Ross Creative around immediate access to Home & Garden, Lifestyle, Still Life, Sets, and Motion, with photography leading each route.",
       detail:
-        "The rebuild replaces ePix and Visual Composer with Elementor and Hello, using persistent navigation and responsive galleries across desktop and mobile.",
+        "The design problem was navigation: five disciplines, plus biography, clients, and contact, had to stay findable without shrinking the photography into thumbnails or surrounding it with theme chrome.",
       story: [
         {
-          label: "Context",
-          title: "The work should arrive before the explanation.",
-          body: "Visitors often arrive looking for one kind of styling. The opening gallery establishes Anne’s range, then gives each discipline a direct path without placing a heavy interface over the images.",
+          label: "Audience",
+          title: "Visitors often arrive looking for one kind of styling.",
+          body: "The opening gallery establishes Anne’s range immediately, while named disciplines lead visitors toward relevant work. Biography and client information stay available without taking priority over the images.",
         },
         {
-          label: "Challenge",
-          title: "Five disciplines need one recognizable browsing model.",
-          body: "Home & Garden, Lifestyle, Still Life, Sets, and Motion use different media but belong to one practice. Navigation and image treatment remain consistent while each gallery keeps its own rhythm.",
+          label: "Content model",
+          title: "Different media need a consistent frame, not identical layouts.",
+          body: "Photography uses responsive masonry; Motion uses a dedicated video grid. Navigation and typography remain steady so Home & Garden, Lifestyle, Still Life, Sets, and Motion feel connected without being forced into the same display.",
         },
         {
-          label: "Approach",
-          title: "Use a quiet frame and let the galleries change inside it.",
-          body: "A fixed desktop rail and compact mobile menu hold the frame steady. Masonry galleries carry photography; a separate video grid handles motion; Bio, Client List, and Contact provide context.",
+          label: "Redesign",
+          title: "Replace the portfolio theme with a quieter system.",
+          body: "The rebuild moves from ePix and Visual Composer to Hello and Elementor, preserving WordPress management while reducing interface chrome and giving every gallery a reusable structure across desktop and mobile.",
         },
       ] satisfies ProjectStory,
       technologyStack: {
@@ -1461,6 +1464,20 @@ export const portfolioProjects = [
           caption:
             "A concise biography adds professional context without interrupting the image-first galleries.",
           alt: "Anne Ross Creative biography page headed Creative Visions, Global Journeys with portrait and career text",
+        },
+        {
+          image: "/images/anne-ross-client-list.webp",
+          title: "Client List",
+          caption:
+            "A dedicated proof page separates client and photographer credits from the image-led galleries.",
+          alt: "Anne Ross Creative Client List page with columns of client and photographer names beside a monochrome portrait",
+        },
+        {
+          image: "/images/anne-ross-contact.webp",
+          title: "Contact",
+          caption:
+            "Direct phone and email paths turn the portfolio into a clear route for project inquiries.",
+          alt: "Anne Ross Creative Contact page with a Let’s Collaborate heading, phone and email links, and an introduction over a black-and-white location portrait",
         },
       ],
     },

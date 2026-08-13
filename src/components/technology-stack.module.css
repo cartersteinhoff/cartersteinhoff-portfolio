@@ -1,13 +1,12 @@
 .stack {
-  display: grid;
-  gap: 3.5rem;
+  display: block;
 }
 
 .stack .groups {
   display: grid;
   margin: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem 2rem;
+  gap: 2rem;
   border: 0;
 }
 
@@ -17,8 +16,7 @@
   padding: 0;
 }
 
-.stack .groupLabel,
-.stack .systemLabel {
+.stack .groupLabel {
   color: var(--muted-soft);
   font-size: var(--text-meta);
   font-weight: var(--text-meta--font-weight);
@@ -41,7 +39,7 @@
   align-items: center;
   border-top: 0;
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
-  padding: 0.75rem 0;
+  padding: 0.65rem 0;
 }
 
 .stack .mark {
@@ -58,78 +56,14 @@
   height: 1rem;
 }
 
-.stack .copy {
-  display: grid;
-  gap: 0.2rem;
-}
-
 .stack .name {
   color: var(--sand);
   font-size: 0.88rem;
   font-weight: 600;
 }
 
-.stack .role {
-  color: var(--muted-soft);
-  font-size: 0.74rem;
-  line-height: 1.45;
-}
-
-.stack .system {
-  display: grid;
-  margin: 0;
-  grid-template-columns: minmax(12rem, 0.55fr) minmax(0, 1.45fr);
-  gap: 2rem;
-  border-top: 1px solid rgba(242, 236, 228, 0.2);
-  padding-top: 1.5rem;
-}
-
-.stack .systemHeading {
-  display: grid;
-  gap: 0.7rem;
-}
-
-.stack .systemHeading h3 {
-  max-width: 20ch;
-  color: var(--sand);
-  font-family: var(--font-display-stack);
-  font-size: var(--text-5);
-  font-weight: 400;
-  letter-spacing: var(--text-5--letter-spacing);
-  line-height: var(--text-5--line-height);
-}
-
-.stack .systemList {
-  display: grid;
-  border: 0;
-}
-
-.stack .systemList > div {
-  display: grid;
-  grid-template-columns: 5.5rem minmax(0, 1fr);
-  gap: 1rem;
-  border-top: 1px solid rgba(242, 236, 228, 0.14);
-  border-bottom: 0;
-  padding: 0.75rem 0;
-}
-
-.stack .systemList dt {
-  color: var(--accent);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.stack .systemList dd {
-  color: var(--muted);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
 @media (max-width: 767px) {
-  .stack .groups,
-  .stack .system {
+  .stack .groups {
     grid-template-columns: 1fr;
   }
 }

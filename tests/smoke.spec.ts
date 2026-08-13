@@ -27,6 +27,20 @@ const ROUTES = [
   ...portfolioProjects.map((project) => `/portfolio/${project.slug}`),
 ];
 
+function wordCount(value: string) {
+  return value.trim().match(/\S+/gu)?.length ?? 0;
+}
+
+function expectWordRange(value: string, min: number, max: number, label: string) {
+  const count = wordCount(value);
+  expect(count, `${label} should be ${min}–${max} words; received ${count}`).toBeGreaterThanOrEqual(
+    min,
+  );
+  expect(count, `${label} should be ${min}–${max} words; received ${count}`).toBeLessThanOrEqual(
+    max,
+  );
+}
+
 /** Console errors, minus noise from browser extensions we do not control. */
 function collectConsoleErrors(page: Page) {
   const errors: string[] = [];
@@ -88,7 +102,7 @@ test("every image referenced in project data resolves", async ({ request }) => {
   }
 });
 
-test("every case study has a concise story, six screens, and a verified stack", () => {
+test("every case study has a concise story, a complete screen set, and a verified stack", () => {
   for (const project of portfolioProjects) {
     const { caseStudy } = project;
 
@@ -104,14 +118,16 @@ test("every case study has a concise story, six screens, and a verified stack", 
       `${project.slug} screen images should be unique`,
     ).toBe(caseStudy.screens.length);
 
+    expectWordRange(caseStudy.headline, 6, 12, `${project.slug} headline`);
+    expectWordRange(caseStudy.overview, 25, 45, `${project.slug} overview`);
+    expectWordRange(caseStudy.detail, 15, 35, `${project.slug} detail`);
+
     expect(caseStudy.story, `${project.slug} needs three story chapters`).toHaveLength(3);
-    for (const chapter of caseStudy.story) {
-      expect(chapter.label.trim().length).toBeGreaterThan(0);
-      expect(chapter.title.trim().length).toBeGreaterThan(0);
-      expect(
-        chapter.body.trim().split(/\s+/).length,
-        `${project.slug}: ${chapter.title}`,
-      ).toBeLessThanOrEqual(45);
+    for (const [index, chapter] of caseStudy.story.entries()) {
+      const chapterName = `${project.slug} chapter ${index + 1}`;
+      expect(chapter.label.trim(), `${chapterName} needs a label`).not.toBe("");
+      expectWordRange(chapter.title, 6, 12, `${chapterName} title`);
+      expectWordRange(chapter.body, 20, 45, `${chapterName} body`);
     }
 
     const stackIds = caseStudy.technologyStack.groups.flatMap((group) =>
@@ -131,17 +147,34 @@ test("every case study has a concise story, six screens, and a verified stack", 
   }
 });
 
+test("Anne Ross selected screens cover every public page", () => {
+  const anneRoss = portfolioProjects.find((project) => project.slug === "anne-ross");
+
+  expect(anneRoss?.caseStudy.screens.map((screen) => screen.title)).toEqual([
+    "Home & Garden",
+    "Lifestyle",
+    "Still Life",
+    "Sets",
+    "Motion",
+    "Bio",
+    "Client List",
+    "Contact",
+  ]);
+});
+
 test("technology stack logos are decorative and names stay visible", async ({ page }) => {
   const project = portfolioProjects[0];
+  const expectedGroups = project.caseStudy.technologyStack.groups.length;
   const expectedCount = project.caseStudy.technologyStack.groups.reduce(
     (total, group) => total + group.technologies.length,
     0,
   );
 
   await page.goto(`/portfolio/${project.slug}`);
+  await expect(page.locator(".case-stack-group-label")).toHaveCount(expectedGroups);
   await expect(page.locator(".case-stack-name")).toHaveCount(expectedCount);
   await expect(page.locator('.case-stack-mark[aria-hidden="true"] svg')).toHaveCount(expectedCount);
-  await expect(page.locator(".case-stack-role")).toHaveCount(expectedCount);
+  await expect(page.getByText("System map", { exact: true })).toHaveCount(0);
 });
 
 test("case-study media uses a full-bleed poster and varied editorial scale", async ({
@@ -150,6 +183,9 @@ test("case-study media uses a full-bleed poster and varied editorial scale", asy
   test.skip(testInfo.project.name !== "desktop", "Desktop owns the editorial media rhythm");
 
   await page.goto("/portfolio/retailboss");
+  await expect(page.locator(".case-screen")).toHaveCount(
+    portfolioProjects[0].caseStudy.screens.length,
+  );
 
   const hero = await page.locator("main > section").first().boundingBox();
   const leadScreen = await page.locator(".case-screen-wide").boundingBox();
@@ -166,6 +202,27 @@ test("case-study media uses a full-bleed poster and varied editorial scale", asy
   const comparison = await page.locator(".case-comparison-stage").boundingBox();
   expect(comparison?.width).toBeGreaterThanOrEqual(900);
   expect(comparison?.width).toBeLessThanOrEqual(1280);
+});
+
+test("desktop case-study section headings share a strong left edge", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Desktop owns the wide editorial layout");
+
+  await page.goto("/portfolio/anne-newgarden");
+
+  for (const sectionId of ["case-build-title", "case-gallery-title"]) {
+    const section = page.locator(`[aria-labelledby="${sectionId}"]`);
+    const label = await section.locator("p").first().boundingBox();
+    const heading = await section.locator(`#${sectionId}`).boundingBox();
+
+    expect(Math.abs((label?.x ?? 0) - (heading?.x ?? 0))).toBeLessThanOrEqual(1);
+  }
+
+  await page.goto("/portfolio/anne-ross");
+  const comparison = page.locator('[aria-labelledby="case-comparison-title"]');
+  const comparisonLabel = await comparison.locator("p").first().boundingBox();
+  const comparisonHeading = await comparison.locator("#case-comparison-title").boundingBox();
+
+  expect(Math.abs((comparisonLabel?.x ?? 0) - (comparisonHeading?.x ?? 0))).toBeLessThanOrEqual(1);
 });
 
 test("case study headings descend h1 to h2 to h3", async ({ page }) => {
