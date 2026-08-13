@@ -58,6 +58,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const nextProject = portfolioProjects[(projectIndex + 1) % portfolioProjects.length];
   const comparison = "comparison" in project.caseStudy ? project.caseStudy.comparison : null;
   const decisions = "decisions" in project.caseStudy ? project.caseStudy.decisions : null;
+  const galleryScreens = project.caseStudy.screens;
   const siteUrl = getSiteUrl();
   const caseStudyUrl = getAbsoluteUrl(`/portfolio/${project.slug}`);
   const structuredData = {
@@ -270,10 +271,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 ))}
               </ol>
             </div>
-            <TechnologyStack
-              stack={project.caseStudy.technologyStack}
-              system={project.caseStudy.architecture}
-            />
+            <TechnologyStack stack={project.caseStudy.technologyStack} />
           </div>
         </div>
       </section>
@@ -282,42 +280,52 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <div className={styles.sectionShell}>
           <Reveal className={styles.galleryHeading}>
             <p className={styles.sectionLabel}>Selected screens</p>
-            <h2 id="case-gallery-title">The work, beyond the opening frame.</h2>
+            <div>
+              <h2 id="case-gallery-title">Every surface, in one view.</h2>
+              <p>All documented pages and product surfaces included in this case study.</p>
+            </div>
           </Reveal>
 
-          <div className={styles.gallery}>
-            {project.caseStudy.screens.slice(1).map((screen, index) => (
-              <article
-                className={`${styles.galleryItem} case-screen ${
-                  index === 0 ? `${styles.galleryItemLead} case-screen-wide` : ""
-                }`}
-                key={screen.image}
-              >
-                <figure>
-                  <div className={styles.galleryMedia}>
-                    <Image
-                      src={screen.image}
-                      alt={screen.alt}
-                      width={("width" in screen && screen.width) || 1440}
-                      height={("height" in screen && screen.height) || 1000}
-                      sizes={
-                        index === 0
-                          ? "(max-width: 767px) 100vw, 92vw"
-                          : "(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 620px"
-                      }
-                    />
-                  </div>
-                  <figcaption>
-                    <span>{String(index + 2).padStart(2, "0")}</span>
-                    <div>
-                      <strong>{screen.title}</strong>
-                      <p>{screen.caption}</p>
+          <ol className={styles.gallery}>
+            {galleryScreens.map((screen, index) => {
+              const isLead = index === 0;
+              const isTail = index === galleryScreens.length - 1 && galleryScreens.length % 2 === 0;
+
+              return (
+                <li
+                  className={`${styles.galleryItem} ${
+                    isLead ? styles.galleryItemLead : ""
+                  } ${isTail ? styles.galleryItemTail : ""} case-screen ${
+                    isLead ? "case-screen-wide" : ""
+                  }`}
+                  key={screen.image}
+                >
+                  <figure className={styles.galleryFigure}>
+                    <div className={styles.galleryMedia}>
+                      <Image
+                        src={screen.image}
+                        alt={screen.alt}
+                        width={("width" in screen && screen.width) || 1440}
+                        height={("height" in screen && screen.height) || 1000}
+                        sizes={
+                          isLead
+                            ? "(max-width: 767px) 100vw, (max-width: 1199px) 70vw, 1030px"
+                            : "(max-width: 767px) 42vw, (max-width: 1199px) 46vw, 670px"
+                        }
+                      />
                     </div>
-                  </figcaption>
-                </figure>
-              </article>
-            ))}
-          </div>
+                    <figcaption>
+                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                      <div>
+                        <h3>{screen.title}</h3>
+                        <p>{screen.caption}</p>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
 

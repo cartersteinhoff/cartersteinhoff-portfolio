@@ -4,16 +4,9 @@ import styles from "./technology-stack.module.css";
 
 type TechnologyStackProps = {
   stack: TechnologyStackData;
-  system: {
-    headline: string;
-    items: readonly {
-      label: string;
-      value: string;
-    }[];
-  };
 };
 
-export function TechnologyStack({ stack, system }: TechnologyStackProps) {
+export function TechnologyStack({ stack }: TechnologyStackProps) {
   return (
     <section className={`${styles.stack} case-stack`} aria-label="Technology stack">
       <div className={`${styles.groups} case-stack-groups`}>
@@ -31,33 +24,13 @@ export function TechnologyStack({ stack, system }: TechnologyStackProps) {
                         <path d={technology.icon.path} fill="currentColor" />
                       </svg>
                     </span>
-                    <span className={`${styles.copy} case-stack-copy`}>
-                      <strong className={`${styles.name} case-stack-name`}>
-                        {technology.name}
-                      </strong>
-                      <span className={`${styles.role} case-stack-role`}>{item.role}</span>
-                    </span>
+                    <strong className={`${styles.name} case-stack-name`}>{technology.name}</strong>
                   </li>
                 );
               })}
             </ul>
           </section>
         ))}
-      </div>
-
-      <div className={`${styles.system} case-stack-system`}>
-        <div className={`${styles.systemHeading} case-stack-system-heading`}>
-          <p className={`${styles.systemLabel} case-stack-system-label`}>System map</p>
-          <h3>{system.headline}</h3>
-        </div>
-        <dl className={`${styles.systemList} case-stack-system-list`}>
-          {system.items.map((item) => (
-            <div key={item.label}>
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
   );
