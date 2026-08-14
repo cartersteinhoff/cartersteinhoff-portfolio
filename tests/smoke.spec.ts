@@ -347,6 +347,18 @@ test("services opens with the catalog and omits retired sections", async ({ page
   }
 });
 
+test("Upwork proof preserves the real profile capture and live source", async ({ page }) => {
+  await page.goto("/services");
+
+  await expect(page.locator('img[src*="upwork-profile-carter-steinhoff"]')).toHaveCount(1);
+  await expect(page.getByText("100%", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("4.9 / 5", { exact: true })).toHaveCount(1);
+  await expect(page.getByRole("link", { name: /View live Upwork profile/ })).toHaveAttribute(
+    "href",
+    "https://www.upwork.com/freelancers/cartersteinhoff",
+  );
+});
+
 test("project numbers match their position in the data", () => {
   // The index, the "next case study" link, and the sitemap all walk
   // portfolioProjects in array order, so a stored number that disagrees

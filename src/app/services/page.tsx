@@ -281,40 +281,42 @@ export default function ServicesPage() {
             </a>
           </div>
 
-          <a
-            className={styles.proofProfile}
-            href={site.upworkUrl}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open Carter's Upwork profile (opens in a new tab)"
-          >
-            <span className={styles.proofProfileHeader} aria-hidden="true">
-              <span className={styles.proofProfileIdentity}>
-                <strong>Carter S. on Upwork</strong>
-                <span>upwork.com/freelancers/cartersteinhoff</span>
+          <div className={styles.proofEvidence}>
+            <a
+              className={styles.proofProfile}
+              href={site.upworkUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Carter's Upwork profile (opens in a new tab)"
+            >
+              <span className={styles.proofProfileHeader} aria-hidden="true">
+                <span className={styles.proofProfileIdentity}>
+                  <strong>Carter S. on Upwork</strong>
+                  <span>upwork.com/freelancers/cartersteinhoff</span>
+                </span>
+                <span className={styles.proofProfileAction}>Open live profile ↗</span>
               </span>
-              <span className={styles.proofProfileAction}>Open live profile ↗</span>
-            </span>
-            <span className={styles.proofProfileImage}>
-              <Image
-                src={upwork.profileScreenshot.src}
-                alt={upwork.profileScreenshot.alt}
-                width={upwork.profileScreenshot.width}
-                height={upwork.profileScreenshot.height}
-                sizes="(max-width: 767px) 100vw, (max-width: 1599px) 94vw, 1500px"
-                className={styles.proofProfileImageAsset}
-              />
-            </span>
-          </a>
+              <span className={styles.proofProfileImage}>
+                <Image
+                  src={upwork.profileScreenshot.src}
+                  alt={upwork.profileScreenshot.alt}
+                  width={upwork.profileScreenshot.width}
+                  height={upwork.profileScreenshot.height}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1599px) 72vw, 1120px"
+                  className={styles.proofProfileImageAsset}
+                />
+              </span>
+            </a>
 
-          <dl className={styles.proofStats}>
-            {upwork.stats.map((stat) => (
-              <div key={stat.label}>
-                <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
-              </div>
-            ))}
-          </dl>
+            <dl className={styles.proofStats}>
+              {upwork.stats.map((stat) => (
+                <div key={stat.label}>
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
 
           <div className={styles.proofQuotes}>
             {upwork.testimonials.map((item) => (

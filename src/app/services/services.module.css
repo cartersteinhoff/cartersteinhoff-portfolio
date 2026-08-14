@@ -316,11 +316,21 @@
     color 180ms ease;
 }
 
+.proofBandLink:hover,
+.proofBandLink:focus-visible {
+  border-color: var(--accent);
+  color: var(--sand);
+}
+
+.proofEvidence {
+  display: grid;
+  gap: 1rem;
+}
+
 .proofProfile {
   display: block;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-bottom: 2.5rem;
   background: #f7f7f7;
   box-shadow: 0 1.5rem 4.5rem rgba(0, 0, 0, 0.28);
   transition:
@@ -556,31 +566,40 @@
     gap: 3rem;
   }
 
+  .proofEvidence {
+    grid-template-columns: minmax(0, 3fr) minmax(13rem, 0.72fr);
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .proofProfile {
+    border-right: 0;
+  }
+
   .proofProfileImage {
-    aspect-ratio: auto;
+    aspect-ratio: 3798 / 1849;
   }
 
   .proofProfileImageAsset {
-    height: auto;
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
   }
 
   .proofStats {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .proofStats > div {
-    border-right: 1px solid rgba(255, 255, 255, 0.14);
-    border-bottom: 0;
-    padding-inline: 1.5rem;
-  }
-
-  .proofStats > div:first-child {
-    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 1rem 1.5rem;
   }
 
   .proofStats > div:last-child {
-    border-right: 0;
+    border-bottom: 0;
   }
 
   .proofQuotes {
