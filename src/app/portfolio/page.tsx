@@ -27,57 +27,22 @@ const orderedProjects = portfolioProjects;
 export default function PortfolioPage() {
   return (
     <main className={styles.root}>
-      <section className={styles.hero} aria-labelledby="portfolio-title">
-        <div className={styles.heroMedia} aria-hidden="true">
-          <Image
-            src="/images/studio-hero-v3.webp"
-            alt=""
-            fill
-            preload
-            sizes="100vw"
-            className={styles.heroPortrait}
-          />
-          <div className={styles.heroLandscape}>
-            <Image
-              src="/images/phoenix-moonrise-hero.webp"
-              alt=""
-              fill
-              loading="lazy"
-              fetchPriority="low"
-              sizes="100vw"
-              className={styles.heroLandscapeImage}
-            />
-          </div>
-          <span className={styles.heroScrim} />
-        </div>
-
-        <div className={styles.heroInner}>
-          <div className={styles.heroCopy}>
-            <p className={styles.heroKicker}>Product · Full-stack · AI &amp; cloud</p>
-            <h1 id="portfolio-title" className={styles.heroTitle}>
-              <span>Products</span>
-              <span>from interface</span>
-              <span>
-                to <em>infrastructure.</em>
-              </span>
-            </h1>
-            <p className={styles.heroSummary}>
-              A selection of products I designed, built, and carried into production.
+      <section className={styles.work} aria-labelledby="portfolio-title">
+        <header className={`${styles.frame} ${styles.workIntro}`}>
+          <div>
+            <p className={styles.workKicker}>
+              Portfolio · {String(orderedProjects.length).padStart(2, "0")} projects
             </p>
-            <div className={styles.heroActions}>
-              <ArrowLink href="/contact" inverse>
-                Start a project
-              </ArrowLink>
-            </div>
+            <h1 id="portfolio-title" className={styles.workTitle}>
+              Selected <em>work.</em>
+            </h1>
           </div>
-
-          <p className={styles.heroCoordinates} aria-hidden="true">
-            33° 26′ N · 112° 04′ W <span>Phoenix · AZ</span>
+          <p className={styles.workSummary}>
+            Digital products designed and built across interfaces, publishing systems, and cloud
+            infrastructure.
           </p>
-        </div>
-      </section>
+        </header>
 
-      <section className={styles.work} aria-label="Selected work">
         <div className={`${styles.frame} ${styles.workGrid}`}>
           {orderedProjects.map((project) => {
             const isLive = project.status === "Live";
