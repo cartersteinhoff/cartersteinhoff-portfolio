@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { JsonLd } from "@/components/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -13,10 +13,11 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: "400",
+  weight: "variable",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -140,7 +141,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body className={`${manrope.variable} ${instrumentSerif.variable}`}>
+      <body className={`${manrope.variable} ${cormorantGaramond.variable}`}>
         <JsonLd id="site-structured-data" data={structuredData} />
         <a className="skip-link" href="#main-content">
           Skip to main content
