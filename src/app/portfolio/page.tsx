@@ -27,27 +27,53 @@ const orderedProjects = portfolioProjects;
 export default function PortfolioPage() {
   return (
     <main className={styles.root}>
-      {/* Mirrors the services hero: grid-line texture, angled gradient,
-       * accent-coloured closing word, and a rule-topped summary column. */}
       <section className={styles.hero} aria-labelledby="portfolio-title">
-        <div className={styles.heroGridLines} aria-hidden="true" />
-        <div className={`${styles.frame} ${styles.heroInner}`}>
-          <div className={styles.heroStatement}>
-            <h1 id="portfolio-title" className={`display-1 ${styles.heroTitle}`}>
-              Products from interface to <em>infrastructure.</em>
+        <div className={styles.heroMedia} aria-hidden="true">
+          <Image
+            src="/images/studio-hero-v3.webp"
+            alt=""
+            fill
+            preload
+            sizes="100vw"
+            className={styles.heroPortrait}
+          />
+          <div className={styles.heroLandscape}>
+            <Image
+              src="/images/phoenix-moonrise-hero.webp"
+              alt=""
+              fill
+              loading="lazy"
+              fetchPriority="low"
+              sizes="100vw"
+              className={styles.heroLandscapeImage}
+            />
+          </div>
+          <span className={styles.heroScrim} />
+        </div>
+
+        <div className={styles.heroInner}>
+          <div className={styles.heroCopy}>
+            <p className={styles.heroKicker}>Product · Full-stack · AI &amp; cloud</p>
+            <h1 id="portfolio-title" className={styles.heroTitle}>
+              <span>Products</span>
+              <span>from interface</span>
+              <span>
+                to <em>infrastructure.</em>
+              </span>
             </h1>
-            <div className={styles.heroSummary}>
-              <p>
-                I design the experience, build the system behind it, and take both into production.
-              </p>
-              <div className={styles.heroActions}>
-                <ArrowLink href="/contact">Start a project</ArrowLink>
-                <Link href="/services" className={styles.textLink}>
-                  See services <span aria-hidden="true">→</span>
-                </Link>
-              </div>
+            <p className={styles.heroSummary}>
+              A selection of products I designed, built, and carried into production.
+            </p>
+            <div className={styles.heroActions}>
+              <ArrowLink href="/contact" inverse>
+                Start a project
+              </ArrowLink>
             </div>
           </div>
+
+          <p className={styles.heroCoordinates} aria-hidden="true">
+            33° 26′ N · 112° 04′ W <span>Phoenix · AZ</span>
+          </p>
         </div>
       </section>
 
