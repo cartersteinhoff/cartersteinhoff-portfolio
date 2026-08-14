@@ -11,7 +11,7 @@ export default function Home() {
       <section className="home-hero">
         <div className="hero-scenes" aria-hidden="true">
           <Image
-            src="/images/studio-hero.webp"
+            src="/images/studio-hero-v3.webp"
             alt=""
             fill
             preload
@@ -48,27 +48,25 @@ export default function Home() {
         </div>
         <div className="hero-scrim" />
 
-        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-end px-5 pb-8 pt-32 md:px-8 md:pb-10">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1500px] flex-col justify-end px-5 pb-8 pt-32 md:justify-center md:px-8 md:pb-10">
           {/* Carries the hairline every other eyebrow on the site has;
            * without it the label floated free of the name. */}
           <p className="hero-kicker mb-5 w-max max-w-full border-t border-white/30 pt-3 text-[0.72rem] font-semibold tracking-[0.13em] text-stone-300 uppercase md:mb-7">
             Product · Full-stack · AI &amp; cloud
           </p>
           <h1 className="hero-title home-hero-title">
-            <span className="block">Carter</span>
-            <span className="block pl-[0.14em] italic text-[var(--accent)]">Steinhoff.</span>
+            <span>Products</span>
+            <span>from interface</span>
+            <span>
+              to <em>infrastructure.</em>
+            </span>
           </h1>
 
-          {/* One left-anchored column so the photograph owns the right
-           * half. Splitting the lead and the actions to opposite edges
-           * left ~676px of dead space between them. */}
-          <div className="hero-bottom mt-9 grid max-w-2xl gap-7 border-t border-white/25 pt-6 text-stone-100">
+          <div className="hero-bottom mt-8 grid max-w-2xl gap-6 border-t border-white/25 pt-5 text-stone-100">
             <div className="grid gap-4">
-              {/* The kicker already names the disciplines, so this states
-               * the scope and who is doing it instead of re-listing. */}
-              <p className="text-[length:var(--text-lead)] leading-[1.65] text-stone-300">
-                I design the product and build the system it runs on — one person carrying a project
-                from the first interface through to the infrastructure behind it.
+              <p className="home-hero-summary">
+                I design and build digital products end to end—shaping the experience, engineering
+                the system behind it, and carrying both into production.
               </p>
               <p className="text-[0.72rem] font-bold tracking-[0.13em] text-stone-400 uppercase">
                 Independent studio · {site.location}

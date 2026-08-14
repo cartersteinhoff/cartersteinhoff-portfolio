@@ -256,6 +256,7 @@ textarea:focus-visible {
 
 .hero-scene-studio {
   object-position: 66% center;
+  filter: saturate(0.96) brightness(0.95);
   opacity: 1;
   animation: hero-studio-cycle 30s 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
 }
@@ -335,12 +336,33 @@ textarea:focus-visible {
 }
 
 .home-hero-title {
-  max-width: 72rem;
+  max-width: 45rem;
   font-family: var(--font-display-stack);
-  font-size: var(--text-display);
-  line-height: var(--text-display--line-height);
-  letter-spacing: var(--text-display--letter-spacing);
+  font-size: clamp(4rem, 7.8vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.82;
+  letter-spacing: -0.047em;
   color: #f5f0e7;
+}
+
+.home-hero-title span {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+}
+
+.home-hero-title em {
+  color: #ec7128;
+  font-style: italic;
+  font-weight: inherit;
+}
+
+.home-hero-summary {
+  max-width: 34rem;
+  margin: 0;
+  color: rgba(242, 236, 228, 0.76);
+  font-size: var(--text-small);
+  line-height: 1.65;
 }
 
 .hero-bottom {
