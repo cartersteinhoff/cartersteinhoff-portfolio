@@ -347,6 +347,23 @@ test("services opens with the catalog and omits retired sections", async ({ page
   }
 });
 
+test("Upwork proof keeps the evidence readable and links to its source", async ({ page }) => {
+  await page.goto("/services");
+
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Client work, publicly verified." }),
+  ).toHaveCount(1);
+  await expect(page.locator('img[src*="upwork-proof-ledger"]')).toHaveCount(1);
+  await expect(page.getByText("100%", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("4.9 / 5", { exact: true })).toHaveCount(1);
+
+  const profileLink = page.getByRole("link", { name: /View live Upwork profile/ });
+  await expect(profileLink).toHaveAttribute(
+    "href",
+    "https://www.upwork.com/freelancers/cartersteinhoff",
+  );
+});
+
 test("project numbers match their position in the data", () => {
   // The index, the "next case study" link, and the sitemap all walk
   // portfolioProjects in array order, so a stored number that disagrees

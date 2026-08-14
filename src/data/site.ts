@@ -44,12 +44,6 @@ export const upwork = {
   reviewCount: 28,
   totalJobs: 37,
   totalHours: 600,
-  profileScreenshot: {
-    src: "/images/upwork-profile-carter-steinhoff.png",
-    width: 3798,
-    height: 1849,
-    alt: "Carter S.'s public Upwork profile showing his verified badge, 100% job success, Top Rated status, 4.9 rating, 37 jobs, and 600 hours.",
-  },
   stats: [
     { label: "Job success", value: "100%" },
     { label: "Rating", value: "4.9 / 5" },
