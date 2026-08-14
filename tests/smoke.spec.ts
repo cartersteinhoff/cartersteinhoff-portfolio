@@ -331,6 +331,22 @@ test("headings descend in rank on a content page", async ({ page }) => {
   }
 });
 
+test("services opens with the catalog and omits retired sections", async ({ page }) => {
+  await page.goto("/services");
+
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Choose the help you need." }),
+  ).toHaveCount(1);
+
+  for (const retiredCopy of [
+    "Design, development, automation, and cloud.",
+    "Engagement options",
+    "Nucamp web development instructor",
+  ]) {
+    await expect(page.getByText(retiredCopy, { exact: true })).toHaveCount(0);
+  }
+});
+
 test("project numbers match their position in the data", () => {
   // The index, the "next case study" link, and the sitemap all walk
   // portfolioProjects in array order, so a stored number that disagrees

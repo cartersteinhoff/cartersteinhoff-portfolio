@@ -139,50 +139,6 @@ const proofStories = [
   readonly alt: string;
 }[];
 
-const engagements = [
-  {
-    number: "01",
-    title: "Audit & roadmap",
-    copy: "A focused review with priorities, tradeoffs, and implementation-ready next steps.",
-    bestFor: "Unclear scope, inherited systems, or a high-stakes rebuild",
-  },
-  {
-    number: "02",
-    title: "Build or rebuild",
-    copy: "A scoped website, product, CMS, or automation from discovery through production.",
-    bestFor: "New launches, redesigns, migrations, and major features",
-  },
-  {
-    number: "03",
-    title: "Ongoing product partner",
-    copy: "Senior design and development support for iteration, SEO, automation, and infrastructure.",
-    bestFor: "Teams that need continuity without another full-time hire",
-  },
-] as const;
-
-const technologyGroups = [
-  {
-    label: "Experience",
-    values: "Product strategy · UX/UI · Next.js · React · TypeScript · Tailwind CSS",
-  },
-  {
-    label: "Content",
-    values: "WordPress · Custom plugins · Headless CMS · Custom admin tools · Migrations",
-  },
-  {
-    label: "Backend & data",
-    values: "Node.js · Fastify · Serverless Functions · Postgres · Neon · REST APIs",
-  },
-  {
-    label: "Cloud & delivery",
-    values: "Vercel · AWS EC2/RDS · Azure/GCP planning · CI/CD · Observability",
-  },
-  {
-    label: "Search & quality",
-    values: "Technical SEO · Structured data · Core Web Vitals · Playwright · Axe · Biome",
-  },
-] as const;
-
 function getProject(slug: ProjectSlug) {
   const project = portfolioProjects.find((item) => item.slug === slug);
 
@@ -196,36 +152,13 @@ function getProject(slug: ProjectSlug) {
 export default function ServicesPage() {
   return (
     <main className={styles.page}>
-      <section className={styles.intro} aria-labelledby="services-title">
-        <div className={styles.introGridLines} aria-hidden="true" />
-        <div className={`${styles.shell} ${styles.introInner}`}>
-          <div className={styles.introStatement}>
-            <h1 id="services-title" className={`display-1 ${styles.introTitle}`}>
-              Design, development, automation, and <em>cloud.</em>
-            </h1>
-            <div className={styles.introSummary}>
-              <p>
-                Websites, products, CMS, SEO, AI workflows, and infrastructure—hire me for one
-                focused service or combine only what your project needs.
-              </p>
-              <div className={styles.introActions}>
-                <ArrowLink href="/contact">Start a project</ArrowLink>
-                <Link href="/portfolio" className={styles.textLink}>
-                  See case studies <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.offer} aria-labelledby="offer-title">
+      <section className={styles.offer} aria-labelledby="services-title">
         <div className={`${styles.shell} ${styles.offerGrid}`}>
           <div className={styles.offerIntro}>
             <p className="eyebrow">Service catalog</p>
-            <h2 id="offer-title" className="display-2">
+            <h1 id="services-title" className="display-2">
               Choose the help you need.
-            </h2>
+            </h1>
             <p>
               Every service can stand on its own. Start with one, or combine services when the scope
               genuinely calls for it.
@@ -242,9 +175,9 @@ export default function ServicesPage() {
               >
                 <span className={styles.serviceNumber}>{service.number}</span>
                 <div className={styles.serviceCopy}>
-                  <h3 id={`${service.id}-title`} className="display-3">
+                  <h2 id={`${service.id}-title`} className="display-3">
                     {service.title}
-                  </h3>
+                  </h2>
                   <p>{service.summary}</p>
                 </div>
                 <div className={styles.serviceIncludes}>
@@ -399,62 +332,6 @@ export default function ServicesPage() {
           <p className={styles.proofFootnote}>
             {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
           </p>
-        </div>
-      </section>
-
-      <section className={styles.engagements} aria-labelledby="engagements-title">
-        <div className={`${styles.shell} ${styles.engagementGrid}`}>
-          <div className={styles.engagementHeading}>
-            <p className="eyebrow">Engagement options</p>
-            <h2 id="engagements-title" className={`display-2 ${styles.engagementTitle}`}>
-              Choose how you want to work.
-            </h2>
-          </div>
-          <div className={styles.engagementList}>
-            {engagements.map((engagement) => (
-              <div key={engagement.number} className={styles.engagementRow}>
-                <article>
-                  <span>{engagement.number}</span>
-                  <h3 className="display-4">{engagement.title}</h3>
-                  <p>{engagement.copy}</p>
-                  <div>
-                    <strong>Best for</strong>
-                    <p>{engagement.bestFor}</p>
-                  </div>
-                </article>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.teaching} aria-labelledby="teaching-title">
-        <div className={styles.shell}>
-          <div className={styles.teachingGrid}>
-            <div>
-              <p className="eyebrow">Nucamp web development instructor</p>
-              <h2 id="teaching-title" className={`display-3 ${styles.teachingTitle}`}>
-                Clear thinking. Maintainable handoffs.
-              </h2>
-            </div>
-            <p>
-              Teaching sharpens how I explain tradeoffs and document decisions. You get a system
-              your team can understand and extend.
-            </p>
-            <ul aria-label="Handoff principles">
-              <li>Clear tradeoffs</li>
-              <li>Documented decisions</li>
-              <li>Maintainable handoff</li>
-            </ul>
-          </div>
-          <dl className={styles.trustStack} aria-label="Selected technology stack">
-            {technologyGroups.map((group) => (
-              <div key={group.label}>
-                <dt>{group.label}</dt>
-                <dd>{group.values}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
