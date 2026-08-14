@@ -253,28 +253,23 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Third-party proof follows the work itself. The generated image
-       * carries the atmosphere; every metric and quote remains live HTML
-       * linked to the public profile so the evidence stays checkable. */}
+      {/* Third-party proof, placed after the work so the evidence stacks:
+       * here is what I built, and here is what the clients said. Every
+       * figure links back to the profile it came from, so the claim is
+       * checkable rather than asserted. */}
       <section className={styles.proofBand} aria-labelledby="upwork-proof-title">
-        <div className={styles.proofStage}>
-          <Image
-            src="/images/upwork-proof-ledger.webp"
-            alt="Black verification stamp, project ledger, and brass tally counter on a dark desk at Phoenix sunset"
-            fill
-            sizes="100vw"
-            className={styles.proofStageImage}
-          />
-          <span className={styles.proofStageScrim} aria-hidden="true" />
-          <div className={`${styles.shell} ${styles.proofStageInner}`}>
-            <p className="eyebrow">Verified on Upwork</p>
-            <h2 id="upwork-proof-title" className={`display-2 ${styles.proofBandTitle}`}>
-              Client work, publicly verified.
-            </h2>
-            <p className={styles.proofBandLead}>
-              {upwork.badge} with a {upwork.jobSuccess} job success score. Current metrics and
-              client feedback link directly to the source.
-            </p>
+        <div className={styles.shell}>
+          <div className={styles.proofBandHead}>
+            <div>
+              <p className="eyebrow">Verified on Upwork</p>
+              <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
+                {upwork.badge} on Upwork, with a {upwork.jobSuccess} job success score.
+              </h2>
+              <p className={styles.proofBandLead}>
+                A current capture of my public Upwork profile, with live metrics and client feedback
+                linked at the source.
+              </p>
+            </div>
             <a
               className={styles.proofBandLink}
               href={site.upworkUrl}
@@ -285,28 +280,45 @@ export default function ServicesPage() {
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
-        </div>
 
-        <div className={`${styles.shell} ${styles.proofBody}`}>
-          <div className={styles.proofStanding}>
-            <div className={styles.proofStandingLabel}>
-              <p>Current standing · {upwork.asOf}</p>
-              <span>Carter S. on Upwork</span>
-            </div>
-            <dl className={styles.proofStats}>
-              {upwork.stats.map((stat) => (
-                <div key={stat.label}>
-                  <dt>{stat.label}</dt>
-                  <dd>{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          <a
+            className={styles.proofProfile}
+            href={site.upworkUrl}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open Carter's Upwork profile (opens in a new tab)"
+          >
+            <span className={styles.proofProfileHeader} aria-hidden="true">
+              <span className={styles.proofProfileIdentity}>
+                <strong>Carter S. on Upwork</strong>
+                <span>upwork.com/freelancers/cartersteinhoff</span>
+              </span>
+              <span className={styles.proofProfileAction}>Open live profile ↗</span>
+            </span>
+            <span className={styles.proofProfileImage}>
+              <Image
+                src={upwork.profileScreenshot.src}
+                alt={upwork.profileScreenshot.alt}
+                width={upwork.profileScreenshot.width}
+                height={upwork.profileScreenshot.height}
+                sizes="(max-width: 767px) 100vw, (max-width: 1599px) 94vw, 1500px"
+                className={styles.proofProfileImageAsset}
+              />
+            </span>
+          </a>
+
+          <dl className={styles.proofStats}>
+            {upwork.stats.map((stat) => (
+              <div key={stat.label}>
+                <dt>{stat.label}</dt>
+                <dd>{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
 
           <div className={styles.proofQuotes}>
-            {upwork.testimonials.map((item, index) => (
+            {upwork.testimonials.map((item) => (
               <figure key={item.quote} className={styles.proofQuote}>
-                <span aria-hidden="true">0{index + 1}</span>
                 <blockquote>
                   <p className="display-5">“{item.quote}”</p>
                 </blockquote>
@@ -317,15 +329,9 @@ export default function ServicesPage() {
             ))}
           </div>
 
-          <div className={styles.proofSource}>
-            <p>
-              {upwork.totalJobs} jobs · {upwork.totalHours} hours · Source checked {upwork.asOf}
-            </p>
-            <a href={site.upworkUrl} target="_blank" rel="noreferrer">
-              upwork.com/freelancers/cartersteinhoff <span aria-hidden="true">↗</span>
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </div>
+          <p className={styles.proofFootnote}>
+            {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
+          </p>
         </div>
       </section>
 
