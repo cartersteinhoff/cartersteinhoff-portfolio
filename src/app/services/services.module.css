@@ -287,7 +287,7 @@
 }
 
 .proofBandLead {
-  max-width: 38ch;
+  max-width: 62rem;
   margin: 0.85rem 0 0;
   color: var(--muted);
   font-size: var(--text-small);
@@ -295,7 +295,8 @@
 }
 
 .proofBandTitle {
-  max-width: 18ch;
+  width: 100%;
+  max-width: none;
   margin: 0.9rem 0 0;
 }
 
@@ -562,8 +563,8 @@
   }
 
   .proofBandHead {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
   }
 
   .proofEvidence {
