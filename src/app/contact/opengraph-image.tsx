@@ -7,7 +7,7 @@ export const contentType = ogContentType;
 export default async function ContactOpenGraphImage() {
   return renderOgCard({
     eyebrow: "Contact · Start anywhere",
-    title: "Let’s make something good.",
+    title: "Bring me the hard part.",
     subtitle: "Tell me what you’re thinking — even if it is still rough.",
     titleSize: 128,
   });

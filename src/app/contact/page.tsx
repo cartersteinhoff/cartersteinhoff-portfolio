@@ -30,8 +30,8 @@ export default function ContactPage() {
             <p className="page-kicker">Contact · Start anywhere</p>
             <div>
               <h1 className="contact-page-title page-title">
-                Let’s make something
-                <span className="italic text-[var(--accent)]"> good.</span>
+                Bring me the
+                <span className="italic text-[var(--accent)]"> hard part.</span>
               </h1>
               <p className="contact-page-intro">
                 Tell me what you’re thinking—even if it is still rough. I’ll ask the useful
