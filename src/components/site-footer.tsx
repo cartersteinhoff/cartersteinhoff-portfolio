@@ -24,11 +24,21 @@ export function SiteFooter() {
           <Link className="footer-link" href="/contact">
             Contact
           </Link>
-          <a className="footer-link" href={site.linkedinUrl} target="_blank" rel="noreferrer">
+          <a
+            className="footer-link footer-link-accent"
+            href={site.linkedinUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             LinkedIn
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
-          <a className="footer-link" href={site.upworkUrl} target="_blank" rel="noreferrer">
+          <a
+            className="footer-link footer-link-accent"
+            href={site.upworkUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             Upwork
             <span className="sr-only"> (opens in a new tab)</span>
           </a>

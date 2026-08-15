@@ -903,6 +903,14 @@ textarea:focus-visible {
   color: var(--accent);
 }
 
+.footer-link.footer-link-accent {
+  color: var(--accent);
+}
+
+.footer-link.footer-link-accent:hover {
+  color: var(--sand);
+}
+
 .reveal {
   opacity: 1;
   transform: none;

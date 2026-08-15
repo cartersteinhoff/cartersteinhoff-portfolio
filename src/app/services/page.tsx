@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLink } from "@/components/arrow-link";
 import { portfolioProjects, site, upwork } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import styles from "./services.module.css";
@@ -334,30 +333,6 @@ export default function ServicesPage() {
           <p className={styles.proofFootnote}>
             {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
           </p>
-        </div>
-      </section>
-
-      <section className={styles.finalCta} aria-labelledby="services-final-title">
-        <div className={`${styles.shell} ${styles.finalInner}`}>
-          <div>
-            <p className="eyebrow">Bring me the messy version</p>
-            <h2 id="services-final-title" className={`display-2 ${styles.finalTitle}`}>
-              I’ll help turn it into a clear plan and a working system.
-            </h2>
-          </div>
-          <div className={styles.finalActions}>
-            <ArrowLink href="/contact">Start a project</ArrowLink>
-            <nav aria-label="Professional profiles">
-              <a href={site.upworkUrl} target="_blank" rel="noreferrer">
-                Hire through Upwork <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-              <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
-                Connect on LinkedIn <span aria-hidden="true">↗</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </nav>
-          </div>
         </div>
       </section>
     </main>
