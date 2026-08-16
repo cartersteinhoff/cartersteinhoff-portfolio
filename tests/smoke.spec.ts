@@ -345,6 +345,42 @@ test("services opens with the catalog and omits retired sections", async ({ page
   ]) {
     await expect(page.getByText(retiredCopy, { exact: true })).toHaveCount(0);
   }
+
+  const sectionOrder = await page
+    .locator("main > section")
+    .evaluateAll((sections) => sections.map((section) => section.getAttribute("aria-labelledby")));
+  expect(sectionOrder).toEqual(["services-title", "upwork-proof-title", "proof-title"]);
+});
+
+test("services hero image stays full bleed", async ({ page }) => {
+  await page.goto("/services");
+
+  const image = await page.locator('img[src*="services-phoenix-dusk"]').boundingBox();
+  const viewport = page.viewportSize();
+
+  expect(image?.x).toBeLessThanOrEqual(1);
+  expect(image?.width).toBeGreaterThanOrEqual((viewport?.width ?? 0) - 1);
+});
+
+test("service catalog opens one offering at a time and allows collapse", async ({ page }) => {
+  await page.goto("/services");
+
+  const design = page.getByRole("button", { name: "Website & product design" });
+  const development = page.getByRole("button", { name: "Full-stack web development" });
+
+  await expect(design).toHaveAttribute("aria-expanded", "true");
+  await expect(development).toHaveAttribute("aria-expanded", "false");
+
+  await development.click();
+
+  await expect(design).toHaveAttribute("aria-expanded", "false");
+  await expect(development).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator('[aria-expanded="true"]')).toHaveCount(1);
+
+  await development.click();
+
+  await expect(development).toHaveAttribute("aria-expanded", "false");
+  await expect(page.locator('[aria-expanded="true"]')).toHaveCount(0);
 });
 
 test("Upwork proof preserves the real profile capture and live source", async ({ page }) => {
@@ -353,7 +389,7 @@ test("Upwork proof preserves the real profile capture and live source", async ({
   await expect(page.locator('img[src*="upwork-profile-carter-steinhoff"]')).toHaveCount(1);
   await expect(page.getByText("100%", { exact: true })).toHaveCount(1);
   await expect(page.getByText("4.9 / 5", { exact: true })).toHaveCount(1);
-  await expect(page.getByRole("link", { name: /View live Upwork profile/ })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: /View Upwork profile/ })).toHaveAttribute(
     "href",
     "https://www.upwork.com/freelancers/cartersteinhoff",
   );

@@ -84,12 +84,11 @@
   gap: 3.5rem 2.5rem;
 }
 
-/* Plate → copy → actions, in that order, with the action row pinned to
- * the bottom so every card in a row ends on the same line. DOM order is
- * visual order, so focus order needs no correcting. */
+/* Copy → plate → actions, with the copy row absorbing the difference
+ * between short and long project names so screenshots align by row. */
 .card {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto auto;
   gap: 1rem;
   min-width: 0;
   scroll-margin-top: 5rem;
@@ -176,8 +175,10 @@
   min-width: 0;
   overflow: hidden;
   color: var(--sand);
+  text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color 180ms ease;
 }
 
 .browserStatus {
@@ -382,6 +383,12 @@
 
   .visitLink:hover {
     color: var(--sand);
+  }
+
+  .browserDomain:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.35em;
   }
 
   .profileLinks a:hover {

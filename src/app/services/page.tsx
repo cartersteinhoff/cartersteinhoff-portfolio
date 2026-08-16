@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { portfolioProjects, site, upwork } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
+import { ServiceLedger, type ServiceOffering } from "./service-ledger";
 import styles from "./services.module.css";
 
 const description =
@@ -14,14 +15,6 @@ export const metadata = createPageMetadata({
 });
 
 type ProjectSlug = (typeof portfolioProjects)[number]["slug"];
-
-type ServiceOffering = {
-  readonly number: string;
-  readonly id: string;
-  readonly title: string;
-  readonly summary: string;
-  readonly includes: readonly string[];
-};
 
 const services = [
   {
@@ -152,44 +145,114 @@ export default function ServicesPage() {
   return (
     <main className={styles.page}>
       <section className={styles.offer} aria-labelledby="services-title">
+        <div className={styles.offerImage} aria-hidden="true">
+          <Image
+            src="/images/services-phoenix-dusk.webp"
+            alt=""
+            fill
+            fetchPriority="high"
+            loading="eager"
+            sizes="100vw"
+            className={styles.offerImageAsset}
+          />
+        </div>
+
         <div className={`${styles.shell} ${styles.offerGrid}`}>
           <div className={styles.offerIntro}>
-            <p className="eyebrow">Service catalog</p>
-            <h1 id="services-title" className="display-2">
-              Choose the help you need.
-            </h1>
-            <p>
-              Every service can stand on its own. Start with one, or combine services when the scope
-              genuinely calls for it.
-            </p>
+            <div className={styles.offerIntroContent}>
+              <p className="eyebrow">Service catalog</p>
+              <h1 id="services-title" className="display-2">
+                Choose the help you need.
+              </h1>
+              <p>
+                Every service can stand on its own. Start with one, or combine services when the
+                scope genuinely calls for it.
+              </p>
+              <Link href="/contact" className={styles.offerCta}>
+                Start a conversation <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
           </div>
 
-          <div className={styles.serviceCatalog}>
-            {services.map((service) => (
-              <article
-                key={service.id}
-                id={service.id}
-                className={styles.serviceItem}
-                aria-labelledby={`${service.id}-title`}
-              >
-                <span className={styles.serviceNumber}>{service.number}</span>
-                <div className={styles.serviceCopy}>
-                  <h2 id={`${service.id}-title`} className="display-3">
-                    {service.title}
-                  </h2>
-                  <p>{service.summary}</p>
+          <ServiceLedger services={services} />
+        </div>
+      </section>
+
+      {/* Third-party proof follows the offer so prospective clients see
+       * verified outcomes before moving into the detailed case studies. */}
+      <section className={styles.proofBand} aria-labelledby="upwork-proof-title">
+        <div className={styles.shell}>
+          <div className={styles.proofBandHead}>
+            <div>
+              <p className="eyebrow">Verified on Upwork</p>
+              <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
+                {upwork.badge} on Upwork, with a {upwork.jobSuccess} job success score.
+              </h2>
+            </div>
+            <a
+              className={styles.proofBandLink}
+              href={site.upworkUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Upwork profile <span aria-hidden="true">↗</span>
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+
+          <div className={styles.proofEvidence}>
+            <a
+              className={styles.proofProfile}
+              href={site.upworkUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Carter's Upwork profile (opens in a new tab)"
+            >
+              <span className={styles.proofProfileHeader} aria-hidden="true">
+                <span className={styles.proofProfileIdentity}>
+                  <strong>Carter S. on Upwork</strong>
+                  <span>upwork.com/freelancers/cartersteinhoff</span>
+                </span>
+                <span className={styles.proofProfileAction}>Open live profile ↗</span>
+              </span>
+              <span className={styles.proofProfileImage}>
+                <Image
+                  src={upwork.profileScreenshot.src}
+                  alt={upwork.profileScreenshot.alt}
+                  width={upwork.profileScreenshot.width}
+                  height={upwork.profileScreenshot.height}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1599px) 72vw, 1120px"
+                  className={styles.proofProfileImageAsset}
+                />
+              </span>
+            </a>
+
+            <dl className={styles.proofStats}>
+              {upwork.stats.map((stat) => (
+                <div key={stat.label}>
+                  <dt>{stat.label}</dt>
+                  <dd>{stat.value}</dd>
                 </div>
-                <div className={styles.serviceIncludes}>
-                  <span>Services include</span>
-                  <ul aria-label={`${service.title} services include`}>
-                    {service.includes.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
+              ))}
+            </dl>
+          </div>
+
+          <div className={styles.proofQuotes}>
+            {upwork.testimonials.map((item) => (
+              <figure key={item.quote} className={styles.proofQuote}>
+                <blockquote>
+                  <p className="display-5">“{item.quote}”</p>
+                </blockquote>
+                <figcaption>
+                  {item.context} · {item.date}
+                </figcaption>
+              </figure>
             ))}
           </div>
+
+          <p className={styles.proofFootnote}>
+            {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
+          </p>
         </div>
       </section>
 
@@ -249,90 +312,6 @@ export default function ServicesPage() {
               );
             })}
           </div>
-        </div>
-      </section>
-
-      {/* Third-party proof, placed after the work so the evidence stacks:
-       * here is what I built, and here is what the clients said. Every
-       * figure links back to the profile it came from, so the claim is
-       * checkable rather than asserted. */}
-      <section className={styles.proofBand} aria-labelledby="upwork-proof-title">
-        <div className={styles.shell}>
-          <div className={styles.proofBandHead}>
-            <div>
-              <p className="eyebrow">Verified on Upwork</p>
-              <h2 id="upwork-proof-title" className={`display-3 ${styles.proofBandTitle}`}>
-                {upwork.badge} on Upwork, with a {upwork.jobSuccess} job success score.
-              </h2>
-              <p className={styles.proofBandLead}>
-                A current capture of my public Upwork profile, with live metrics and client feedback
-                linked at the source.
-              </p>
-            </div>
-            <a
-              className={styles.proofBandLink}
-              href={site.upworkUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View live Upwork profile <span aria-hidden="true">↗</span>
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          </div>
-
-          <div className={styles.proofEvidence}>
-            <a
-              className={styles.proofProfile}
-              href={site.upworkUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open Carter's Upwork profile (opens in a new tab)"
-            >
-              <span className={styles.proofProfileHeader} aria-hidden="true">
-                <span className={styles.proofProfileIdentity}>
-                  <strong>Carter S. on Upwork</strong>
-                  <span>upwork.com/freelancers/cartersteinhoff</span>
-                </span>
-                <span className={styles.proofProfileAction}>Open live profile ↗</span>
-              </span>
-              <span className={styles.proofProfileImage}>
-                <Image
-                  src={upwork.profileScreenshot.src}
-                  alt={upwork.profileScreenshot.alt}
-                  width={upwork.profileScreenshot.width}
-                  height={upwork.profileScreenshot.height}
-                  sizes="(max-width: 767px) 100vw, (max-width: 1599px) 72vw, 1120px"
-                  className={styles.proofProfileImageAsset}
-                />
-              </span>
-            </a>
-
-            <dl className={styles.proofStats}>
-              {upwork.stats.map((stat) => (
-                <div key={stat.label}>
-                  <dt>{stat.label}</dt>
-                  <dd>{stat.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className={styles.proofQuotes}>
-            {upwork.testimonials.map((item) => (
-              <figure key={item.quote} className={styles.proofQuote}>
-                <blockquote>
-                  <p className="display-5">“{item.quote}”</p>
-                </blockquote>
-                <figcaption>
-                  {item.context} · {item.date}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <p className={styles.proofFootnote}>
-            {upwork.totalJobs} jobs and {upwork.totalHours} hours on Upwork as of {upwork.asOf}.
-          </p>
         </div>
       </section>
     </main>

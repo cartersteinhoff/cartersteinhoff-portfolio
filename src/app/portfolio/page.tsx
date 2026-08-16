@@ -44,7 +44,7 @@ export default function PortfolioPage() {
         </header>
 
         <div className={`${styles.frame} ${styles.workGrid}`}>
-          {orderedProjects.map((project) => {
+          {orderedProjects.map((project, index) => {
             const isLive = project.status === "Live";
 
             return (
@@ -54,6 +54,18 @@ export default function PortfolioPage() {
                 className={styles.card}
                 aria-labelledby={`project-${project.slug}`}
               >
+                <div className={styles.cardBody}>
+                  <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
+                    {project.title}
+                  </h2>
+                  <p className={styles.cardMeta}>
+                    <span className={styles.cardNumber}>{project.number}</span>
+                    <span>{project.shortPlatform}</span>
+                    <span>{project.year}</span>
+                  </p>
+                  <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
+                </div>
+
                 {/* Browser chrome frames the screenshot as a product,
                  * which is what keeps a bright site from reading as a
                  * glaring rectangle on an ink-black page. */}
@@ -64,7 +76,15 @@ export default function PortfolioPage() {
                       <i />
                       <i />
                     </span>
-                    <span className={styles.browserDomain}>{project.domain}</span>
+                    <a
+                      className={styles.browserDomain}
+                      href={project.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.domain} <span aria-hidden="true">↗</span>
+                      <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
                     <span className={`${styles.browserStatus} ${isLive ? styles.statusLive : ""}`}>
                       {project.status}
                     </span>
@@ -87,27 +107,12 @@ export default function PortfolioPage() {
                         src={project.image}
                         alt={project.imageAlt}
                         fill
+                        loading={index === 0 ? "eager" : "lazy"}
                         sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), 40vw"
                         className={styles.shotImage}
                       />
                     </span>
                   </Link>
-                </div>
-
-                {/* One thing to scan, then one thing to read. The title is
-                 * the only large type on the card, so the eye lands there
-                 * first; the meta line hangs off it as a caption, and the
-                 * headline is the single sentence of substance. */}
-                <div className={styles.cardBody}>
-                  <h2 id={`project-${project.slug}`} className={`display-4 ${styles.cardTitle}`}>
-                    {project.title}
-                  </h2>
-                  <p className={styles.cardMeta}>
-                    <span className={styles.cardNumber}>{project.number}</span>
-                    <span>{project.shortPlatform}</span>
-                    <span>{project.year}</span>
-                  </p>
-                  <p className={styles.cardHeadline}>{project.caseStudy.headline}</p>
                 </div>
 
                 <div className={styles.cardActions}>
