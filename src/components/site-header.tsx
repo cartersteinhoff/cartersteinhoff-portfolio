@@ -1,6 +1,7 @@
 "use client";
 
 import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -197,7 +198,17 @@ export function SiteHeader() {
         aria-modal={isOpen}
         role="dialog"
       >
-        <nav className="flex h-full flex-col justify-end gap-2 px-6 pb-12">
+        <div className="mobile-menu-art" aria-hidden="true">
+          <Image
+            src="/images/mobile-menu-sonoran-dusk.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="mobile-menu-art-image"
+          />
+        </div>
+
+        <nav className="mobile-menu-nav relative z-10 flex h-full flex-col justify-end gap-2 px-6">
           <p className="mb-6 text-[0.66rem] tracking-[0.2em] text-stone-400 uppercase">Navigate</p>
           {links.map((link, index) => {
             const isActive = isActivePath(pathname, link.href);
