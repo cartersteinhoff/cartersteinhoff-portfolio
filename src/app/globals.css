@@ -490,6 +490,65 @@ textarea:focus-visible {
   transform: translateY(0);
 }
 
+.mobile-menu-art {
+  position: absolute;
+  inset: 0 0 auto;
+  height: min(43svh, 23rem);
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.035);
+  transform-origin: center 45%;
+  transition:
+    opacity 520ms ease 80ms,
+    transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.mobile-menu-art::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(
+      to bottom,
+      rgb(11 12 12 / 18%) 0%,
+      rgb(11 12 12 / 8%) 34%,
+      rgb(11 12 12 / 58%) 66%,
+      var(--ink) 96%
+    ),
+    linear-gradient(
+      to right,
+      rgb(11 12 12 / 18%),
+      transparent 34%,
+      transparent 66%,
+      rgb(11 12 12 / 18%)
+    );
+}
+
+.mobile-menu-art-image {
+  object-fit: cover;
+  object-position: center 50%;
+  filter: saturate(0.78) brightness(0.8) contrast(1.04);
+}
+
+.mobile-menu.is-open .mobile-menu-art {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mobile-menu-nav {
+  padding-bottom: clamp(3rem, 12svh, 6.5rem);
+}
+
+@media (max-width: 767px) and (max-height: 650px) {
+  .mobile-menu-art {
+    height: 10.75rem;
+  }
+
+  .mobile-menu-art-image {
+    object-position: center 54%;
+  }
+}
+
 .arrow-link {
   display: inline-flex;
   width: max-content;
