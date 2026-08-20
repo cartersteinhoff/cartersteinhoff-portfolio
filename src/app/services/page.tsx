@@ -168,8 +168,9 @@ export default function ServicesPage() {
                 Every service can stand on its own. Start with one, or combine services when the
                 scope genuinely calls for it.
               </p>
-            <Link href="/contact" className={styles.offerCta}>
-                Start a conversation <span aria-hidden="true" className="cta-icon">
+              <Link href="/contact" className={styles.offerCta}>
+                Start a conversation{" "}
+                <span aria-hidden="true" className="cta-icon">
                   ↗
                 </span>
               </Link>
@@ -197,7 +198,8 @@ export default function ServicesPage() {
               target="_blank"
               rel="noreferrer"
             >
-              View Upwork profile <span aria-hidden="true" className="cta-icon">
+              View Upwork profile{" "}
+              <span aria-hidden="true" className="cta-icon">
                 ↗
               </span>
               <span className="sr-only"> (opens in a new tab)</span>
@@ -218,7 +220,8 @@ export default function ServicesPage() {
                   <span>upwork.com/freelancers/cartersteinhoff</span>
                 </span>
                 <span className={styles.proofProfileAction}>
-                  Open live profile <span aria-hidden="true" className="cta-icon">
+                  Open live profile{" "}
+                  <span aria-hidden="true" className="cta-icon">
                     ↗
                   </span>
                 </span>

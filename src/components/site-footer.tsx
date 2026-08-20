@@ -24,24 +24,26 @@ export function SiteFooter() {
           <Link className="footer-link" href="/contact">
             Contact
           </Link>
-          <a
-            className="footer-link footer-link-accent"
-            href={site.linkedinUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-          <a
-            className="footer-link footer-link-accent"
-            href={site.upworkUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Upwork
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
+          <span className="flex basis-full gap-x-5 md:basis-auto">
+            <a
+              className="footer-link footer-link-accent"
+              href={site.linkedinUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+            <a
+              className="footer-link footer-link-accent"
+              href={site.upworkUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Upwork
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          </span>
         </div>
       </div>
       <div className="mx-auto mt-12 flex max-w-[1500px] flex-wrap items-center gap-x-6 gap-y-1 border-t border-white/10 pt-5 text-xs tracking-[0.09em] text-stone-400 uppercase">
