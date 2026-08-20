@@ -1402,7 +1402,6 @@ button:focus-visible .cta-icon {
   text-wrap: balance;
 }
 
-/* biome-ignore lint/style/noDescendingSpecificity: scoped to the case-story component. */
 .case-story-item > p {
   max-width: 45rem;
   color: #d6d3d1;
@@ -1569,8 +1568,6 @@ button:focus-visible .cta-icon {
   letter-spacing: 0.1em;
 }
 
-/* biome-ignore lint/style/noDescendingSpecificity: scoped to a different
-   component than `.case-screen figcaption p`; no element matches both. */
 .case-ownership-item p {
   color: #d6d3d1;
   font-size: clamp(1rem, 1.3vw, 1.15rem);
@@ -1614,7 +1611,6 @@ button:focus-visible .cta-icon {
   text-wrap: balance;
 }
 
-/* biome-ignore lint/style/noDescendingSpecificity: scoped to the case-decision component. */
 .case-decision p {
   max-width: 40rem;
   color: #d6d3d1;
@@ -1884,8 +1880,6 @@ button:focus-visible .cta-icon {
   letter-spacing: -0.035em;
 }
 
-/* biome-ignore lint/style/noDescendingSpecificity: scoped to a different
-   component than `.case-screen figcaption p`; no element matches both. */
 .case-status-action p {
   max-width: 38rem;
   color: var(--muted);
@@ -2342,7 +2336,6 @@ button:focus-visible .cta-icon {
     padding-top: 5.5rem;
     padding-bottom: 4rem;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

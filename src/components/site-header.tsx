@@ -143,7 +143,7 @@ export function SiteHeader() {
         <Link
           href="/"
           tabIndex={isOpen ? -1 : undefined}
-          className="group relative z-50 flex items-center gap-3 rounded-full border border-white/10 bg-black/25 py-1.5 pr-4 pl-1.5 text-[0.68rem] font-semibold tracking-[0.2em] text-stone-50 uppercase backdrop-blur-xl"
+          className="group relative z-50 flex items-center gap-3 rounded-full border border-white/10 bg-black/25 p-1.5 text-[0.68rem] font-semibold tracking-[0.2em] text-stone-50 uppercase backdrop-blur-xl sm:py-1.5 sm:pr-4 sm:pl-1.5"
           aria-label="Carter Steinhoff, home"
         >
           <span className="grid size-9 place-items-center rounded-full border border-white/35 transition-colors group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-black">

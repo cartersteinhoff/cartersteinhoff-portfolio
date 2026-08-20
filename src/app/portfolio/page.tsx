@@ -77,7 +77,7 @@ export default function PortfolioPage() {
                       <i />
                     </span>
                     <a
-                    className={styles.browserDomain}
+                      className={styles.browserDomain}
                       href={project.url}
                       target="_blank"
                       rel="noreferrer"
@@ -154,13 +154,15 @@ export default function PortfolioPage() {
             <ArrowLink href="/contact">Tell me about your project</ArrowLink>
             <nav className={styles.profileLinks} aria-label="Professional profiles">
               <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
-                LinkedIn <span aria-hidden="true" className="cta-icon">
+                LinkedIn{" "}
+                <span aria-hidden="true" className="cta-icon">
                   ↗
                 </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
               <a href={site.upworkUrl} target="_blank" rel="noreferrer">
-                Hire through Upwork <span aria-hidden="true" className="cta-icon">
+                Hire through Upwork{" "}
+                <span aria-hidden="true" className="cta-icon">
                   ↗
                 </span>
                 <span className="sr-only"> (opens in a new tab)</span>
