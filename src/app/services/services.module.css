@@ -607,6 +607,9 @@
 .proofProfileAction {
   flex: 0 0 auto;
   color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .proofProfileImage {
@@ -898,6 +901,24 @@
 
   .proof {
     padding-block: 3.25rem;
+  }
+
+  .offerCta {
+    min-height: 3rem;
+  }
+
+  .proofBandLink,
+  .proofCopy > a,
+  .proofProfileAction {
+    min-height: 2.95rem;
+  }
+
+  .proofProfileAction {
+    max-width: 11rem;
+  }
+
+  .proofProfileIdentity > span {
+    max-width: 10rem;
   }
 
   .sectionHeading {

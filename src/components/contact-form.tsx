@@ -184,7 +184,9 @@ export function ContactForm() {
       </div>
       <button className="form-submit" type="submit" disabled={isSubmitting}>
         <span>{isSubmitting ? "Sending…" : "Start the conversation"}</span>
-        <span aria-hidden="true">↗</span>
+        <span aria-hidden="true" className="cta-icon">
+          ↗
+        </span>
       </button>
       <p className="form-note" aria-live="polite" data-status={status.tone}>
         {status.message}

@@ -19,7 +19,7 @@ export function ArrowLink<T extends string>({
   return (
     <Link className={`arrow-link ${inverse ? "arrow-link-inverse" : ""}`} href={href}>
       <span>{children}</span>
-      <span className="arrow-link-icon" aria-hidden="true">
+      <span className="arrow-link-icon cta-icon" aria-hidden="true">
         ↗
       </span>
     </Link>

@@ -362,6 +362,19 @@
   .workSummary {
     max-width: 27rem;
   }
+
+  .visitLink {
+    min-height: 2.95rem;
+    gap: 0.6rem;
+  }
+
+  .cardActions {
+    gap: 0.4rem 1.25rem;
+  }
+
+  .finalCtaActions {
+    gap: 0.55rem 1.25rem;
+  }
 }
 
 @media (min-width: 1024px) {

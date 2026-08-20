@@ -168,8 +168,10 @@ export default function ServicesPage() {
                 Every service can stand on its own. Start with one, or combine services when the
                 scope genuinely calls for it.
               </p>
-              <Link href="/contact" className={styles.offerCta}>
-                Start a conversation <span aria-hidden="true">↗</span>
+            <Link href="/contact" className={styles.offerCta}>
+                Start a conversation <span aria-hidden="true" className="cta-icon">
+                  ↗
+                </span>
               </Link>
             </div>
           </div>
@@ -195,7 +197,9 @@ export default function ServicesPage() {
               target="_blank"
               rel="noreferrer"
             >
-              View Upwork profile <span aria-hidden="true">↗</span>
+              View Upwork profile <span aria-hidden="true" className="cta-icon">
+                ↗
+              </span>
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
@@ -213,7 +217,11 @@ export default function ServicesPage() {
                   <strong>Carter S. on Upwork</strong>
                   <span>upwork.com/freelancers/cartersteinhoff</span>
                 </span>
-                <span className={styles.proofProfileAction}>Open live profile ↗</span>
+                <span className={styles.proofProfileAction}>
+                  Open live profile <span aria-hidden="true" className="cta-icon">
+                    ↗
+                  </span>
+                </span>
               </span>
               <span className={styles.proofProfileImage}>
                 <Image
@@ -287,7 +295,9 @@ export default function ServicesPage() {
                           <i />
                         </span>
                         <span>{project.domain}</span>
-                        <span aria-hidden="true">↗</span>
+                        <span aria-hidden="true" className="cta-icon">
+                          ↗
+                        </span>
                       </span>
                       <span className={styles.proofImage}>
                         <Image
@@ -304,7 +314,10 @@ export default function ServicesPage() {
                       <h3 className="display-4">{proof.headline}</h3>
                       <p>{proof.copy}</p>
                       <Link href={`/portfolio/${project.slug}`}>
-                        View {project.title} case study <span aria-hidden="true">↗</span>
+                        View {project.title} case study{" "}
+                        <span aria-hidden="true" className="cta-icon">
+                          ↗
+                        </span>
                       </Link>
                     </div>
                   </article>

@@ -107,7 +107,10 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <div className={styles.heroInner}>
           <div className={styles.heroTopline}>
             <Link className={styles.backLink} href="/portfolio">
-              <span aria-hidden="true">←</span> Selected work
+              <span aria-hidden="true" className="cta-icon">
+                ←
+              </span>{" "}
+              Selected work
             </Link>
             <p className={styles.heroIndex}>Case study · {project.number}</p>
           </div>
@@ -123,7 +126,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <div className={styles.heroActions}>
               <a className={styles.primaryLink} href={project.url} target="_blank" rel="noreferrer">
                 {project.externalLabel}
-                <span aria-hidden="true"> ↗</span>
+                <span aria-hidden="true" className="cta-icon">
+                  ↗
+                </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
               {comparison ? (
@@ -134,7 +139,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                   rel="noreferrer"
                 >
                   View original
-                  <span aria-hidden="true"> ↗</span>
+                  <span aria-hidden="true" className="cta-icon">
+                    ↗
+                  </span>
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               ) : null}
@@ -190,7 +197,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                       <a href={state.url} target="_blank" rel="noreferrer" key={state.label}>
                         <span>{state.label}</span>
                         <strong className={styles.comparisonTechnology}>{state.technology}</strong>
-                        <i className={styles.comparisonArrow} aria-hidden="true">
+                        <i className={`${styles.comparisonArrow} cta-icon`} aria-hidden="true">
                           ↗
                         </i>
                         <span className="sr-only"> (opens in a new tab)</span>
@@ -337,13 +344,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <p className={styles.sectionLabel}>Current status</p>
             <strong className={styles.closingStatusTitle}>{project.statusDetail}</strong>
             <p>{project.caseStudy.statusCopy}</p>
-            <Link href="/contact">Discuss a similar project ↗</Link>
+            <Link href="/contact">
+              Discuss a similar project
+              <span aria-hidden="true" className="cta-icon">
+                ↗
+              </span>
+            </Link>
           </div>
 
           <Link className={styles.nextLink} href={`/portfolio/${nextProject.slug}`}>
             <span>Next case study</span>
             <h2 id="next-case">{nextProject.title}</h2>
-            <i className={styles.nextArrow} aria-hidden="true">
+            <i className={`${styles.nextArrow} cta-icon`} aria-hidden="true">
               ↗
             </i>
           </Link>
