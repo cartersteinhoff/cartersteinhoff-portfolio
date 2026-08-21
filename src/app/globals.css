@@ -570,13 +570,13 @@ button:focus-visible .cta-icon {
   position: fixed;
   inset: 0;
   visibility: hidden;
+  pointer-events: none;
   background: var(--ink);
-  opacity: 0;
-  transform: translateY(-2%);
+  clip-path: inset(0 0 100% 0);
+  will-change: clip-path;
   transition:
-    opacity 280ms ease,
-    transform 280ms ease,
-    visibility 280ms;
+    clip-path 360ms cubic-bezier(0.76, 0, 0.24, 1),
+    visibility 0s linear 360ms;
 }
 
 .mobile-nav-link.is-active {
@@ -585,8 +585,11 @@ button:focus-visible .cta-icon {
 
 .mobile-menu.is-open {
   visibility: visible;
-  opacity: 1;
-  transform: translateY(0);
+  pointer-events: auto;
+  clip-path: inset(0);
+  transition:
+    clip-path 520ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    visibility 0s;
 }
 
 .mobile-menu-art {
@@ -594,12 +597,12 @@ button:focus-visible .cta-icon {
   inset: 0 0 auto;
   height: min(43svh, 23rem);
   overflow: hidden;
-  opacity: 0;
-  transform: scale(1.035);
+  opacity: 0.42;
+  transform: scale(1.08) translateY(-1.5%);
   transform-origin: center 45%;
   transition:
-    opacity 520ms ease 80ms,
-    transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    opacity 420ms ease 80ms,
+    transform 760ms cubic-bezier(0.2, 0.75, 0.25, 1) 40ms;
 }
 
 .mobile-menu-art::after {
@@ -631,11 +634,62 @@ button:focus-visible .cta-icon {
 
 .mobile-menu.is-open .mobile-menu-art {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 
 .mobile-menu-nav {
   padding-bottom: clamp(3rem, 12svh, 6.5rem);
+}
+
+.mobile-menu-label,
+.mobile-nav-link {
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition:
+    color 180ms ease,
+    opacity 300ms ease,
+    transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.mobile-menu-label {
+  transition-delay: 150ms;
+}
+
+.mobile-nav-link {
+  transition-delay: var(--menu-link-delay);
+}
+
+.mobile-menu.is-open .mobile-menu-label,
+.mobile-menu.is-open .mobile-nav-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-menu.is-navigating .mobile-menu-label {
+  opacity: 0;
+  transform: translateY(-0.45rem);
+  transition-delay: 0ms;
+}
+
+.mobile-menu.is-navigating .mobile-nav-link {
+  pointer-events: none;
+  opacity: 0.14;
+  transform: translateY(-0.45rem);
+  transition-delay: 0ms;
+  transition-duration: 160ms, 180ms, 220ms;
+}
+
+.mobile-menu.is-navigating .mobile-nav-link.is-destination {
+  color: var(--accent);
+  opacity: 1;
+  transform: translateX(0.5rem);
+}
+
+.mobile-menu.is-navigating .mobile-menu-art {
+  opacity: 0.72;
+  transform: scale(1.025) translateY(0);
+  transition-delay: 0ms;
+  transition-duration: 240ms;
 }
 
 @media (max-width: 767px) and (max-height: 650px) {

@@ -469,3 +469,37 @@ test("only the first hero scene is high priority", async ({ page }) => {
     expect(scene.fetchPriority).toBe("low");
   }
 });
+
+test("mobile menu keeps the route change covered until the new page is ready", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile navigation behavior");
+
+  await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
+
+  const menu = page.locator("#mobile-navigation");
+  await expect(menu).toHaveClass(/is-open/);
+  await page.getByRole("link", { name: "Services 02" }).click();
+
+  await expect(menu).toHaveAttribute("aria-busy", "true");
+  await expect(menu).toHaveClass(/is-navigating/);
+
+  const transitionSurface = await menu.evaluate((element) => {
+    const style = window.getComputedStyle(element);
+    return {
+      opacity: style.opacity,
+      visibility: style.visibility,
+      backgroundColor: style.backgroundColor,
+      transitionProperty: style.transitionProperty,
+    };
+  });
+
+  expect(transitionSurface.opacity).toBe("1");
+  expect(transitionSurface.visibility).toBe("visible");
+  expect(transitionSurface.backgroundColor).toBe("rgb(9, 9, 11)");
+  expect(transitionSurface.transitionProperty).not.toContain("opacity");
+
+  await expect(page).toHaveURL(/\/services$/);
+  await expect(menu).toHaveAttribute("aria-hidden", "true");
+});
