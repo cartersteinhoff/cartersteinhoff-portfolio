@@ -336,7 +336,7 @@
 
 @media (min-width: 768px) {
   .work {
-    padding-block: 4.5rem;
+    padding: 7.5rem 0 4.5rem;
   }
 
   .finalCta {
