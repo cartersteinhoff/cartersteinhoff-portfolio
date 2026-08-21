@@ -143,10 +143,10 @@ export function SiteHeader() {
         <Link
           href="/"
           tabIndex={isOpen ? -1 : undefined}
-          className="group relative z-50 flex items-center gap-3 rounded-full border border-white/10 bg-black/25 p-1.5 text-[0.68rem] font-semibold tracking-[0.2em] text-stone-50 uppercase backdrop-blur-xl sm:py-1.5 sm:pr-4 sm:pl-1.5"
+          className="mobile-home-control group relative z-50 flex size-11 items-center justify-center rounded-full border-0 bg-black/35 text-[0.68rem] font-semibold tracking-[0.2em] text-stone-50 uppercase backdrop-blur-xl transition-colors hover:bg-black/55 sm:h-auto sm:w-auto sm:justify-start sm:gap-3 sm:border sm:border-white/10 sm:bg-black/25 sm:py-1.5 sm:pr-4 sm:pl-1.5"
           aria-label="Carter Steinhoff, home"
         >
-          <span className="grid size-9 place-items-center rounded-full border border-white/35 transition-colors group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-black">
+          <span className="mobile-home-mark grid size-9 place-items-center rounded-full border-0 transition-colors group-hover:bg-[var(--accent)] group-hover:text-black sm:border sm:border-white/35 sm:group-hover:border-[var(--accent)]">
             CS
           </span>
           <span className="hidden sm:block">Carter Steinhoff</span>
@@ -172,7 +172,7 @@ export function SiteHeader() {
         <button
           ref={menuButtonRef}
           type="button"
-          className="relative z-50 grid size-11 place-items-center rounded-full border border-white/20 bg-black/20 text-stone-50 backdrop-blur-xl md:hidden"
+          className="mobile-menu-control relative z-50 grid size-11 place-items-center rounded-full border-0 bg-black/35 text-stone-50 backdrop-blur-xl transition-colors hover:bg-black/55 md:hidden"
           onClick={() => {
             setIsHeaderHidden(false);
             setIsOpen((open) => !open);
@@ -181,7 +181,6 @@ export function SiteHeader() {
           aria-controls="mobile-navigation"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
-          <span className="sr-only">{isOpen ? "Close menu" : "Open menu"}</span>
           <span className={`menu-icon ${isOpen ? "is-open" : ""}`} aria-hidden="true">
             <span />
             <span />
