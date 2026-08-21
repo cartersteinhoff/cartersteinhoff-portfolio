@@ -36,7 +36,7 @@ export default function ContactPage() {
                 <span className="italic text-[var(--accent)]"> hard part.</span>
               </h1>
               <p className="contact-page-intro">
-                Tell me what you’re thinking—even if it is still rough. I’ll ask the useful
+                Tell me what you’re thinking, even if it is still rough. I’ll ask the useful
                 questions and reply directly.
               </p>
             </div>

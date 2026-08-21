@@ -829,7 +829,7 @@ export const portfolioProjects = [
     seoDescription:
       "Local City Places case study: a Next.js directory and membership rewards platform with merchant self-service pages, Stripe billing, and role-based dashboards on Postgres.",
     description:
-      "I designed and built Local City Places end to end — a Phoenix-metro business directory where merchants claim and run their own listing, members earn rewards, and admins operate the whole thing from role-based dashboards.",
+      "I designed and built Local City Places end to end: a Phoenix-metro business directory where merchants claim and run their own listing, members earn rewards, and admins operate the whole thing from role-based dashboards.",
     services: ["Product design", "Full-stack development", "Custom CMS", "Payments & cloud"],
     image: "/images/local-city-places-project.webp",
     imageAlt:
@@ -1007,7 +1007,7 @@ export const portfolioProjects = [
       system: "Next.js 16 · React 19 · TypeScript 7 · Tailwind CSS 4 · Biome · Playwright · Vercel",
       headline: "A portfolio that exposes both the work and the decisions behind it.",
       overview:
-        "The site has to present a broad practice—product design, full-stack development, automation, and cloud work—without reading like a résumé or hiding behind surface polish. I built an editorial system where each case pairs the finished interface with its constraints and reasoning.",
+        "The site has to present a broad practice across product design, full-stack development, automation, and cloud work without reading like a résumé or hiding behind surface polish. I built an editorial system where each case pairs the finished interface with its constraints and reasoning.",
       detail:
         "The design challenge is credibility: keep the identity unmistakable, let current screenshots lead, and make a sparse visual language support the evidence instead of competing with it.",
       story: [
@@ -1111,7 +1111,7 @@ export const portfolioProjects = [
           height: 900,
           title: "Homepage",
           caption:
-            "The hero cycles through three scenes on a timer and stops entirely when the visitor prefers reduced motion — a behaviour the test suite asserts rather than trusts.",
+            "The hero cycles through three scenes on a timer and stops entirely when the visitor prefers reduced motion. The test suite asserts that behaviour rather than trusting it.",
           alt: "Homepage hero with the name in a large serif display face over a photograph of a desk at night, above a short positioning line and two calls to action",
         },
         {

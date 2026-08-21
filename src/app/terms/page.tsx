@@ -149,9 +149,9 @@ const sections: readonly LegalSection[] = [
         </p>
         <p>
           To the fullest extent permitted by law, Carter will not be liable for indirect,
-          incidental, special, consequential, or punitive damages arising from use of—or inability
-          to use—the site or an external site linked from it. Nothing in these terms excludes rights
-          or liability that cannot lawfully be excluded.
+          incidental, special, consequential, or punitive damages arising from use of, or inability
+          to use, the site or an external site linked from it. Nothing in these terms excludes
+          rights or liability that cannot lawfully be excluded.
         </p>
       </>
     ),

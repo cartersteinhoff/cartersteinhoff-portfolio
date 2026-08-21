@@ -79,7 +79,7 @@ export function ContactForm() {
       setFieldErrors({});
       setStatus({
         tone: "success",
-        message: result.message ?? "Message sent. Thanks—Carter will reply directly.",
+        message: result.message ?? "Message sent. Thanks. Carter will reply directly.",
       });
     } catch (error) {
       setStatus({
