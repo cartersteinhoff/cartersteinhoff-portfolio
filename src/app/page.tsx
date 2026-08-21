@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { ArrowLink } from "@/components/arrow-link";
+import { homeContent } from "@/data/home";
 import { site } from "@/data/site";
 
-/* The homepage is the hero and nothing else. Work lives on /portfolio and
- * the contact CTA lives in the site footer, so repeating either here only
- * delayed the visitor's first real choice. */
+/* The first viewport remains a focused hero. The editorial overview below
+ * gives no-JavaScript readers and agents enough context to understand the
+ * practice without duplicating the portfolio or service catalog. */
 export default function Home() {
   return (
     <main>
@@ -54,6 +55,7 @@ export default function Home() {
             Product · Full-stack · AI &amp; cloud
           </p>
           <h1 className="hero-title home-hero-title">
+            <span className="sr-only">{site.name}. </span>
             <span>Products </span>
             <span>from interface </span>
             <span>
@@ -63,10 +65,7 @@ export default function Home() {
 
           <div className="hero-bottom mt-8 grid max-w-2xl gap-6 border-t border-white/25 pt-5 text-stone-100">
             <div className="grid gap-4">
-              <p className="home-hero-summary">
-                I design and build digital products end to end, shaping the experience, engineering
-                the system behind it, and carrying both into production.
-              </p>
+              <p className="home-hero-summary">{homeContent.heroSummary}</p>
               <p className="text-[0.72rem] font-bold tracking-[0.13em] text-stone-400 uppercase">
                 Independent studio · {site.location}
               </p>
@@ -78,6 +77,25 @@ export default function Home() {
               <ArrowLink href="/services" inverse>
                 See services
               </ArrowLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-overview" aria-labelledby="home-overview-title">
+        <div className="home-overview-shell">
+          <p className="eyebrow">Independent product studio · {site.location}</p>
+          <div className="home-overview-grid">
+            <h2 id="home-overview-title">{homeContent.overviewTitle}</h2>
+            <div className="home-overview-copy">
+              {homeContent.overviewParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              <nav className="home-overview-links" aria-label="Explore Carter Steinhoff's work">
+                <ArrowLink href="/portfolio">Review case studies</ArrowLink>
+                <ArrowLink href="/about">Read the background</ArrowLink>
+                <ArrowLink href="/contact">Discuss a project</ArrowLink>
+              </nav>
             </div>
           </div>
         </div>

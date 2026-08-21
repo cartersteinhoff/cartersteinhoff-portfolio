@@ -1,15 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import type { ServiceOffering } from "@/data/services";
 import styles from "./services.module.css";
-
-export type ServiceOffering = {
-  readonly number: string;
-  readonly id: string;
-  readonly title: string;
-  readonly summary: string;
-  readonly includes: readonly string[];
-};
 
 type ServiceLedgerProps = {
   readonly services: readonly ServiceOffering[];

@@ -1,5 +1,6 @@
 import { withBotId } from "botid/next/config";
 import type { NextConfig } from "next";
+import { agentNegotiationHeader } from "./src/lib/content-negotiation";
 
 /**
  * Headers the platform does not set for us. Production already sends
@@ -45,6 +46,38 @@ const nextConfig: NextConfig = {
    * to save one cached request on the first one. */
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async rewrites() {
+    const negotiated = (value: string) => [
+      { type: "header" as const, key: agentNegotiationHeader, value },
+    ];
+
+    return {
+      beforeFiles: [
+        {
+          source: "/index.md",
+          destination: "/api/markdown",
+          has: negotiated("markdown-explicit"),
+        },
+        {
+          source: "/:path*/index.md",
+          destination: "/api/markdown/:path*",
+          has: negotiated("markdown-explicit"),
+        },
+        {
+          source: "/:path*",
+          destination: "/api/markdown/:path*",
+          has: negotiated("markdown-canonical"),
+        },
+        {
+          source: "/:path*",
+          destination: "/api/not-acceptable",
+          has: negotiated("not-acceptable"),
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 };
 

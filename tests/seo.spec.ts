@@ -5,10 +5,14 @@ async function metaContent(page: Page, selector: string) {
   return page.locator(selector).getAttribute("content");
 }
 
-test("homepage h1 keeps spaces between its visual lines", async ({ page }) => {
+test("homepage h1 identifies Carter and keeps spaces between its visual lines", async ({
+  page,
+}) => {
   await page.goto("/");
 
-  expect(await page.locator("h1").textContent()).toBe("Products from interface to infrastructure.");
+  expect(await page.locator("h1").textContent()).toBe(
+    "Carter Steinhoff. Products from interface to infrastructure.",
+  );
 });
 
 test("legal pages use the branded social image", async ({ page }) => {
