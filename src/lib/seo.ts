@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/data/site";
+import { markdownPathForCanonical } from "@/lib/content-negotiation";
 
 type SocialImage = {
   url: string;
@@ -46,6 +47,9 @@ export function createPageMetadata({
     description,
     alternates: {
       canonical: path,
+      types: {
+        "text/markdown": markdownPathForCanonical(path),
+      },
     },
     openGraph: {
       title: socialTitle,
