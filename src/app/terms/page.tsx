@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LegalDocument, type LegalSection } from "@/components/legal-document";
 import { site } from "@/data/site";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata, defaultSocialImage } from "@/lib/seo";
 
 const description =
   "Terms governing use of Carter Steinhoff's portfolio website, project inquiries, portfolio content, and external links.";
@@ -10,6 +10,7 @@ export const metadata = createPageMetadata({
   title: "Terms of Use",
   description,
   path: "/terms",
+  image: defaultSocialImage,
 });
 
 const sections: readonly LegalSection[] = [

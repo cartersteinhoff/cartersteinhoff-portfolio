@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LegalDocument, type LegalSection } from "@/components/legal-document";
 import { site } from "@/data/site";
-import { createPageMetadata } from "@/lib/seo";
+import { createPageMetadata, defaultSocialImage } from "@/lib/seo";
 
 const description =
   "How Carter Steinhoff collects, uses, protects, and shares information submitted through cartersteinhoff.co.";
@@ -10,6 +10,7 @@ export const metadata = createPageMetadata({
   title: "Privacy Policy",
   description,
   path: "/privacy",
+  image: defaultSocialImage,
 });
 
 const sections: readonly LegalSection[] = [

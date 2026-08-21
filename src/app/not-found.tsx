@@ -1,11 +1,26 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+const title = "Page Not Found";
+const description = "The requested page could not be found.";
+
 export const metadata: Metadata = {
-  title: "Page Not Found",
-  description: "The requested page could not be found.",
+  title,
+  description,
   alternates: {
     canonical: null,
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    images: [],
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+    images: [],
   },
   robots: {
     index: false,

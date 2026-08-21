@@ -54,8 +54,8 @@ export default function Home() {
             Product · Full-stack · AI &amp; cloud
           </p>
           <h1 className="hero-title home-hero-title">
-            <span>Products</span>
-            <span>from interface</span>
+            <span>Products </span>
+            <span>from interface </span>
             <span>
               to <em>infrastructure.</em>
             </span>

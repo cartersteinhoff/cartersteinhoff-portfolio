@@ -25,6 +25,7 @@ const assetDir = join(process.cwd(), "src/app/_og-assets");
 
 const sand = "#f2ece4";
 const accent = "#f4a261";
+const siteHostname = new URL(site.defaultUrl).hostname;
 /* Lighter than the site's --muted. Over a photograph the background sits
  * around 74-90 luminance, where --muted only reaches ~3.2:1. */
 const muted = "#d9d2c9";
@@ -160,7 +161,7 @@ export async function renderOgCard({ eyebrow, title, subtitle, titleSize = 112 }
         }}
       >
         <span style={{ color: muted }}>Design through deployment</span>
-        <span style={{ color: sand }}>cartersteinhoff.com</span>
+        <span style={{ color: sand }}>{siteHostname}</span>
       </div>
     </div>,
     { ...ogSize, fonts },

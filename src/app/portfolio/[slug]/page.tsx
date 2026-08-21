@@ -71,7 +71,6 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     description: project.seoDescription,
     url: caseStudyUrl,
     image: getAbsoluteUrl(project.image),
-    sameAs: project.url,
     creator: {
       "@id": `${siteUrl}/#person`,
     },
