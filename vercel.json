@@ -8,12 +8,6 @@
       "transforms": [
         {
           "type": "response.headers",
-          "op": "delete",
-          "target": { "key": "Vary" },
-          "args": ["Accept", "Accept-Encoding"]
-        },
-        {
-          "type": "response.headers",
           "op": "append",
           "target": { "key": "Vary" },
           "args": ["Accept", "Accept-Encoding"]

@@ -169,12 +169,6 @@ test("Vercel applies final Vary repair only to negotiated page routes", ({
   expect(route.transforms).toEqual([
     {
       type: "response.headers",
-      op: "delete",
-      target: { key: "Vary" },
-      args: ["Accept", "Accept-Encoding"],
-    },
-    {
-      type: "response.headers",
       op: "append",
       target: { key: "Vary" },
       args: ["Accept", "Accept-Encoding"],
@@ -280,6 +274,24 @@ test("alternating HTML and Markdown requests never crosses cached representation
     );
     expect(body.startsWith("# ")).toBe(isMarkdown);
     expect(body.match(/<!DOCTYPE html>/iu) !== null).toBe(!isMarkdown);
+  }
+});
+
+test("internal negotiation routes cannot be activated by client headers", async ({
+  request,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Raw HTTP behavior is viewport-independent");
+
+  for (const [pathname, marker] of [
+    ["/api/markdown", "markdown-canonical"],
+    ["/api/not-acceptable", "not-acceptable"],
+  ] as const) {
+    const response = await request.get(pathname, {
+      headers: { "x-cs-agent-negotiation": marker },
+    });
+
+    expect(response.status(), pathname).toBe(404);
+    expect(response.headers()["cache-control"], pathname).toContain("no-store");
   }
 });
 

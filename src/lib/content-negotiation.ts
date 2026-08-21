@@ -1,4 +1,5 @@
 export const supportedMediaTypes = ["text/html", "text/markdown"] as const;
+export const agentNegotiationHeader = "x-cs-agent-negotiation";
 
 export type Representation = "html" | "markdown";
 
