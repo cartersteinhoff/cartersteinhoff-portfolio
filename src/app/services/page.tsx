@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRightGlyph } from "@/components/arrow-up-right-glyph";
 import { portfolioProjects, site, upwork } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import { ServiceLedger, type ServiceOffering } from "./service-ledger";
@@ -171,7 +172,7 @@ export default function ServicesPage() {
               <Link href="/contact" className={styles.offerCta}>
                 Start a conversation{" "}
                 <span aria-hidden="true" className="cta-icon">
-                  ↗
+                  <ArrowUpRightGlyph />
                 </span>
               </Link>
             </div>
@@ -200,7 +201,7 @@ export default function ServicesPage() {
             >
               View Upwork profile{" "}
               <span aria-hidden="true" className="cta-icon">
-                ↗
+                <ArrowUpRightGlyph />
               </span>
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
@@ -222,7 +223,7 @@ export default function ServicesPage() {
                 <span className={styles.proofProfileAction}>
                   Open live profile{" "}
                   <span aria-hidden="true" className="cta-icon">
-                    ↗
+                    <ArrowUpRightGlyph />
                   </span>
                 </span>
               </span>
@@ -299,7 +300,7 @@ export default function ServicesPage() {
                         </span>
                         <span>{project.domain}</span>
                         <span aria-hidden="true" className="cta-icon">
-                          ↗
+                          <ArrowUpRightGlyph />
                         </span>
                       </span>
                       <span className={styles.proofImage}>
@@ -319,7 +320,7 @@ export default function ServicesPage() {
                       <Link href={`/portfolio/${project.slug}`}>
                         View {project.title} case study{" "}
                         <span aria-hidden="true" className="cta-icon">
-                          ↗
+                          <ArrowUpRightGlyph />
                         </span>
                       </Link>
                     </div>

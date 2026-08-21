@@ -282,6 +282,13 @@ button > span[aria-hidden="true"] {
     opacity 220ms ease;
 }
 
+.cta-icon-glyph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
 a:hover .cta-icon,
 button:hover .cta-icon,
 a:focus-visible .cta-icon,

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
+import { ArrowUpRightGlyph } from "@/components/arrow-up-right-glyph";
 import { site } from "@/data/site";
 
 type ContactField = "name" | "email" | "projectType" | "message";
@@ -185,7 +186,7 @@ export function ContactForm() {
       <button className="form-submit" type="submit" disabled={isSubmitting}>
         <span>{isSubmitting ? "Sending…" : "Start the conversation"}</span>
         <span aria-hidden="true" className="cta-icon">
-          ↗
+          <ArrowUpRightGlyph />
         </span>
       </button>
       <p className="form-note" aria-live="polite" data-status={status.tone}>

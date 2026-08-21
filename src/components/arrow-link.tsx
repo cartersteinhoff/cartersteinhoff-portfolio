@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ArrowUpRightGlyph } from "@/components/arrow-up-right-glyph";
 
 /* Generic over the route so `typedRoutes` can check the href at the call
  * site rather than here. A plain `string` would make this component the
@@ -20,7 +21,7 @@ export function ArrowLink<T extends string>({
     <Link className={`arrow-link ${inverse ? "arrow-link-inverse" : ""}`} href={href}>
       <span>{children}</span>
       <span className="arrow-link-icon cta-icon" aria-hidden="true">
-        ↗
+        <ArrowUpRightGlyph />
       </span>
     </Link>
   );
