@@ -3,7 +3,8 @@
 import type { Route } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import type { CSSProperties, MouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 
 /* Typed as Route so a renamed page breaks the build here rather than
@@ -21,19 +22,36 @@ function isActivePath(pathname: string, href: string) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [pendingHref, setPendingHref] = useState<Route | null>(null);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const menuPanelRef = useRef<HTMLDivElement>(null);
+  const navigationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const previousPathnameRef = useRef(pathname);
 
   useEffect(() => {
     if (previousPathnameRef.current !== pathname) {
       previousPathnameRef.current = pathname;
+      if (navigationTimerRef.current) {
+        clearTimeout(navigationTimerRef.current);
+        navigationTimerRef.current = null;
+      }
+      setIsNavigating(false);
+      setPendingHref(null);
       setIsOpen(false);
       setIsHeaderHidden(false);
     }
   }, [pathname]);
+
+  useEffect(
+    () => () => {
+      if (navigationTimerRef.current) clearTimeout(navigationTimerRef.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -133,6 +151,31 @@ export function SiteHeader() {
     };
   }, [isOpen]);
 
+  function handleMobileNavigation(event: MouseEvent<HTMLAnchorElement>, href: Route) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (isNavigating) return;
+
+    if (pathname === href) {
+      setIsOpen(false);
+      return;
+    }
+
+    setPendingHref(href);
+    setIsNavigating(true);
+    setIsHeaderHidden(false);
+
+    const navigationDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 220;
+
+    navigationTimerRef.current = setTimeout(() => {
+      router.push(href);
+    }, navigationDelay);
+  }
+
   return (
     <header
       className={`site-header fixed inset-x-0 top-0 z-50 px-5 pt-5 md:px-8 md:pt-7 ${
@@ -174,9 +217,11 @@ export function SiteHeader() {
           type="button"
           className="mobile-menu-control relative z-50 grid size-11 place-items-center rounded-full border-0 bg-black/35 text-stone-50 backdrop-blur-xl transition-colors hover:bg-black/55 md:hidden"
           onClick={() => {
+            if (isNavigating) return;
             setIsHeaderHidden(false);
             setIsOpen((open) => !open);
           }}
+          disabled={isNavigating}
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -191,8 +236,9 @@ export function SiteHeader() {
       <div
         ref={menuPanelRef}
         id="mobile-navigation"
-        className={`mobile-menu ${isOpen ? "is-open" : ""}`}
+        className={`mobile-menu ${isOpen ? "is-open" : ""} ${isNavigating ? "is-navigating" : ""}`}
         aria-hidden={!isOpen}
+        aria-busy={isNavigating}
         aria-label="Site navigation"
         aria-modal={isOpen}
         role="dialog"
@@ -208,20 +254,27 @@ export function SiteHeader() {
         </div>
 
         <nav className="mobile-menu-nav relative z-10 flex h-full flex-col justify-end gap-2 px-6">
-          <p className="mb-6 text-[0.66rem] tracking-[0.2em] text-stone-400 uppercase">Navigate</p>
+          <p className="mobile-menu-label mb-6 text-[0.66rem] tracking-[0.2em] text-stone-400 uppercase">
+            Navigate
+          </p>
           {links.map((link, index) => {
             const isActive = isActivePath(pathname, link.href);
+            const isDestination = pendingHref === link.href;
+            const menuLinkStyle = {
+              "--menu-link-delay": `${190 + index * 48}ms`,
+            } as CSSProperties;
 
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                tabIndex={isOpen ? 0 : -1}
+                tabIndex={isOpen && !isNavigating ? 0 : -1}
                 aria-current={isActive ? "page" : undefined}
-                onClick={() => setIsOpen(false)}
+                onClick={(event) => handleMobileNavigation(event, link.href)}
+                style={menuLinkStyle}
                 className={`mobile-nav-link flex items-end justify-between border-t border-white/15 py-4 font-[family-name:var(--font-display)] text-[clamp(2.9rem,15vw,5rem)] leading-none text-stone-50 ${
                   isActive ? "is-active" : ""
-                }`}
+                } ${isDestination ? "is-destination" : ""}`}
               >
                 {link.label}
                 <span className="pb-1 font-sans text-[0.62rem] tracking-[0.18em] text-[var(--accent)]">
