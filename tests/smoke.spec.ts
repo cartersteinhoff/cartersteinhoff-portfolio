@@ -90,6 +90,11 @@ test("every image referenced in project data resolves", async ({ request }) => {
     for (const screen of project.caseStudy.screens) {
       paths.add(screen.image);
     }
+    if ("responsiveProof" in project.caseStudy) {
+      for (const screen of project.caseStudy.responsiveProof.screens) {
+        paths.add(screen.image);
+      }
+    }
     if ("comparison" in project.caseStudy) {
       paths.add(project.caseStudy.comparison.before.image);
       paths.add(project.caseStudy.comparison.after.image);
@@ -118,6 +123,46 @@ test("every case study has a concise story, a complete screen set, and a verifie
       `${project.slug} screen images should be unique`,
     ).toBe(caseStudy.screens.length);
 
+    expect(
+      caseStudy.proofScreenIndexes,
+      `${project.slug} needs two curated proof screens`,
+    ).toHaveLength(2);
+    expect(
+      new Set(caseStudy.proofScreenIndexes).size,
+      `${project.slug} proof screens should be unique`,
+    ).toBe(caseStudy.proofScreenIndexes.length);
+    for (const index of caseStudy.proofScreenIndexes) {
+      expect(index, `${project.slug} proof screen indexes must be integers`).toBe(
+        Math.floor(index),
+      );
+      expect(index, `${project.slug} should reserve screen zero for the hero`).toBeGreaterThan(0);
+      expect(index, `${project.slug} proof screen index must exist`).toBeLessThan(
+        caseStudy.screens.length,
+      );
+    }
+
+    const featuredScreenIndexes = new Set([0, ...caseStudy.proofScreenIndexes]);
+    const galleryScreens = caseStudy.screens.filter(
+      (_, index) => !featuredScreenIndexes.has(index),
+    );
+    const templateImages = [
+      caseStudy.screens[0].image,
+      ...caseStudy.proofScreenIndexes.map((index) => caseStudy.screens[index].image),
+      ...galleryScreens.map((screen) => screen.image),
+    ];
+    expect(
+      templateImages,
+      `${project.slug} should place every screen once across hero, proof, and gallery`,
+    ).toHaveLength(caseStudy.screens.length);
+    expect(
+      new Set(templateImages).size,
+      `${project.slug} should not repeat screens across template chapters`,
+    ).toBe(templateImages.length);
+    expect(
+      galleryScreens.length,
+      `${project.slug} needs at least three gallery screens`,
+    ).toBeGreaterThanOrEqual(3);
+
     expectWordRange(caseStudy.headline, 6, 12, `${project.slug} headline`);
     expectWordRange(caseStudy.overview, 25, 45, `${project.slug} overview`);
     expectWordRange(caseStudy.detail, 15, 35, `${project.slug} detail`);
@@ -144,6 +189,28 @@ test("every case study has a concise story, a complete screen set, and a verifie
         `${project.slug} uses an unknown technology id: ${id}`,
       ).toBeDefined();
     }
+
+    for (const group of caseStudy.technologyStack.groups) {
+      for (const technology of group.technologies) {
+        expect(
+          technology.role.trim(),
+          `${project.slug} ${technology.id} needs a visible role`,
+        ).not.toBe("");
+      }
+    }
+
+    expect(
+      caseStudy.architecture.items,
+      `${project.slug} needs a four-step system map`,
+    ).toHaveLength(4);
+    expect(
+      new Set(caseStudy.architecture.items.map((item) => item.label)).size,
+      `${project.slug} system-map labels should be unique`,
+    ).toBe(caseStudy.architecture.items.length);
+    for (const item of caseStudy.architecture.items) {
+      expect(item.label.trim(), `${project.slug} has an empty system-map label`).not.toBe("");
+      expect(item.value.trim(), `${project.slug} has an empty system-map value`).not.toBe("");
+    }
   }
 });
 
@@ -162,67 +229,198 @@ test("Anne Ross selected screens cover every public page", () => {
   ]);
 });
 
-test("technology stack logos are decorative and names stay visible", async ({ page }) => {
+test("architecture and technology roles are visible in separate labelled regions", async ({
+  page,
+}) => {
   const project = portfolioProjects[0];
-  const expectedGroups = project.caseStudy.technologyStack.groups.length;
   const expectedCount = project.caseStudy.technologyStack.groups.reduce(
     (total, group) => total + group.technologies.length,
     0,
   );
 
   await page.goto(`/portfolio/${project.slug}`);
-  await expect(page.locator(".case-stack-group-label")).toHaveCount(expectedGroups);
-  await expect(page.locator(".case-stack-name")).toHaveCount(expectedCount);
-  await expect(page.locator('.case-stack-mark[aria-hidden="true"] svg')).toHaveCount(expectedCount);
-  await expect(page.getByText("System map", { exact: true })).toHaveCount(0);
+  const stack = page.getByRole("region", { name: "Technology stack" });
+  const architecture = page.getByRole("region", {
+    name: project.caseStudy.architecture.headline,
+  });
+
+  await expect(stack).toBeVisible();
+  await expect(
+    architecture.getByRole("heading", {
+      level: 2,
+      name: project.caseStudy.architecture.headline,
+    }),
+  ).toBeVisible();
+  await expect(
+    stack.getByText(project.caseStudy.architecture.headline, { exact: true }),
+  ).toHaveCount(0);
+
+  for (const item of project.caseStudy.architecture.items) {
+    await expect(architecture.getByText(item.label, { exact: true })).toBeVisible();
+    await expect(architecture.getByText(item.value, { exact: true })).toBeVisible();
+  }
+  await expect(architecture.locator("ol > li")).toHaveCount(4);
+
+  for (const group of project.caseStudy.technologyStack.groups) {
+    await expect(stack.getByRole("heading", { level: 3, name: group.label })).toBeVisible();
+
+    for (const item of group.technologies) {
+      await expect(stack.getByText(technologies[item.id].name, { exact: true })).toBeVisible();
+      await expect(stack.getByText(item.role, { exact: true })).toBeVisible();
+    }
+  }
+
+  await expect(stack.locator('svg[aria-hidden="true"]')).toHaveCount(expectedCount);
 });
 
-test("case-study media uses a full-bleed poster and varied editorial scale", async ({
+test("every case study follows the approved website chapter order", async ({ page }) => {
+  const expectedOrder = ["hero", "proof", "story", "build", "architecture", "screens", "closing"];
+
+  for (const project of portfolioProjects) {
+    await page.goto(`/portfolio/${project.slug}`);
+    const order = await page
+      .locator("main > [data-case-section]")
+      .evaluateAll((sections) =>
+        sections.map((section) => section.getAttribute("data-case-section")),
+      );
+
+    expect(order, `${project.slug} chapter order`).toEqual(expectedOrder);
+  }
+});
+
+test("case-study hero and selected screens expose inspectable visual evidence", async ({
   page,
-}, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop", "Desktop owns the editorial media rhythm");
+}) => {
+  const project = portfolioProjects[0];
 
-  await page.goto("/portfolio/retailboss");
-  await expect(page.locator(".case-screen")).toHaveCount(
-    portfolioProjects[0].caseStudy.screens.length,
+  await page.goto(`/portfolio/${project.slug}`);
+
+  const hero = page.getByRole("region", { name: project.title });
+  await expect(hero.getByRole("heading", { level: 1, name: project.title })).toBeVisible();
+  await expect(hero.getByRole("img", { name: project.imageAlt })).toBeVisible();
+
+  const proof = page.getByRole("region", { name: "The work, before the process." });
+  const proofScreens = project.caseStudy.proofScreenIndexes.map(
+    (index) => project.caseStudy.screens[index],
   );
+  const featuredScreenIndexes = new Set([0, ...project.caseStudy.proofScreenIndexes]);
+  const galleryScreens = project.caseStudy.screens.filter(
+    (_, index) => !featuredScreenIndexes.has(index),
+  );
+  await expect(proof.getByRole("heading", { level: 2 })).toHaveText(
+    "The work, before the process.",
+  );
+  for (const screen of proofScreens) {
+    await expect(proof.getByRole("img", { name: screen.alt })).toBeVisible();
+  }
 
-  const hero = await page.locator("main > section").first().boundingBox();
-  const leadScreen = await page.locator(".case-screen-wide").boundingBox();
-  const supportingScreen = await page
-    .locator(".case-screen:not(.case-screen-wide)")
-    .first()
-    .boundingBox();
+  if ("responsiveProof" in project.caseStudy) {
+    await expect(
+      proof.getByRole("heading", { level: 3, name: project.caseStudy.responsiveProof.headline }),
+    ).toBeVisible();
+    for (const screen of project.caseStudy.responsiveProof.screens) {
+      await expect(proof.getByRole("img", { name: screen.alt })).toBeVisible();
+    }
+  }
 
-  expect(hero?.width).toBeGreaterThanOrEqual(1400);
-  expect(leadScreen?.width).toBeGreaterThanOrEqual(1200);
-  expect(leadScreen?.width ?? 0).toBeGreaterThan((supportingScreen?.width ?? 0) * 1.45);
+  const gallery = page.getByRole("region", { name: "The system, seen in practice." });
+  const enlargeButtons = gallery.getByRole("button", { name: /^Enlarge /u });
+  await expect(enlargeButtons).toHaveCount(galleryScreens.length);
 
-  await page.goto("/portfolio/anne-ross");
-  const comparison = await page.locator(".case-comparison-stage").boundingBox();
-  expect(comparison?.width).toBeGreaterThanOrEqual(900);
-  expect(comparison?.width).toBeLessThanOrEqual(1280);
+  for (const screen of galleryScreens) {
+    const trigger = gallery.getByRole("button", { name: `Enlarge ${screen.title}` });
+    await expect(trigger).toHaveAttribute("aria-haspopup", "dialog");
+    await expect(trigger.getByRole("img", { name: screen.alt })).toHaveCount(1);
+  }
 });
 
-test("desktop case-study section headings share a strong left edge", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop", "Desktop owns the wide editorial layout");
+test("case-study narrative sections are exposed as labelled regions", async ({ page }) => {
+  const project = portfolioProjects.find((candidate) => candidate.slug === "anne-newgarden");
+  expect(project).toBeDefined();
+  if (!project || !("comparison" in project.caseStudy)) {
+    throw new Error("Anne Newgarden needs comparison data for its case-study contract");
+  }
 
   await page.goto("/portfolio/anne-newgarden");
 
-  for (const sectionId of ["case-build-title", "case-gallery-title"]) {
-    const section = page.locator(`[aria-labelledby="${sectionId}"]`);
-    const label = await section.locator("p").first().boundingBox();
-    const heading = await section.locator(`#${sectionId}`).boundingBox();
+  for (const heading of [
+    "The work, before the process.",
+    project.caseStudy.comparison.headline,
+    project.caseStudy.headline,
+    project.caseStudy.technologyStack.headline,
+    project.caseStudy.architecture.headline,
+    "The system, seen in practice.",
+  ]) {
+    const region = page.getByRole("region", { name: heading });
+    await expect(region, `${heading} should label its section`).toHaveCount(1);
+    await expect(region.getByRole("heading", { level: 2, name: heading })).toHaveCount(1);
+  }
+});
 
-    expect(Math.abs((label?.x ?? 0) - (heading?.x ?? 0))).toBeLessThanOrEqual(1);
+test("the before-and-after comparison is keyboard operable", async ({ page }) => {
+  const project = portfolioProjects.find((candidate) => candidate.slug === "anne-ross");
+  expect(project).toBeDefined();
+  if (!project || !("comparison" in project.caseStudy)) {
+    throw new Error("Anne Ross needs comparison data for its case-study contract");
   }
 
   await page.goto("/portfolio/anne-ross");
-  const comparison = page.locator('[aria-labelledby="case-comparison-title"]');
-  const comparisonLabel = await comparison.locator("p").first().boundingBox();
-  const comparisonHeading = await comparison.locator("#case-comparison-title").boundingBox();
 
-  expect(Math.abs((comparisonLabel?.x ?? 0) - (comparisonHeading?.x ?? 0))).toBeLessThanOrEqual(1);
+  const { before, after } = project.caseStudy.comparison;
+  const comparison = page.getByRole("region", { name: project.caseStudy.comparison.headline });
+  const slider = comparison.getByRole("slider", {
+    name: `Compare ${before.label} with ${after.label}`,
+  });
+
+  await expect(slider).toHaveAttribute(
+    "aria-valuetext",
+    `50% of ${before.label} visible; 50% of ${after.label} visible`,
+  );
+  await slider.focus();
+  await slider.press("End");
+  await expect(slider).toHaveAttribute(
+    "aria-valuetext",
+    `100% of ${before.label} visible; 0% of ${after.label} visible`,
+  );
+});
+
+test("mobile gallery opens a labelled dialog and supports screen navigation", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile", "Mobile gallery interaction");
+
+  const project = portfolioProjects[0];
+  const featuredScreenIndexes = new Set([0, ...project.caseStudy.proofScreenIndexes]);
+  const [firstScreen, secondScreen, thirdScreen] = project.caseStudy.screens.filter(
+    (_, index) => !featuredScreenIndexes.has(index),
+  );
+  await page.goto(`/portfolio/${project.slug}`);
+
+  const gallery = page.getByRole("region", { name: "The system, seen in practice." });
+  const firstTrigger = gallery.getByRole("button", { name: `Enlarge ${firstScreen.title}` });
+  await firstTrigger.click();
+
+  const firstDialog = page.getByRole("dialog", { name: firstScreen.title });
+  await expect(firstDialog).toBeVisible();
+  await expect(firstDialog.getByRole("img", { name: firstScreen.alt })).toBeVisible();
+  await expect(firstDialog.getByText(firstScreen.caption, { exact: true })).toBeVisible();
+
+  await firstDialog.getByRole("button", { name: "Next", exact: true }).click();
+  const secondDialog = page.getByRole("dialog", { name: secondScreen.title });
+  await expect(secondDialog).toBeVisible();
+  await expect(secondDialog.getByText(secondScreen.caption, { exact: true })).toBeVisible();
+
+  await page.keyboard.press("ArrowRight");
+  await expect(page.getByRole("dialog", { name: thirdScreen.title })).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(firstTrigger).toBeFocused();
+
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
+  expect(overflow, "the closed mobile gallery must not create horizontal overflow").toBe(false);
 });
 
 test("case study headings descend h1 to h2 to h3", async ({ page }) => {

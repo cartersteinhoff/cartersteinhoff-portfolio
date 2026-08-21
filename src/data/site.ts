@@ -108,6 +108,21 @@ export type ProjectArchitecture = {
   }[];
 };
 
+export type ProjectProofSelection = readonly [number, number];
+
+export type ProjectResponsiveProof = {
+  readonly headline: string;
+  readonly summary: string;
+  readonly screens: readonly {
+    readonly image: string;
+    readonly alt: string;
+    readonly title: string;
+    readonly caption: string;
+    readonly width: number;
+    readonly height: number;
+  }[];
+};
+
 /**
  * The reasoning behind a build — the one thing screenshots can't carry.
  * `title` states the decision; `body` gives the constraint that forced it
@@ -247,6 +262,38 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [2, 5] satisfies ProjectProofSelection,
+      responsiveProof: {
+        headline: "Built for full-width reading and inspection on smaller screens.",
+        summary:
+          "Current mobile captures show the editorial front page, events calendar, and ranking filters adapting without collapsing the interface into thumbnails.",
+        screens: [
+          {
+            image: "/images/retailboss-home-mobile.webp",
+            title: "Editorial front page",
+            caption: "The live publishing hierarchy remains readable in a narrow viewport.",
+            alt: "RetailBoss mobile homepage with navigation, subscription banner, featured store image, and featured story",
+            width: 1082,
+            height: 2202,
+          },
+          {
+            image: "/images/retailboss-events-mobile.webp",
+            title: "Events calendar",
+            caption: "Event discovery keeps its editorial hierarchy and full-width reading flow.",
+            alt: "RetailBoss mobile events page with navigation, calendar heading, description, and event imagery",
+            width: 1082,
+            height: 2202,
+          },
+          {
+            image: "/images/retailboss-rankings-mobile.webp",
+            title: "Ranking filters",
+            caption: "Search and filters become touch-sized controls before the ranking entries.",
+            alt: "RetailBoss mobile rankings page with navigation, search, topic, year, and metric filters above a ranking entry",
+            width: 1082,
+            height: 2202,
+          },
+        ],
+      } satisfies ProjectResponsiveProof,
       screens: [
         {
           image: "/images/retailboss-project.webp",
@@ -270,11 +317,11 @@ export const portfolioProjects = [
           alt: "RetailBoss events directory showing upcoming retail conferences and trade shows",
         },
         {
-          image: "/images/retailboss-research.webp",
-          title: "Research & intelligence",
+          image: "/images/retailboss-reports.webp",
+          title: "Reports library",
           caption:
-            "Rankings and reports extend the editorial system into reusable market-intelligence products.",
-          alt: "RetailBoss research page with retail rankings and reports",
+            "Search, topic filters, and report briefs extend the newsroom into long-form market intelligence.",
+          alt: "RetailBoss Reports page with search and filters above three illustrated market-intelligence reports",
         },
         {
           image: "/images/retailboss-brands.webp",
@@ -420,6 +467,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 2] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/openworkspace-project.webp",
@@ -587,6 +635,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 2] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/pay-it-forward-project.webp",
@@ -767,6 +816,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 4] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/anne-newgarden-project.webp",
@@ -936,6 +986,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 5] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/local-city-places-project.webp",
@@ -1104,6 +1155,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 3] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/cartersteinhoff-project.webp",
@@ -1258,6 +1310,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [2, 4] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/provepharm-project.webp",
@@ -1423,6 +1476,7 @@ export const portfolioProjects = [
           },
         ],
       } satisfies ProjectArchitecture,
+      proofScreenIndexes: [1, 4] satisfies ProjectProofSelection,
       screens: [
         {
           image: "/images/anne-ross-project.webp",
