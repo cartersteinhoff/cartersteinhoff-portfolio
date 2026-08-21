@@ -16,15 +16,17 @@ export default function ContactPage() {
   return (
     <main className="contact-sunset min-h-screen bg-[var(--sunset-deep)] text-[var(--sand)]">
       <section className="contact-page-shell">
-        <Image
-          src="/images/phoenix-night.webp"
-          alt=""
-          fill
-          preload
-          sizes="100vw"
-          className="contact-page-media object-cover"
-        />
-        <span className="contact-page-scrim" aria-hidden="true" />
+        <div className="contact-page-art" aria-hidden="true">
+          <Image
+            src="/images/phoenix-night.webp"
+            alt=""
+            fill
+            preload
+            sizes="100vw"
+            className="contact-page-media object-cover"
+          />
+          <span className="contact-page-scrim" />
+        </div>
         <div className="contact-page-inner">
           <header className="contact-page-copy">
             <p className="page-kicker">Contact · Start anywhere</p>
@@ -38,20 +40,6 @@ export default function ContactPage() {
                 questions and reply directly.
               </p>
             </div>
-            <div className="contact-page-details">
-              <a className="contact-email-link" href={`mailto:${site.email}`}>
-                {site.email}
-              </a>
-              <span>Phoenix · MST</span>
-              <nav aria-label="Professional profiles">
-                <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
-                  LinkedIn<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-                <a href={site.upworkUrl} target="_blank" rel="noreferrer">
-                  Upwork<span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </nav>
-            </div>
           </header>
 
           <div className="contact-page-form">
@@ -61,6 +49,21 @@ export default function ContactPage() {
             </div>
             <ContactForm />
           </div>
+
+          <aside className="contact-page-details" aria-label="Direct contact details">
+            <a className="contact-email-link" href={`mailto:${site.email}`}>
+              {site.email}
+            </a>
+            <span>Phoenix · MST</span>
+            <nav aria-label="Professional profiles">
+              <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
+                LinkedIn<span className="sr-only"> (opens in a new tab)</span>
+              </a>
+              <a href={site.upworkUrl} target="_blank" rel="noreferrer">
+                Upwork<span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </nav>
+          </aside>
         </div>
       </section>
     </main>
