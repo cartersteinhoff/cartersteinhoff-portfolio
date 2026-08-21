@@ -10,6 +10,7 @@ import { TechnologyStack } from "@/components/technology-stack";
 import { getAbsoluteUrl, getSiteUrl, portfolioProjects } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import styles from "./case-study.module.css";
+import { CaseStudyGallery } from "./case-study-gallery";
 
 type CaseStudyPageProps = {
   params: Promise<{ slug: string }>;
@@ -59,7 +60,19 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
   const nextProject = portfolioProjects[(projectIndex + 1) % portfolioProjects.length];
   const comparison = "comparison" in project.caseStudy ? project.caseStudy.comparison : null;
   const decisions = "decisions" in project.caseStudy ? project.caseStudy.decisions : null;
-  const galleryScreens = project.caseStudy.screens;
+  const responsiveProof =
+    "responsiveProof" in project.caseStudy ? project.caseStudy.responsiveProof : null;
+  const allScreens = project.caseStudy.screens;
+  const coverScreen = allScreens[0];
+  const proofScreenIndexes: readonly number[] = project.caseStudy.proofScreenIndexes;
+  const proofScreens = proofScreenIndexes.map((screenIndex) => ({
+    screen: allScreens[screenIndex] ?? coverScreen,
+    screenIndex,
+  }));
+  const featuredScreenIndexes = new Set([0, ...proofScreenIndexes]);
+  const galleryScreens = allScreens.filter((_, index) => !featuredScreenIndexes.has(index));
+  const coverWidth = ("width" in coverScreen && coverScreen.width) || 1440;
+  const coverHeight = ("height" in coverScreen && coverScreen.height) || 1000;
   const siteUrl = getSiteUrl();
   const caseStudyUrl = getAbsoluteUrl(`/portfolio/${project.slug}`);
   const structuredData = {
@@ -93,16 +106,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     <main className={`${styles.caseStudy} case-study`} data-project={project.slug}>
       <JsonLd id="case-study-structured-data" data={structuredData} />
 
-      <section className={styles.hero} aria-labelledby="case-title">
-        <Image
-          src={project.image}
-          alt={project.imageAlt}
-          fill
-          preload
-          sizes="100vw"
-          className={styles.heroImage}
-        />
-        <div className={styles.heroScrim} aria-hidden="true" />
+      <section className={styles.hero} data-case-section="hero" aria-labelledby="case-title">
+        <div className={styles.heroAtmosphere} aria-hidden="true" />
 
         <div className={styles.heroInner}>
           <div className={styles.heroTopline}>
@@ -115,59 +120,158 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <p className={styles.heroIndex}>Case study · {project.number}</p>
           </div>
 
-          <div className={styles.heroCopy}>
-            <p className={styles.heroEyebrow}>
-              {project.year} · {project.caseStudy.role}
-            </p>
-            <h1 id="case-title" className={styles.title}>
-              {project.title}
-            </h1>
-            <p className={styles.summary}>{project.summary}</p>
-            <div className={styles.heroActions}>
-              <a className={styles.primaryLink} href={project.url} target="_blank" rel="noreferrer">
-                {project.externalLabel}
-                <span aria-hidden="true" className="cta-icon">
-                  <ArrowUpRightGlyph />
-                </span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-              {comparison ? (
+          <div className={styles.heroLayout}>
+            <div className={styles.heroCopy}>
+              <p className={styles.heroEyebrow}>
+                {project.year} · {project.caseStudy.role}
+              </p>
+              <h1 id="case-title" className={styles.title}>
+                {project.title}
+              </h1>
+              <p className={styles.summary}>{project.summary}</p>
+              <div className={styles.heroActions}>
                 <a
-                  className={styles.secondaryLink}
-                  href={comparison.before.url}
+                  className={styles.primaryLink}
+                  href={project.url}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  View original
+                  {project.externalLabel}
                   <span aria-hidden="true" className="cta-icon">
                     <ArrowUpRightGlyph />
                   </span>
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
-              ) : null}
+                {comparison ? (
+                  <a
+                    className={styles.secondaryLink}
+                    href={comparison.before.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View original
+                    <span aria-hidden="true" className="cta-icon">
+                      <ArrowUpRightGlyph />
+                    </span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                ) : null}
+              </div>
             </div>
+
+            <figure className={styles.heroProof}>
+              <div className={styles.heroMedia}>
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  width={coverWidth}
+                  height={coverHeight}
+                  loading="eager"
+                  sizes="(max-width: 767px) 100vw, (max-width: 1199px) 62vw, 900px"
+                />
+              </div>
+            </figure>
           </div>
         </div>
+
+        <dl className={styles.facts} aria-label="Project details">
+          <div>
+            <dt>Year</dt>
+            <dd>{project.year}</dd>
+          </div>
+          <div>
+            <dt>Role</dt>
+            <dd>{project.caseStudy.role}</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>{project.caseStudy.system}</dd>
+          </div>
+          <div>
+            <dt>Status</dt>
+            <dd>{project.statusDetail}</dd>
+          </div>
+        </dl>
       </section>
 
-      <dl className={styles.facts} aria-label="Project details">
-        <div>
-          <dt>Year</dt>
-          <dd>{project.year}</dd>
+      <section
+        className={styles.proof}
+        data-case-section="proof"
+        aria-labelledby="case-proof-title"
+      >
+        <div className={styles.sectionShell}>
+          <Reveal className={styles.proofHeading}>
+            <p className={styles.sectionLabel}>Selected views</p>
+            <div>
+              <h2 id="case-proof-title">The work, before the process.</h2>
+              <p>
+                Two representative views establish the range before the case study moves into the
+                decisions behind them.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className={styles.proofGrid}>
+            {proofScreens.map(({ screen, screenIndex }, index) => {
+              const width = ("width" in screen && screen.width) || 1440;
+              const height = ("height" in screen && screen.height) || 1000;
+
+              return (
+                <Reveal className={styles.proofItem} delay={index * 70} key={screen.image}>
+                  <figure>
+                    <div className={styles.proofMedia}>
+                      <Image
+                        src={screen.image}
+                        alt={screen.alt}
+                        width={width}
+                        height={height}
+                        sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1199px) calc(50vw - 2.75rem), 680px"
+                      />
+                    </div>
+                    <figcaption>
+                      <span aria-hidden="true">{String(screenIndex + 1).padStart(2, "0")}</span>
+                      <div>
+                        <h3>{screen.title}</h3>
+                        <p>{screen.caption}</p>
+                      </div>
+                    </figcaption>
+                  </figure>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          {responsiveProof ? (
+            <div className={styles.responsiveProof}>
+              <Reveal className={styles.responsiveProofCopy}>
+                <p className={styles.sectionLabel}>Responsive proof</p>
+                <h3>{responsiveProof.headline}</h3>
+                <p>{responsiveProof.summary}</p>
+              </Reveal>
+
+              <div className={styles.mobileProofGrid}>
+                {responsiveProof.screens.map((screen, index) => (
+                  <Reveal className={styles.mobileProofItem} delay={index * 60} key={screen.image}>
+                    <figure>
+                      <Image
+                        src={screen.image}
+                        alt={screen.alt}
+                        width={screen.width}
+                        height={screen.height}
+                        sizes="(max-width: 767px) calc(100vw - 2.5rem), (max-width: 1199px) 30vw, 280px"
+                      />
+                      <figcaption>
+                        <strong>{screen.title}</strong>
+                        <span>{screen.caption}</span>
+                      </figcaption>
+                    </figure>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
-        <div>
-          <dt>Role</dt>
-          <dd>{project.caseStudy.role}</dd>
-        </div>
-        <div>
-          <dt>Stack</dt>
-          <dd>{project.caseStudy.system}</dd>
-        </div>
-        <div>
-          <dt>Status</dt>
-          <dd>{project.statusDetail}</dd>
-        </div>
-      </dl>
+      </section>
 
       {comparison ? (
         <section
@@ -211,14 +315,20 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </section>
       ) : null}
 
-      <section className={styles.story} aria-labelledby="case-story-title">
-        <div className={`${styles.sectionShell} ${styles.storyGrid}`}>
+      <section
+        className={styles.story}
+        data-case-section="story"
+        aria-labelledby="case-story-title"
+      >
+        <div className={styles.sectionShell}>
           <Reveal className={styles.storyIntro}>
-            <div className={styles.stickyIntro}>
-              <p className={styles.sectionLabel}>Project story</p>
+            <p className={styles.sectionLabel}>Project story</p>
+            <div>
               <h2 id="case-story-title">{project.caseStudy.headline}</h2>
-              <p className={styles.storyLead}>{project.caseStudy.overview}</p>
-              <p className={styles.storyDetail}>{project.caseStudy.detail}</p>
+              <div className={styles.storySummary}>
+                <p className={styles.storyLead}>{project.caseStudy.overview}</p>
+                <p className={styles.storyDetail}>{project.caseStudy.detail}</p>
+              </div>
             </div>
           </Reveal>
 
@@ -226,37 +336,41 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             {project.caseStudy.story.map((chapter, index) => (
               <Reveal className={styles.storyChapter} delay={index * 70} key={chapter.title}>
                 <p className={styles.chapterNumber}>{String(index + 1).padStart(2, "0")}</p>
-                <div>
-                  <span>{chapter.label}</span>
-                  <h3>{chapter.title}</h3>
-                  <p>{chapter.body}</p>
-                </div>
+                <span className={styles.chapterLabel}>{chapter.label}</span>
+                <h3>{chapter.title}</h3>
+                <p className={styles.chapterBody}>{chapter.body}</p>
               </Reveal>
             ))}
-
-            {decisions ? (
-              <div className={`${styles.decisions} case-decisions-section`}>
-                <p className={styles.sectionLabel}>Decisions</p>
-                <div className={styles.decisionsGrid}>
-                  {decisions.map((decision, index) => (
-                    <Reveal
-                      className={`${styles.decision} case-decision`}
-                      delay={index * 60}
-                      key={decision.title}
-                    >
-                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                      <h3>{decision.title}</h3>
-                      <p>{decision.body}</p>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            ) : null}
           </div>
+
+          {decisions ? (
+            <div className={`${styles.decisions} case-decisions-section`}>
+              <p className={styles.sectionLabel}>Decisions</p>
+              <div className={styles.decisionsGrid}>
+                {decisions.map((decision, index) => (
+                  <Reveal
+                    className={`${styles.decision} case-decision`}
+                    delay={index * 60}
+                    key={decision.title}
+                  >
+                    <span className={styles.decisionNumber} aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <h3>{decision.title}</h3>
+                    <p className={styles.decisionBody}>{decision.body}</p>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
 
-      <section className={styles.build} aria-labelledby="case-build-title">
+      <section
+        className={styles.build}
+        data-case-section="build"
+        aria-labelledby="case-build-title"
+      >
         <div className={styles.sectionShell}>
           <Reveal className={styles.buildHeading}>
             <p className={styles.sectionLabel}>The build</p>
@@ -283,62 +397,55 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         </div>
       </section>
 
-      <section className={styles.gallerySection} aria-labelledby="case-gallery-title">
+      <section
+        className={styles.architecture}
+        data-case-section="architecture"
+        aria-labelledby="case-architecture-title"
+      >
+        <div className={styles.sectionShell}>
+          <Reveal className={styles.architectureHeading}>
+            <p className={styles.sectionLabel}>System architecture</p>
+            <div>
+              <h2 id="case-architecture-title">{project.caseStudy.architecture.headline}</h2>
+              <p>{project.caseStudy.architecture.summary}</p>
+            </div>
+          </Reveal>
+
+          <Reveal className={styles.architectureMap}>
+            <ol>
+              {project.caseStudy.architecture.items.map((item, index) => (
+                <li key={item.label}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <strong>{item.label}</strong>
+                    <p>{item.value}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </div>
+      </section>
+
+      <section
+        className={styles.gallerySection}
+        data-case-section="screens"
+        aria-labelledby="case-gallery-title"
+      >
         <div className={styles.sectionShell}>
           <Reveal className={styles.galleryHeading}>
             <p className={styles.sectionLabel}>Selected screens</p>
             <div>
-              <h2 id="case-gallery-title">Every surface, in one view.</h2>
-              <p>All documented pages and product surfaces included in this case study.</p>
+              <h2 id="case-gallery-title">The system, seen in practice.</h2>
+              <p>Readable views of the site and the system behind it.</p>
             </div>
           </Reveal>
 
-          <ol className={styles.gallery}>
-            {galleryScreens.map((screen, index) => {
-              const isLead = index === 0;
-              const isTail = index === galleryScreens.length - 1 && galleryScreens.length % 2 === 0;
-
-              return (
-                <li
-                  className={`${styles.galleryItem} ${
-                    isLead ? styles.galleryItemLead : ""
-                  } ${isTail ? styles.galleryItemTail : ""} case-screen ${
-                    isLead ? "case-screen-wide" : ""
-                  }`}
-                  key={screen.image}
-                >
-                  <figure className={styles.galleryFigure}>
-                    <div className={styles.galleryMedia}>
-                      <Image
-                        src={screen.image}
-                        alt={screen.alt}
-                        width={("width" in screen && screen.width) || 1440}
-                        height={("height" in screen && screen.height) || 1000}
-                        sizes={
-                          isLead
-                            ? "(max-width: 767px) 100vw, (max-width: 1199px) 70vw, 1030px"
-                            : "(max-width: 767px) 42vw, (max-width: 1199px) 46vw, 670px"
-                        }
-                      />
-                    </div>
-                    <figcaption>
-                      <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                      <div>
-                        <h3>{screen.title}</h3>
-                        <p>{screen.caption}</p>
-                      </div>
-                    </figcaption>
-                  </figure>
-                </li>
-              );
-            })}
-          </ol>
+          <CaseStudyGallery screens={galleryScreens} />
         </div>
       </section>
 
-      <section className={styles.closing} aria-labelledby="next-case">
-        <Image src={nextProject.image} alt="" fill sizes="100vw" className={styles.nextImage} />
-        <div className={styles.closingScrim} aria-hidden="true" />
+      <section className={styles.closing} data-case-section="closing" aria-labelledby="next-case">
         <div className={styles.closingInner}>
           <div className={styles.closingStatus}>
             <p className={styles.sectionLabel}>Current status</p>
@@ -352,9 +459,18 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             </Link>
           </div>
 
-          <Link className={styles.nextLink} href={`/portfolio/${nextProject.slug}`}>
-            <span>Next case study</span>
-            <h2 id="next-case">{nextProject.title}</h2>
+          <Link
+            className={styles.nextLink}
+            data-next-project={nextProject.slug}
+            href={`/portfolio/${nextProject.slug}`}
+          >
+            <div className={styles.nextCopy}>
+              <span className={styles.nextLabel}>Next case study</span>
+              <h2 id="next-case">{nextProject.title}</h2>
+            </div>
+            <div className={styles.nextMedia} aria-hidden="true">
+              <Image src={nextProject.image} alt="" fill sizes="(max-width: 767px) 100vw, 32vw" />
+            </div>
             <i className={`${styles.nextArrow} cta-icon`} aria-hidden="true">
               <ArrowUpRightGlyph />
             </i>
