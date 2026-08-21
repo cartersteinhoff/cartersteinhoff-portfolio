@@ -1,5 +1,4 @@
 export const supportedMediaTypes = ["text/html", "text/markdown"] as const;
-export const markdownRewriteHeader = "x-cs-markdown-rewrite";
 
 export type Representation = "html" | "markdown";
 

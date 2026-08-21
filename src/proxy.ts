@@ -1,34 +1,33 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { getAgentDocument } from "@/lib/agent-content";
 import {
   appendVary,
   canonicalPathFromMarkdown,
   isFixedRepresentationPath,
   markdownPathForCanonical,
-  markdownRewriteHeader,
   preferredRepresentation,
 } from "@/lib/content-negotiation";
 
 const negotiatedVaryTokens = ["Accept", "Accept-Encoding"] as const;
 
-function markdownRewrite(request: NextRequest, canonicalPath: string) {
-  const url = request.nextUrl.clone();
-  url.pathname = canonicalPath === "/" ? "/api/markdown" : `/api/markdown${canonicalPath}`;
+function markdownResponse(request: NextRequest, canonicalPath: string) {
+  const document = getAgentDocument(canonicalPath);
+  const cacheControl =
+    document.status === 200
+      ? "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400"
+      : "no-store";
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(markdownRewriteHeader, "1");
-
-  const response = NextResponse.rewrite(url, {
-    request: {
-      headers: requestHeaders,
+  return new Response(request.method === "HEAD" ? null : document.body, {
+    status: document.status,
+    headers: {
+      "Cache-Control": cacheControl,
+      "Content-Language": "en",
+      "Content-Type": "text/markdown; charset=utf-8",
+      Link: `<${canonicalPath}>; rel="canonical"; type="text/html", </llms.txt>; rel="describedby"`,
+      Vary: negotiatedVaryTokens.join(", "),
     },
   });
-  appendVary(response.headers, ...negotiatedVaryTokens);
-  response.headers.set(
-    "Link",
-    `<${canonicalPath}>; rel="canonical"; type="text/html", </llms.txt>; rel="describedby"`,
-  );
-  return response;
 }
 
 function htmlResponse(request: NextRequest) {
@@ -50,10 +49,10 @@ export function proxy(request: NextRequest) {
   if (isFixedRepresentationPath(pathname)) return NextResponse.next();
 
   const explicitMarkdownPath = canonicalPathFromMarkdown(pathname);
-  if (explicitMarkdownPath !== null) return markdownRewrite(request, explicitMarkdownPath);
+  if (explicitMarkdownPath !== null) return markdownResponse(request, explicitMarkdownPath);
 
   const representation = preferredRepresentation(request.headers.get("accept"));
-  if (representation === "markdown") return markdownRewrite(request, pathname);
+  if (representation === "markdown") return markdownResponse(request, pathname);
   if (representation === "html") return htmlResponse(request);
 
   return new Response(
