@@ -1,13 +1,28 @@
 .stack {
-  display: block;
+  display: grid;
+  gap: 1rem;
+}
+
+.stack .stackLabel,
+.stack .groupLabel {
+  color: var(--accent);
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
+  line-height: var(--text-meta--line-height);
+  text-transform: uppercase;
+}
+
+.stack .stackLabel {
+  color: rgba(242, 236, 228, 0.58);
 }
 
 .stack .groups {
   display: grid;
-  margin: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem;
-  border: 0;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid rgba(242, 236, 228, 0.18);
+  padding-top: 1.5rem;
 }
 
 .stack .group {
@@ -17,12 +32,7 @@
 }
 
 .stack .groupLabel {
-  color: var(--muted-soft);
-  font-size: var(--text-meta);
-  font-weight: var(--text-meta--font-weight);
-  letter-spacing: var(--text-meta--letter-spacing);
-  line-height: var(--text-meta--line-height);
-  text-transform: uppercase;
+  color: rgba(242, 236, 228, 0.58);
 }
 
 .stack .list {
@@ -35,11 +45,11 @@
 .stack .item {
   display: grid;
   grid-template-columns: 1.75rem minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: center;
+  gap: 0.8rem;
+  align-items: start;
   border-top: 0;
   border-bottom: 1px solid rgba(242, 236, 228, 0.14);
-  padding: 0.65rem 0;
+  padding: 0.8rem 0 0.9rem;
 }
 
 .stack .mark {
@@ -60,6 +70,17 @@
   color: var(--sand);
   font-size: 0.88rem;
   font-weight: 600;
+}
+
+.stack .copy {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.stack .role {
+  color: rgba(242, 236, 228, 0.58);
+  font-size: 0.76rem;
+  line-height: 1.45;
 }
 
 @media (max-width: 767px) {
