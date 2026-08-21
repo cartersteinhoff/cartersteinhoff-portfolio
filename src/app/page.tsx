@@ -19,21 +19,10 @@ export default function Home() {
             className="hero-scene hero-scene-studio"
             data-hero-scene="studio"
           />
-          {/* Scenes two and three are invisible for the first 10 and 20
-           * seconds, so they must not compete with the LCP image above.
-           * They still overlap the viewport, so lazy loading alone would
-           * not defer them — fetchPriority is what actually drops them
-           * behind the critical resources. */}
-          <Image
-            src="/images/phoenix-moonrise-hero.webp"
-            alt=""
-            fill
-            loading="lazy"
-            fetchPriority="low"
-            sizes="100vw"
-            className="hero-scene hero-scene-moonrise"
-            data-hero-scene="moonrise"
-          />
+          {/* The desk now owns the second cut, but both later scenes remain
+           * lazy and low priority behind the preloaded LCP image. Because the
+           * stacked frames overlap the viewport, the browser still discovers
+           * them early enough for the fast sequence. */}
           <Image
             src="/images/desk-night-hero.webp"
             alt=""
@@ -43,6 +32,16 @@ export default function Home() {
             sizes="100vw"
             className="hero-scene hero-scene-desk"
             data-hero-scene="desk"
+          />
+          <Image
+            src="/images/phoenix-moonrise-hero.webp"
+            alt=""
+            fill
+            loading="lazy"
+            fetchPriority="low"
+            sizes="100vw"
+            className="hero-scene hero-scene-moonrise"
+            data-hero-scene="moonrise"
           />
           <div className="hero-light-shift" />
         </div>

@@ -304,23 +304,46 @@ button:focus-visible .cta-icon {
   animation: hero-image-in 1.8s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 
+/* A narrow exposure streak crosses the frame at each scene change. It sits
+ * beneath the scrim, so the photography cuts hard without flashing the copy. */
+.hero-scenes::after {
+  position: absolute;
+  inset: -12% -28%;
+  z-index: 2;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    102deg,
+    transparent 42%,
+    rgba(255, 238, 210, 0.08) 46%,
+    rgba(244, 162, 97, 0.82) 50%,
+    rgba(255, 244, 225, 0.2) 53%,
+    transparent 58%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translate3d(48%, 0, 0) skewX(-7deg);
+  will-change: opacity, transform;
+  animation: hero-cut-flash 8.1s 1.2s linear infinite both;
+}
+
 .hero-scene {
   object-fit: cover;
   backface-visibility: hidden;
-  will-change: opacity, transform;
+  will-change: opacity, transform, clip-path;
 }
 
 .hero-scene-studio {
   object-position: 66% center;
   filter: saturate(0.96) brightness(0.95);
   opacity: 1;
-  animation: hero-studio-cycle 30s 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  animation: hero-studio-cycle 8.1s 1.2s linear infinite both;
 }
 
 .hero-scene-moonrise {
   object-position: 88% center;
   opacity: 0;
-  animation: hero-moonrise-cycle 30s 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  animation: hero-moonrise-cycle 8.1s 1.2s linear infinite both;
 }
 
 /* Framed right-of-centre so the desk and monitors sit clear of the copy
@@ -328,7 +351,7 @@ button:focus-visible .cta-icon {
 .hero-scene-desk {
   object-position: 72% center;
   opacity: 0;
-  animation: hero-desk-cycle 30s 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+  animation: hero-desk-cycle 8.1s 1.2s linear infinite both;
 }
 
 .hero-light-shift {
@@ -346,7 +369,7 @@ button:focus-visible .cta-icon {
   filter: blur(30px);
   opacity: 0;
   will-change: opacity, transform;
-  animation: hero-light-shift 20s 1.2s ease-in-out infinite both;
+  animation: hero-light-shift 8.1s 1.2s linear infinite both;
 }
 
 /* Three stacked gradients: a left-heavy one holding the desktop copy
@@ -375,6 +398,7 @@ button:focus-visible .cta-icon {
  * so the hero renders as a still photograph with no further work. */
 @media (prefers-reduced-motion: reduce) {
   .hero-scenes,
+  .hero-scenes::after,
   .hero-scene-studio,
   .hero-scene-moonrise,
   .hero-scene-desk,
@@ -511,6 +535,7 @@ button:focus-visible .cta-icon {
 
 .menu-icon span {
   display: block;
+  width: 100%;
   height: 1px;
   background: currentColor;
   transition: transform 260ms ease;
@@ -2398,91 +2423,135 @@ button:focus-visible .cta-icon {
   }
 }
 
-/* Three scenes over one 30s loop, each holding ~1/3 with a 6% crossfade
- * between them. Scene 1 owns 0-27%, scene 2 owns 33-60%, scene 3 owns
- * 67-94%, and scene 1 fades back in by 100% so the loop is seamless. */
+/* Three scenes over one fast 8.1s loop. Each photograph pushes in for roughly
+ * 2.7s, then a 200ms angled shutter cut replaces it. The original third frame
+ * (desk) now owns beat two; moonrise closes the loop on beat three. */
 @keyframes hero-studio-cycle {
   0% {
     opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transform: scale(1.02) translate3d(0, 0, 0);
   }
-  27% {
+  30.5% {
     opacity: 1;
-    transform: scale(1.05) translate3d(-0.4%, 0, 0);
-  }
-  33%,
-  94% {
-    opacity: 0;
-    transform: scale(1.07) translate3d(-0.6%, 0, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.02) translate3d(0, 0, 0);
-  }
-}
-
-@keyframes hero-moonrise-cycle {
-  0%,
-  27% {
-    opacity: 0;
-    transform: scale(1.07) translate3d(0.45%, 0, 0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.085) translate3d(-1.2%, 0, 0);
   }
   33% {
-    opacity: 1;
-    transform: scale(1.02) translate3d(0, 0, 0);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.05) translate3d(-0.35%, 0, 0);
-  }
-  67%,
-  100% {
     opacity: 0;
-    transform: scale(1.07) translate3d(-0.5%, 0, 0);
+    clip-path: polygon(0 0, 0 0, 8% 100%, 8% 100%);
+    transform: scale(1.12) translate3d(-3%, 0, 0);
+  }
+  96.5% {
+    opacity: 0;
+    clip-path: polygon(100% 0, 100% 0, 92% 100%, 92% 100%);
+    transform: scale(1.1) translate3d(3%, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.02) translate3d(0, 0, 0);
   }
 }
 
 @keyframes hero-desk-cycle {
   0%,
-  60% {
+  30.5% {
     opacity: 0;
-    transform: scale(1.07) translate3d(0.45%, 0, 0);
+    clip-path: polygon(100% 0, 100% 0, 92% 100%, 92% 100%);
+    transform: scale(1.1) translate3d(3%, 0, 0);
   }
-  67% {
+  33% {
     opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     transform: scale(1.02) translate3d(0, 0, 0);
   }
-  94% {
+  63.8% {
     opacity: 1;
-    transform: scale(1.05) translate3d(-0.35%, 0, 0);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.085) translate3d(-1.2%, 0, 0);
+  }
+  66.6%,
+  100% {
+    opacity: 0;
+    clip-path: polygon(0 0, 0 0, 8% 100%, 8% 100%);
+    transform: scale(1.12) translate3d(-3%, 0, 0);
+  }
+}
+
+@keyframes hero-moonrise-cycle {
+  0%,
+  63.8% {
+    opacity: 0;
+    clip-path: polygon(100% 0, 100% 0, 92% 100%, 92% 100%);
+    transform: scale(1.1) translate3d(3%, 0, 0);
+  }
+  66.6% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  96.5% {
+    opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transform: scale(1.085) translate3d(-1.2%, 0, 0);
   }
   100% {
     opacity: 0;
-    transform: scale(1.07) translate3d(-0.5%, 0, 0);
+    clip-path: polygon(0 0, 0 0, 8% 100%, 8% 100%);
+    transform: scale(1.12) translate3d(-3%, 0, 0);
+  }
+}
+
+@keyframes hero-cut-flash {
+  0%,
+  29.8%,
+  33.4%,
+  63.1%,
+  67%,
+  96%,
+  100% {
+    opacity: 0;
+    transform: translate3d(48%, 0, 0) skewX(-7deg);
+  }
+  31.6%,
+  64.9%,
+  98.1% {
+    opacity: 0.72;
+    transform: translate3d(-48%, 0, 0) skewX(-7deg);
   }
 }
 
 @keyframes hero-light-shift {
   0%,
-  34% {
+  31% {
     opacity: 0;
     transform: translate3d(12%, 0, 0) scale(1.06);
   }
-  44% {
-    opacity: 0.2;
+  33% {
+    opacity: 0.18;
     transform: translate3d(0, 0, 0) scale(1.12);
   }
-  54%,
-  84% {
+  35%,
+  64% {
     opacity: 0;
     transform: translate3d(-12%, 0, 0) scale(1.06);
   }
-  94% {
+  66% {
+    opacity: 0.14;
+    transform: translate3d(0, 0, 0) scale(1.12);
+  }
+  68%,
+  97% {
+    opacity: 0;
+    transform: translate3d(12%, 0, 0) scale(1.06);
+  }
+  99% {
     opacity: 0.16;
     transform: translate3d(0, 0, 0) scale(1.12);
   }
   100% {
     opacity: 0;
-    transform: translate3d(12%, 0, 0) scale(1.06);
+    transform: translate3d(-12%, 0, 0) scale(1.06);
   }
 }
