@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRightGlyph } from "@/components/arrow-up-right-glyph";
 import { BeforeAfterSlider } from "@/components/before-after-slider";
 import { JsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
@@ -127,7 +128,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
               <a className={styles.primaryLink} href={project.url} target="_blank" rel="noreferrer">
                 {project.externalLabel}
                 <span aria-hidden="true" className="cta-icon">
-                  ↗
+                  <ArrowUpRightGlyph />
                 </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
@@ -140,7 +141,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                 >
                   View original
                   <span aria-hidden="true" className="cta-icon">
-                    ↗
+                    <ArrowUpRightGlyph />
                   </span>
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
@@ -198,7 +199,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
                         <span>{state.label}</span>
                         <strong className={styles.comparisonTechnology}>{state.technology}</strong>
                         <i className={`${styles.comparisonArrow} cta-icon`} aria-hidden="true">
-                          ↗
+                          <ArrowUpRightGlyph />
                         </i>
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
@@ -347,7 +348,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <Link href="/contact">
               Discuss a similar project
               <span aria-hidden="true" className="cta-icon">
-                ↗
+                <ArrowUpRightGlyph />
               </span>
             </Link>
           </div>
@@ -356,7 +357,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
             <span>Next case study</span>
             <h2 id="next-case">{nextProject.title}</h2>
             <i className={`${styles.nextArrow} cta-icon`} aria-hidden="true">
-              ↗
+              <ArrowUpRightGlyph />
             </i>
           </Link>
         </div>

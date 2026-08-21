@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLink } from "@/components/arrow-link";
+import { ArrowUpRightGlyph } from "@/components/arrow-up-right-glyph";
 import { portfolioProjects, site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 import styles from "./portfolio-index.module.css";
@@ -84,7 +85,7 @@ export default function PortfolioPage() {
                     >
                       {project.domain}{" "}
                       <span aria-hidden="true" className="cta-icon">
-                        ↗
+                        <ArrowUpRightGlyph />
                       </span>
                       <span className="sr-only"> (opens in a new tab)</span>
                     </a>
@@ -131,7 +132,7 @@ export default function PortfolioPage() {
                   >
                     Visit site{" "}
                     <span aria-hidden="true" className="cta-icon">
-                      ↗
+                      <ArrowUpRightGlyph />
                     </span>
                     <span className="sr-only"> ({project.domain}, opens in a new tab)</span>
                   </a>
@@ -156,14 +157,14 @@ export default function PortfolioPage() {
               <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
                 LinkedIn{" "}
                 <span aria-hidden="true" className="cta-icon">
-                  ↗
+                  <ArrowUpRightGlyph />
                 </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
               <a href={site.upworkUrl} target="_blank" rel="noreferrer">
                 Hire through Upwork{" "}
                 <span aria-hidden="true" className="cta-icon">
-                  ↗
+                  <ArrowUpRightGlyph />
                 </span>
                 <span className="sr-only"> (opens in a new tab)</span>
               </a>
