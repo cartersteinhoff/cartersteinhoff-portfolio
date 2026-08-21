@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ContactForm } from "@/components/contact-form";
+import { PhoenixTime } from "@/components/phoenix-time";
 import { site } from "@/data/site";
 import { createPageMetadata } from "@/lib/seo";
 
@@ -54,7 +55,7 @@ export default function ContactPage() {
             <a className="contact-email-link" href={`mailto:${site.email}`}>
               {site.email}
             </a>
-            <span>Phoenix · MST</span>
+            <PhoenixTime />
             <nav aria-label="Professional profiles">
               <a href={site.linkedinUrl} target="_blank" rel="noreferrer">
                 LinkedIn<span className="sr-only"> (opens in a new tab)</span>
