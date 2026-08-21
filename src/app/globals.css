@@ -206,6 +206,14 @@ svg {
   height: auto;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 p,
 h1,
 h2,
