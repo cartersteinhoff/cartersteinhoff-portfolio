@@ -94,6 +94,9 @@ test("every canonical page negotiates a route-specific Markdown representation",
     expect(response.headers()["content-type"], `${pathname} Markdown type`).toBe(
       "text/markdown; charset=utf-8",
     );
+    expect(response.headers()["cache-control"], `${pathname} Markdown cache policy`).toContain(
+      "private, no-store",
+    );
     expect(vary, `${pathname} must vary by Accept`).toContain("accept");
     expect(vary, `${pathname} must preserve encoding variance`).toContain("accept-encoding");
     expect(body.startsWith(expectedMarkdownHeading(pathname)), `${pathname} Markdown heading`).toBe(
