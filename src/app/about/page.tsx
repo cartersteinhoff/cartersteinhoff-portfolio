@@ -26,7 +26,7 @@ export default function AboutPage() {
             <div className={styles.heroSummary}>
               <p>
                 Ten years from COBOL on an American Express mainframe to designing and building
-                complete products — by way of a layoff, a classroom, and a studio.
+                complete products, by way of a layoff, a classroom, and a studio.
               </p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
               <p>
                 I enrolled in a web development bootcamp. Going back to a classroom after having had
                 the job is a particular kind of humbling, but it was the right call. I had learned
-                the web through one CMS; I needed the modern JavaScript foundation underneath it —
+                the web through one CMS; I needed the modern JavaScript foundation underneath it:
                 the languages, the frameworks, and the habits that would let me build something from
                 nothing rather than only maintain what already existed.
               </p>
@@ -102,10 +102,10 @@ export default function AboutPage() {
                 The other side of the classroom.
               </h2>
               <p>
-                In 2020 I ended up back at a bootcamp — this time teaching. I have been an
-                instructor at Nucamp ever since, running a weekly workshop in React, React Native,
-                DevOps, and cybersecurity for people making the same career change I had made a few
-                years earlier.
+                In 2020 I ended up back at a bootcamp, this time teaching. I have been an instructor
+                at Nucamp ever since, running a weekly workshop in React, React Native, DevOps, and
+                cybersecurity for people making the same career change I had made a few years
+                earlier.
               </p>
               <p>
                 Teaching changed how I work more than any job before it. You cannot hand-wave in
@@ -122,14 +122,14 @@ export default function AboutPage() {
               <h2 className={`display-4 ${styles.chapterTitle}`}>A student, and a partner.</h2>
               <p>
                 One of my students wanted to try freelancing for real. So we built something
-                together — a studio making websites for the life sciences sector, the two of us
+                together: a studio making websites for the life sciences sector, the two of us
                 working through the parts no curriculum covers: pricing, scoping, saying no,
                 security and compliance, and putting your name on something a client depends on.
               </p>
               <p>
                 I co-owned it for a little over a year. Running a studio with someone you taught is
-                a strange and clarifying experience — every shortcut you ever demonstrated comes
-                back to you as a question.
+                a strange and clarifying experience. Every shortcut you ever demonstrated comes back
+                to you as a question.
               </p>
             </div>
 
@@ -138,7 +138,7 @@ export default function AboutPage() {
               <h2 className={`display-4 ${styles.chapterTitle}`}>Why the range matters.</h2>
               <p>
                 After two years as a full-stack engineer and product designer at City Press Media, I
-                am back to running my own practice — still teaching at Nucamp, and taking on product
+                am back to running my own practice, still teaching at Nucamp and taking on product
                 and platform work independently.
               </p>
               <p>

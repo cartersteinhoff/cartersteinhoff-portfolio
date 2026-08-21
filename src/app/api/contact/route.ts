@@ -336,6 +336,6 @@ export async function POST(request: Request) {
 
   return respond({
     ok: true,
-    message: "Message sent. Thanks—Carter will reply directly.",
+    message: "Message sent. Thanks. Carter will reply directly.",
   });
 }

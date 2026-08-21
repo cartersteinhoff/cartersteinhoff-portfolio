@@ -64,7 +64,7 @@ export default function Home() {
           <div className="hero-bottom mt-8 grid max-w-2xl gap-6 border-t border-white/25 pt-5 text-stone-100">
             <div className="grid gap-4">
               <p className="home-hero-summary">
-                I design and build digital products end to end—shaping the experience, engineering
+                I design and build digital products end to end, shaping the experience, engineering
                 the system behind it, and carrying both into production.
               </p>
               <p className="text-[0.72rem] font-bold tracking-[0.13em] text-stone-400 uppercase">
