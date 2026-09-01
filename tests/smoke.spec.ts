@@ -27,6 +27,21 @@ const ROUTES = [
   ...portfolioProjects.map((project) => `/portfolio/${project.slug}`),
 ];
 
+const HOME_FEATURED_PROJECTS = [
+  {
+    slug: "retailboss",
+    imageStems: ["retailboss-project", "retailboss-home-mobile"],
+  },
+  {
+    slug: "openworkspace",
+    imageStems: ["openworkspace-project", "openworkspace-whitepaper-automating"],
+  },
+  {
+    slug: "pay-it-forward-card-shows",
+    imageStems: ["pay-it-forward-project", "pay-it-forward-shows"],
+  },
+] as const;
+
 function wordCount(value: string) {
   return value.trim().match(/\S+/gu)?.length ?? 0;
 }
@@ -79,6 +94,110 @@ for (const route of ROUTES) {
     expect(errors, `${route} logged console errors`).toEqual([]);
   });
 }
+
+test("homepage selected work is a dense alternating editorial sequence", async ({
+  page,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Desktop editorial-strip geometry");
+
+  await page.goto("/", { waitUntil: "networkidle" });
+
+  const proof = page.locator("[data-home-proof]");
+  const articles = proof.locator("[data-home-project]");
+  await expect(proof).toHaveCount(1);
+  await expect(articles).toHaveCount(HOME_FEATURED_PROJECTS.length);
+
+  expect(
+    await articles.evaluateAll((elements) =>
+      elements.map((element) => element.getAttribute("data-home-project")),
+    ),
+    "featured projects should stay in the approved order",
+  ).toEqual(HOME_FEATURED_PROJECTS.map((project) => project.slug));
+
+  for (const project of HOME_FEATURED_PROJECTS) {
+    const article = proof.locator(`[data-home-project="${project.slug}"]`);
+    const media = article.locator("[data-project-media]");
+    const copy = article.locator("[data-project-copy]");
+    const images = media.locator("img");
+    const href = `/portfolio/${project.slug}`;
+
+    await expect(media, `${project.slug} media plane`).toHaveCount(1);
+    await expect(copy, `${project.slug} copy plane`).toHaveCount(1);
+    await expect(images, `${project.slug} should pair a cover with one detail`).toHaveCount(2);
+    await expect(
+      article.locator(`a[href="${href}"]`),
+      `${project.slug} case-study link`,
+    ).toHaveCount(1);
+
+    const sources = await images.evaluateAll((elements) =>
+      elements.map((element) =>
+        decodeURIComponent(
+          (element as HTMLImageElement).currentSrc || (element as HTMLImageElement).src,
+        ),
+      ),
+    );
+    for (const stem of project.imageStems) {
+      expect(
+        sources.some((source) => source.includes(stem)),
+        `${project.slug} should render ${stem}`,
+      ).toBe(true);
+    }
+  }
+
+  await expect(
+    proof.locator('a[href="/portfolio"]'),
+    "proof should end at the work index",
+  ).toHaveCount(1);
+
+  const geometry = await articles.evaluateAll((elements) =>
+    elements.map((element) => {
+      const media = element.querySelector<HTMLElement>("[data-project-media]");
+      const copy = element.querySelector<HTMLElement>("[data-project-copy]");
+      if (!media || !copy) throw new Error("Homepage project is missing its media or copy plane");
+
+      const mediaRect = media.getBoundingClientRect();
+      const copyRect = copy.getBoundingClientRect();
+      return {
+        media: {
+          x: mediaRect.x,
+          width: mediaRect.width,
+          top: mediaRect.top,
+          bottom: mediaRect.bottom,
+        },
+        copy: {
+          x: copyRect.x,
+          width: copyRect.width,
+          top: copyRect.top,
+          bottom: copyRect.bottom,
+        },
+        contentTop: Math.min(mediaRect.top, copyRect.top),
+        contentBottom: Math.max(mediaRect.bottom, copyRect.bottom),
+      };
+    }),
+  );
+
+  for (const [index, chapter] of geometry.entries()) {
+    expect(
+      chapter.media.width,
+      `${HOME_FEATURED_PROJECTS[index].slug} imagery should outweigh its copy`,
+    ).toBeGreaterThan(chapter.copy.width);
+
+    const mediaLeads = index % 2 === 0;
+    expect(
+      mediaLeads ? chapter.media.x < chapter.copy.x : chapter.media.x > chapter.copy.x,
+      `${HOME_FEATURED_PROJECTS[index].slug} should follow the L/R/L alternation`,
+    ).toBe(true);
+  }
+
+  // Measure rendered content rather than article edges: chapter wrappers own
+  // their breathing room as padding, so edge-to-edge wrappers can conceal a
+  // much larger visual gap than the composition actually shows.
+  for (let index = 0; index < geometry.length - 1; index += 1) {
+    const gap = geometry[index + 1].contentTop - geometry[index].contentBottom;
+    expect(gap, `gap after ${HOME_FEATURED_PROJECTS[index].slug}`).toBeGreaterThanOrEqual(-2);
+    expect(gap, `gap after ${HOME_FEATURED_PROJECTS[index].slug}`).toBeLessThanOrEqual(112);
+  }
+});
 
 test("every image referenced in project data resolves", async ({ request }) => {
   // Screens get deleted and replaced as projects change -- three were
@@ -640,6 +759,20 @@ test("hero honours reduced motion", async ({ page }) => {
       studio: read(".hero-scene-studio"),
       moonrise: read(".hero-scene-moonrise"),
       title: read(".hero-title"),
+      stripTargets: [
+        ...document.querySelectorAll(
+          "[data-home-project] [data-project-media], " +
+            "[data-home-project] [data-project-media] > *, " +
+            "[data-home-project] [data-project-copy]",
+        ),
+      ].map((element) => {
+        const style = getComputedStyle(element);
+        return {
+          clipPath: style.clipPath,
+          opacity: Number(style.opacity),
+          transform: style.transform,
+        };
+      }),
     };
   });
 
@@ -649,22 +782,55 @@ test("hero honours reduced motion", async ({ page }) => {
   // ...and what is left is a legible still, not a blank hero.
   expect(state.studio?.opacity).toBe(1);
   expect(state.title?.opacity).toBe(1);
+
+  expect(state.stripTargets.length, "reduced-motion proof targets").toBeGreaterThanOrEqual(9);
+  for (const [index, target] of state.stripTargets.entries()) {
+    const normalizedClipPath = target.clipPath
+      .toLowerCase()
+      .replace(/(?:px|%)/gu, "")
+      .replace(/\s+/gu, "");
+    const isOpenClipPath = [
+      "none",
+      "inset(0)",
+      "inset(0,0,0,0)",
+      "polygon(00,1000,100100,0100)",
+    ].includes(normalizedClipPath);
+
+    expect(target.opacity, `reduced-motion proof target ${index} opacity`).toBe(1);
+    expect(target.transform, `reduced-motion proof target ${index} transform`).toBe("none");
+    expect(
+      isOpenClipPath,
+      `reduced-motion proof target ${index} clip-path was ${target.clipPath}`,
+    ).toBe(true);
+  }
 });
 
 test("only the first hero scene is high priority", async ({ page }) => {
   await page.goto("/");
-  const scenes = await page.evaluate(() =>
-    [...document.querySelectorAll<HTMLImageElement>(".hero-scene")].map((img) => ({
+  const { proofImages, scenes } = await page.evaluate(() => ({
+    scenes: [...document.querySelectorAll<HTMLImageElement>(".hero-scene")].map((img) => ({
       loading: img.loading,
       fetchPriority: img.getAttribute("fetchpriority"),
     })),
-  );
+    proofImages: [...document.querySelectorAll<HTMLImageElement>("[data-home-proof] img")].map(
+      (img) => ({
+        loading: img.loading,
+        fetchPriority: img.getAttribute("fetchpriority"),
+      }),
+    ),
+  }));
 
   expect(scenes).toHaveLength(3);
   expect(scenes[0].loading).not.toBe("lazy");
   for (const scene of scenes.slice(1)) {
     expect(scene.loading).toBe("lazy");
     expect(scene.fetchPriority).toBe("low");
+  }
+
+  expect(proofImages).toHaveLength(6);
+  for (const image of proofImages) {
+    expect(image.loading).toBe("lazy");
+    expect(image.fetchPriority).not.toBe("high");
   }
 });
 
