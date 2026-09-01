@@ -1,11 +1,35 @@
 import Image from "next/image";
 import { ArrowLink } from "@/components/arrow-link";
+import { Reveal } from "@/components/reveal";
 import { homeContent } from "@/data/home";
-import { site } from "@/data/site";
+import { portfolioProjects, site } from "@/data/site";
+import styles from "./home-proof.module.css";
 
-/* The first viewport remains a focused hero. The editorial overview below
- * gives no-JavaScript readers and agents enough context to understand the
- * practice without duplicating the portfolio or service catalog. */
+const featuredProjects = homeContent.featuredProjectSlugs.map((slug) => {
+  const project = portfolioProjects.find((candidate) => candidate.slug === slug);
+  const media = homeContent.featuredProjectMedia.find((candidate) => candidate.slug === slug);
+
+  if (!project || !media) {
+    throw new Error(`Unknown featured homepage project: ${slug}`);
+  }
+
+  const detailScreen =
+    project.caseStudy.screens.find((screen) => screen.image === media.detailImage) ??
+    ("responsiveProof" in project.caseStudy
+      ? project.caseStudy.responsiveProof.screens.find(
+          (screen) => screen.image === media.detailImage,
+        )
+      : undefined);
+
+  if (!detailScreen) {
+    throw new Error(`Unknown featured homepage image: ${media.detailImage}`);
+  }
+
+  return { project, media, detailScreen };
+});
+
+/* The first viewport remains a focused hero. The proof section below
+ * moves directly into shipped work instead of repeating the studio pitch. */
 export default function Home() {
   return (
     <main>
@@ -82,22 +106,82 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-overview" aria-labelledby="home-overview-title">
-        <div className="home-overview-shell">
-          <p className="eyebrow">Independent product studio · {site.location}</p>
-          <div className="home-overview-grid">
-            <h2 id="home-overview-title">{homeContent.overviewTitle}</h2>
-            <div className="home-overview-copy">
-              {homeContent.overviewParagraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-              <nav className="home-overview-links" aria-label="Explore Carter Steinhoff's work">
-                <ArrowLink href="/portfolio">Review case studies</ArrowLink>
-                <ArrowLink href="/about">Read the background</ArrowLink>
-                <ArrowLink href="/contact">Discuss a project</ArrowLink>
-              </nav>
-            </div>
+      <section className={styles.proof} aria-labelledby="home-proof-title" data-home-proof>
+        <div className={styles.shell}>
+          <header className={styles.sectionHead}>
+            <h2 id="home-proof-title" className={styles.sectionTitle}>
+              {homeContent.proofEyebrow}
+            </h2>
+            <p className={styles.sectionCount}>01—03</p>
+          </header>
+
+          <div className={styles.projects}>
+            {featuredProjects.map(({ project, media, detailScreen }, index) => {
+              const isReverse = index % 2 === 1;
+              return (
+                <Reveal
+                  key={project.slug}
+                  className={`${styles.projectReveal} ${isReverse ? styles.reverse : ""}`}
+                >
+                  <article
+                    className={styles.project}
+                    aria-labelledby={`home-project-${project.slug}`}
+                    data-home-project={project.slug}
+                  >
+                    <div className={styles.visual} data-project-media>
+                      <div className={styles.primaryFrame} data-project-primary>
+                        <Image
+                          src={project.image}
+                          alt={project.imageAlt}
+                          fill
+                          sizes="(max-width: 639px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), 62vw"
+                          className={styles.primaryImage}
+                        />
+                      </div>
+                      <div
+                        className={`${styles.detailFrame} ${
+                          media.detailKind === "portrait"
+                            ? styles.detailPortrait
+                            : styles.detailLandscape
+                        }`}
+                        data-project-detail
+                      >
+                        <Image
+                          src={media.detailImage}
+                          alt={detailScreen.alt}
+                          fill
+                          sizes={
+                            media.detailKind === "portrait"
+                              ? "(max-width: 1023px) 7rem, 13rem"
+                              : "(max-width: 1023px) 50vw, 25rem"
+                          }
+                          className={styles.detailImage}
+                        />
+                      </div>
+                    </div>
+
+                    <div className={styles.projectCopy} data-project-copy>
+                      <p className={styles.projectNumber}>
+                        {project.number} <span aria-hidden="true">/ 03</span>
+                        <span className="sr-only"> of 3</span>
+                      </p>
+                      <h3 id={`home-project-${project.slug}`} className={styles.projectTitle}>
+                        {project.title}
+                      </h3>
+                      <p className={styles.projectHeadline}>{project.caseStudy.headline}</p>
+                      <ArrowLink href={`/portfolio/${project.slug}`}>
+                        View case study<span className="sr-only">: {project.title}</span>
+                      </ArrowLink>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
+
+          <footer className={styles.sectionFooter}>
+            <ArrowLink href="/portfolio">View all case studies</ArrowLink>
+          </footer>
         </div>
       </section>
     </main>

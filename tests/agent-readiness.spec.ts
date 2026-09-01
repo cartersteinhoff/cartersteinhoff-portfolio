@@ -53,7 +53,7 @@ function serverRenderedMainText(html: string) {
     .trim();
 }
 
-test("homepage raw HTML has a branded h1 and substantial server-rendered main content", async ({
+test("homepage raw HTML has a branded h1 and specific server-rendered work proof", async ({
   request,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop", "Raw HTTP behavior is viewport-independent");
@@ -67,15 +67,41 @@ test("homepage raw HTML has a branded h1 and substantial server-rendered main co
     .replace(/\s+([.,])/gu, "$1")
     .trim();
   const mainText = serverRenderedMainText(html);
+  const proofHtml =
+    html.match(/<section\b[^>]*data-home-proof[^>]*>([\s\S]*?)<\/section>/iu)?.[1] ?? "";
+  const proofText = proofHtml
+    .replace(/<(?:script|style|template)\b[^>]*>[\s\S]*?<\/(?:script|style|template)>/giu, " ")
+    .replace(/<[^>]+>/gu, " ")
+    .replace(/&(?:nbsp|#160);/giu, " ")
+    .replace(/&amp;/giu, "&")
+    .replace(/\s+/gu, " ")
+    .trim();
 
   expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("text/html");
   expect(h1Text).toBe("Carter Steinhoff. Products from interface to infrastructure.");
-  expect(mainText).toContain("Carter Steinhoff designs the interface");
-  expect(
-    mainText.length,
-    "meaningful raw <main> text should exceed the audit floor",
-  ).toBeGreaterThan(700);
+  expect(proofHtml, "homepage work proof should be server rendered").not.toBe("");
+
+  for (const text of [
+    "Selected work",
+    "RetailBoss",
+    "OpenWorkspace",
+    "Pay It Forward Card Shows",
+    "View all case studies",
+  ]) {
+    expect(proofText).toContain(text);
+  }
+
+  for (const href of [
+    "/portfolio/retailboss",
+    "/portfolio/openworkspace",
+    "/portfolio/pay-it-forward-card-shows",
+    "/portfolio",
+  ]) {
+    expect(proofHtml).toContain(`href="${href}"`);
+  }
+
+  expect(mainText).toContain("Selected work");
 });
 
 test("every canonical page negotiates a route-specific Markdown representation", async ({

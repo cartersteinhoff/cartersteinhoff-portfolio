@@ -6,4 +6,23 @@ export const homeContent = {
     "Based in Phoenix, Carter works across product and website design, full-stack application development, WordPress and custom CMS platforms, technical SEO, AI automation, and cloud architecture. The practice is intentionally end to end: product direction, interface design, application code, content systems, infrastructure, testing, and production delivery can be handled as one connected system.",
     "The portfolio documents shipped work with current screenshots, project status, responsibilities, technology choices, constraints, and the decisions behind the build. Use the services page to match a specific problem to the available work, the about page for professional background, and the contact page when you are ready to discuss a concrete project directly with Carter.",
   ],
+  proofEyebrow: "Selected work",
+  featuredProjectSlugs: ["retailboss", "openworkspace", "pay-it-forward-card-shows"],
+  featuredProjectMedia: [
+    {
+      slug: "retailboss",
+      detailImage: "/images/retailboss-home-mobile.webp",
+      detailKind: "portrait",
+    },
+    {
+      slug: "openworkspace",
+      detailImage: "/images/openworkspace-whitepaper-automating.webp",
+      detailKind: "landscape",
+    },
+    {
+      slug: "pay-it-forward-card-shows",
+      detailImage: "/images/pay-it-forward-shows.webp",
+      detailKind: "landscape",
+    },
+  ],
 } as const;

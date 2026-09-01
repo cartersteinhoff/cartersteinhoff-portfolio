@@ -17,6 +17,11 @@ export function Reveal({ children, className = "", delay = 0 }: RevealProps) {
 
     element.dataset.ready = "true";
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      element.dataset.visible = "true";
+      return;
+    }
+
     if (!("IntersectionObserver" in window)) {
       element.dataset.visible = "true";
       return;

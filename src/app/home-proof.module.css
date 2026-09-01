@@ -1,0 +1,313 @@
+.proof {
+  --proof-rule: rgba(242, 236, 228, 0.16);
+  border-top: 1px solid rgba(242, 236, 228, 0.12);
+  overflow: clip;
+  background: var(--ink);
+  color: var(--sand);
+}
+
+.shell {
+  width: min(100%, 93.75rem);
+  margin-inline: auto;
+  padding: clamp(2.75rem, 5vw, 4.75rem) 1.25rem clamp(2.5rem, 3vw, 3rem);
+}
+
+.sectionHead {
+  display: flex;
+  gap: 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--proof-rule);
+  padding-bottom: 1rem;
+}
+
+.sectionTitle,
+.sectionCount {
+  margin: 0;
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
+  line-height: var(--text-meta--line-height);
+  text-transform: uppercase;
+}
+
+.sectionTitle {
+  color: var(--sand);
+}
+
+.sectionCount {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.projects {
+  display: grid;
+}
+
+.projectReveal {
+  min-width: 0;
+  border-bottom: 1px solid var(--proof-rule);
+}
+
+/* Reveal supplies the intersection state. The strip itself stays fixed while
+ * its image planes and copy perform the entrance, preventing a second rise. */
+.projectReveal.projectReveal[data-ready="true"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.project {
+  display: grid;
+  min-width: 0;
+  gap: clamp(1.75rem, 5vw, 3rem);
+  padding-block: clamp(1.75rem, 5vw, 2.75rem);
+}
+
+.visual {
+  position: relative;
+  min-width: 0;
+  padding-bottom: clamp(2.75rem, 11vw, 4.75rem);
+}
+
+.primaryFrame,
+.detailFrame {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-soft);
+}
+
+.primaryFrame {
+  width: 94%;
+  aspect-ratio: 36 / 25;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, 0.34);
+}
+
+.reverse .primaryFrame {
+  margin-left: auto;
+}
+
+.primaryFrame::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(242, 236, 228, 0.08);
+  pointer-events: none;
+  content: "";
+}
+
+.primaryImage,
+.detailImage {
+  object-fit: cover;
+  object-position: 50% 0%;
+  transform: none;
+  transition: transform 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.detailFrame {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(242, 236, 228, 0.22);
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.62);
+}
+
+.reverse .detailFrame {
+  right: auto;
+  left: 0;
+}
+
+.detailPortrait {
+  width: clamp(6rem, 24%, 13rem);
+  aspect-ratio: 9 / 16;
+}
+
+.detailLandscape {
+  width: clamp(10.5rem, 47%, 25rem);
+  aspect-ratio: 36 / 25;
+}
+
+.projectCopy {
+  display: grid;
+  justify-items: start;
+  align-content: center;
+  gap: 0.9rem;
+  max-width: 37rem;
+}
+
+.projectNumber {
+  display: flex;
+  gap: 0.45rem;
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: var(--text-meta);
+  font-weight: var(--text-meta--font-weight);
+  letter-spacing: var(--text-meta--letter-spacing);
+  line-height: var(--text-meta--line-height);
+  text-transform: uppercase;
+}
+
+.projectNumber span {
+  color: var(--muted-soft);
+}
+
+.projectTitle {
+  max-width: 15ch;
+  margin: 0;
+  font-family: var(--font-display-stack);
+  font-size: clamp(2.75rem, 10.5vw, 4.7rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.projectHeadline {
+  max-width: 31rem;
+  margin: 0.35rem 0 0.45rem;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.sectionFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1.75rem;
+}
+
+/* The no-data state above is deliberately complete and visible for SSR and
+ * no-JS. Only a hydrated strip that is still outside the viewport is hidden. */
+.projectReveal[data-ready="true"]:not([data-visible="true"]) .primaryFrame {
+  clip-path: polygon(0 0, 0 0, 8% 100%, 8% 100%);
+}
+
+.projectReveal.reverse[data-ready="true"]:not([data-visible="true"]) .primaryFrame {
+  clip-path: polygon(100% 0, 100% 0, 92% 100%, 92% 100%);
+}
+
+.projectReveal[data-ready="true"]:not([data-visible="true"]) .primaryImage {
+  transform: scale(1.045);
+}
+
+.projectReveal[data-ready="true"]:not([data-visible="true"]) .detailFrame {
+  opacity: 0;
+  transform: translate3d(1.5rem, 1rem, 0) scale(0.985);
+}
+
+.projectReveal.reverse[data-ready="true"]:not([data-visible="true"]) .detailFrame {
+  transform: translate3d(-1.5rem, 1rem, 0) scale(0.985);
+}
+
+.projectReveal[data-ready="true"]:not([data-visible="true"]) .projectCopy {
+  opacity: 0;
+  transform: translate3d(0, 1rem, 0);
+}
+
+.projectReveal[data-ready="true"][data-visible="true"] .primaryFrame {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition: clip-path 800ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.projectReveal[data-ready="true"][data-visible="true"] .primaryImage {
+  transform: none;
+  transition: transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.projectReveal[data-ready="true"][data-visible="true"] .detailFrame {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 650ms cubic-bezier(0.2, 0.75, 0.25, 1) 120ms,
+    transform 650ms cubic-bezier(0.2, 0.75, 0.25, 1) 120ms,
+    border-color 220ms ease;
+}
+
+.projectReveal[data-ready="true"][data-visible="true"] .projectCopy {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 600ms cubic-bezier(0.2, 0.75, 0.25, 1) 190ms,
+    transform 600ms cubic-bezier(0.2, 0.75, 0.25, 1) 190ms;
+}
+
+@media (min-width: 640px) {
+  .shell {
+    padding-inline: 2rem;
+  }
+
+  .project {
+    gap: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .project {
+    grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+    gap: clamp(3rem, 5.25vw, 5.5rem);
+    align-items: center;
+    padding-block: clamp(3rem, 3.8vw, 3.5rem);
+  }
+
+  .visual {
+    grid-row: 1;
+    grid-column: 1;
+    padding-bottom: clamp(3.25rem, 5.4vw, 5.25rem);
+  }
+
+  .projectCopy {
+    grid-row: 1;
+    grid-column: 2;
+    max-width: 26rem;
+  }
+
+  .reverse .project {
+    grid-template-columns: minmax(18rem, 1fr) minmax(0, 2fr);
+  }
+
+  .reverse .visual {
+    grid-column: 2;
+  }
+
+  .reverse .projectCopy {
+    grid-column: 1;
+  }
+
+  .projectTitle {
+    font-size: clamp(3.1rem, 3.8vw, 4.9rem);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .projectReveal[data-visible="true"] .project:hover .primaryImage,
+  .projectReveal[data-visible="true"] .project:focus-within .primaryImage {
+    transform: scale(1.018);
+  }
+
+  .projectReveal[data-visible="true"] .project:hover .detailImage,
+  .projectReveal[data-visible="true"] .project:focus-within .detailImage {
+    transform: scale(1.025);
+  }
+
+  .projectReveal[data-visible="true"] .project:hover .detailFrame,
+  .projectReveal[data-visible="true"] .project:focus-within .detailFrame {
+    border-color: rgba(244, 162, 97, 0.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projectReveal.projectReveal[data-ready="true"],
+  .projectReveal.projectReveal[data-ready="true"] .primaryFrame,
+  .projectReveal.projectReveal[data-ready="true"] .primaryImage,
+  .projectReveal.projectReveal[data-ready="true"] .detailFrame,
+  .projectReveal.projectReveal[data-ready="true"] .detailImage,
+  .projectReveal.projectReveal[data-ready="true"] .projectCopy {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+}
